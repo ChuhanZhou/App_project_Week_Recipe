@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Week_Recipe</string>
+    <string name="input_account">Email:</string>
+    <string name="input_password">Password:</string>
+    <string name="button_login">Login</string>
+    <string name="button_register">Register</string>
+    <string name="text_registerTitle">New User</string>
+    <string name="input_confirmPassword">Confirm：</string>
+    <string name="button_back">Back</string>
+    <string name="nullData">null</string>
+    <string name="homepage">Homepage</string>
+    <string name="setting">Setting</string>
+</resources>
