@@ -3,21 +3,25 @@ package com.example.week_recipe.model.domain.user;
 import java.util.ArrayList;
 
 public class AccountList {
-    private ArrayList<Account> accounts;
+    private ArrayList<Account> accountList;
 
     public AccountList()
     {
-        accounts = new ArrayList<>();
+        accountList = new ArrayList<>();
     }
 
     public String addAccount(Account newAccount)
     {
-        if (!hasAccount(newAccount.getEmail()))
+        if (newAccount!=null)
         {
-            accounts.add(newAccount);
-            return null;
+            if (!hasAccount(newAccount.getEmail()))
+            {
+                accountList.add(newAccount);
+                return null;
+            }
+            return "This email is used!";
         }
-        return "This account number is used!";
+        return "Can't input null";
     }
 
     public boolean checkPassword(String email,String password)
@@ -36,11 +40,11 @@ public class AccountList {
 
     private Account getAccountByEmail(String email)
     {
-        for(int i=0;i<accounts.size();i++)
+        for(int i = 0; i< accountList.size(); i++)
         {
-            if (accounts.get(i).getEmail().equals(email))
+            if (accountList.get(i).getEmail().equals(email))
             {
-                return accounts.get(i);
+                return accountList.get(i);
             }
         }
         return null;
@@ -61,7 +65,7 @@ public class AccountList {
         {
             if (getAccountByEmail(email).checkPassword(password))
             {
-                accounts.remove(getAccountByEmail(email));
+                accountList.remove(getAccountByEmail(email));
             }
         }
     }

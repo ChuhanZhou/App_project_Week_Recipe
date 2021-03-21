@@ -33,10 +33,10 @@ public class LoginActivity extends AppCompatActivity {
         bind();
         setListener();
 
-        loginModel.register("0","0");
-        accountEditText.setText("0");
-        passwordEditText.setText("0");
-        clickLoginButton();
+        //loginModel.register("0","0");
+        //accountEditText.setText("0");
+        //passwordEditText.setText("0");
+        //clickLoginButton();
 
         //System.out.println(userPicture.getDrawable().g.toString());
 
