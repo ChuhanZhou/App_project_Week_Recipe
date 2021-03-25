@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Week_Recipe</string>
+
     <string name="input_account">Email:</string>
     <string name="input_password">Password:</string>
+    <string name="input_confirmPassword">Confirm：</string>
+    <string name="input_UserName">User Name:</string>
+
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
-    <string name="text_registerTitle">New User</string>
-    <string name="input_confirmPassword">Confirm：</string>
+    <string name="button_save">Save</string>
     <string name="button_back">Back</string>
+
+    <string name="text_registerTitle">New User</string>
+
     <string name="nullData">null</string>
-    <string name="homepage">Homepage</string>
-    <string name="setting">Setting</string>
+
+    <string name="title_homepage">Homepage</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_todayRecipe">Today Recipe</string>
+    <string name="title_weekRecipe">Week Recipe</string>
+    <string name="title_myInformation">My Information</string>
+    <string name="title_breakfast">Breakfast</string>
+    <string name="title_lunch">Lunch</string>
+    <string name="title_dinner">Dinner</string>
+
 </resources>

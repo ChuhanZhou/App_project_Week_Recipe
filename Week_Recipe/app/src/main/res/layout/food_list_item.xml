@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/background_1"
+        android:foreground="@drawable/ripple_foreground"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop">
+
+        <ImageView
+            android:id="@+id/item_recipeList_foodImage"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/background_1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_action_food" />
+
+        <TextView
+            android:id="@+id/item_recipeList_foodName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="90dp"
+            android:background="@color/textView_Background1"
+            android:textColor="@color/textView_Text1"
+            android:gravity="center"
+            android:text="@string/nullData"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry" />
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

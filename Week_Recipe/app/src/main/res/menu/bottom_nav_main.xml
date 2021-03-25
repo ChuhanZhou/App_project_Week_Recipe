@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_todayRecipeFragment"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="@string/title_todayRecipe" />
+    <item
+        android:id="@+id/nav_weekRecipeFragment"
+        android:icon="@android:drawable/ic_menu_week"
+        android:title="@string/title_weekRecipe" />
+    <item
+        android:id="@+id/nav_userInformationFragment"
+        android:icon="@drawable/ic_action_user_info"
+        android:title="@string/title_myInformation" />
+</menu>

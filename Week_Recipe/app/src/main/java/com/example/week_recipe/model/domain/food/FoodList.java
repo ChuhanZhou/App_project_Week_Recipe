@@ -42,6 +42,15 @@ public class FoodList {
         return null;
     }
 
+    public Food getByIndex(int index)
+    {
+        if (index>=0&&index<foodList.size())
+        {
+            return foodList.get(index);
+        }
+        return null;
+    }
+
     public FoodList getByType(FoodType foodType)
     {
         FoodList searchList = new FoodList();

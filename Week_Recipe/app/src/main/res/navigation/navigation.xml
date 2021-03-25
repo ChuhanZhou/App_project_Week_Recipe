@@ -3,16 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homePageMainFragment">
+    app:startDestination="@id/nav_todayRecipeFragment">
 
     <fragment
-        android:id="@+id/homePageMainFragment"
-        android:name="com.example.login.HomePageMainFragment"
-        android:label="fragment_homepage_main"
-        tools:layout="@layout/fragment_homepage_main" />
+        android:id="@+id/nav_todayRecipeFragment"
+        android:name="com.example.week_recipe.DailyRecipeFragment"
+        android:label="@string/title_todayRecipe"
+        tools:layout="@layout/fragment_daily_recipe" />
     <fragment
-        android:id="@+id/homePageSecondFragment"
-        android:name="com.example.login.HomePageSecondFragment"
-        android:label="fragment_homepage_second"
-        tools:layout="@layout/fragment_homepage_second" />
+        android:id="@+id/nav_foodListFragment"
+        android:name="com.example.week_recipe.FoodListFragment"
+        android:label="@string/title_breakfast"
+        tools:layout="@layout/fragment_food_list" />
+    <fragment
+        android:id="@+id/nav_userInformationFragment"
+        android:name="com.example.week_recipe.UserInformationFragment"
+        android:label="@string/title_myInformation"
+        tools:layout="@layout/fragment_user_information" />
+    <fragment
+        android:id="@+id/nav_settingsFragment"
+        android:name="com.example.week_recipe.SettingsFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

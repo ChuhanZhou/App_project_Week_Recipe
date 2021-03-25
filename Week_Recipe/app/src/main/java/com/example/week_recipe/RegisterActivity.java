@@ -25,8 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
         setContentView(R.layout.activity_register);
+        init();
         bind();
         setListener();
     }
@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (result==null)
         {
             Intent intent = new Intent();
-            intent.putExtra("account",accountEditText.getText().toString());
+            intent.putExtra("email",accountEditText.getText().toString());
             intent.putExtra("password",passwordEditText.getText().toString());
             setResult(1,intent);
             finish();

@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/homePage_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/homepage_constraintLayout"
     tools:context=".HomePageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,9 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/homepage">
-
-
+            app:title="@string/title_homepage">
         </com.google.android.material.appbar.MaterialToolbar>
 
         <fragment
@@ -30,24 +28,30 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/homePage_background2"
+            app:layout_constraintBottom_toTopOf="@+id/homePage_bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/homePage_toolbar"
             app:navGraph="@navigation/navigation" />
 
-        <ImageView
-            android:id="@+id/homePage_background2"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/homePage_bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="#ecfcf1"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.125"
-            app:layout_constraintStart_toStartOf="parent"/>
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_main">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/homePage_navigationDrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_drawer_header"
+        app:menu="@menu/navigation_drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

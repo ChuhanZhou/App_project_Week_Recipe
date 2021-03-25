@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/data">
+        <item
+            android:id="@+id/nav_todayRecipeFragment"
+            android:icon="@drawable/ic_action_home"
+            android:title="@string/title_homepage" />
+    </group>
+    <group
+        android:id="@+id/other">
+        <item
+            android:id="@+id/nav_settingsFragment"
+            android:icon="@drawable/ic_action_settings"
+            android:title="@string/title_setting" />
+    </group>
+
+</menu>

@@ -11,7 +11,7 @@
         android:id="@+id/register_background1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#ecfcf1"
+        android:background="@color/background_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.2"
@@ -60,14 +60,15 @@
         android:id="@+id/register_EditText_accountNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:maxLength="50"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/register_accountText"
         app:layout_constraintStart_toEndOf="@+id/register_accountText"
         app:layout_constraintTop_toTopOf="@+id/register_accountText"
-        android:autofillHints="Account Number"  />
+        android:autofillHints="Account Number"
+        tools:ignore="TextFields" />
 
     <TextView
         android:id="@+id/register_passwordText"

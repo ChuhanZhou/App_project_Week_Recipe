@@ -23,13 +23,14 @@ public class UserDataList {
             if (!hasUserData(newUserData.getEmail()))
             {
                 userDataList.add(newUserData);
+                return null;
             }
             return "This email is used!";
         }
         return "Can't input null";
     }
 
-    private UserData getByEmail(String email)
+    public UserData getByEmail(String email)
     {
         for(int i=0;i<userDataList.size();i++)
         {

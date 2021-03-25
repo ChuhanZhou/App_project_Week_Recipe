@@ -33,10 +33,10 @@ public class LoginActivity extends AppCompatActivity {
         bind();
         setListener();
 
-        //loginModel.register("0","0");
-        //accountEditText.setText("0");
-        //passwordEditText.setText("0");
-        //clickLoginButton();
+        loginModel.register("Email@gmail.com","0");
+        accountEditText.setText("Email@gmail.com");
+        passwordEditText.setText("0");
+        clickLoginButton();
 
         //System.out.println(userPicture.getDrawable().g.toString());
 
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 1 && resultCode == 1)
         {
-            accountEditText.setText(data.getExtras().getString("account"));
+            accountEditText.setText(data.getExtras().getString("email"));
             passwordEditText.setText(data.getExtras().getString("password"));
             clickLoginButton();
         }
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             Intent intent = new Intent(context,HomePageActivity.class);
             startActivity(intent);
-            intent.putExtra("account",Integer.parseInt(accountEditText.getText().toString()));
+            intent.putExtra("email",accountEditText.getText().toString());
             finish();
         }
         else

@@ -11,7 +11,7 @@
         android:id="@+id/login_background1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#ecfcf1"
+        android:background="@color/background_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.4"
@@ -31,18 +31,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/login_userPicture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/user_picture_background"
-        android:padding="3dp"
-        android:src="@drawable/ic_launcher_foreground"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/login_userPictureCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#888888"
+        app:cardCornerRadius="100dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/login_background1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_background1"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat">
+        <ImageView
+            android:id="@+id/login_userPicture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_launcher_foreground"
+            android:src="@drawable/user_picture_background"/>
+    </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/login_accountText"
@@ -75,7 +83,7 @@
         android:id="@+id/login_accountEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:maxLength="50"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.5"
