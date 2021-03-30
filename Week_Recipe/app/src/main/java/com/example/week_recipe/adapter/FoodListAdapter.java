@@ -1,8 +1,15 @@
 package com.example.week_recipe.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,6 +75,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         ImageView more;
         ImageView delete;
         CardView cardView;
+        CardView deleteCardView;
 
         ViewHolder(View itemView)
         {
@@ -77,7 +85,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             more = itemView.findViewById(R.id.item_recipeList_more);
             delete = itemView.findViewById(R.id.item_recipeList_delete);
             cardView = itemView.findViewById(R.id.item_recipeList_cardView);
-            delete.setVisibility(View.GONE);
+            deleteCardView = itemView.findViewById(R.id.item_recipeList_deleteCardView);
+            deleteCardView.setVisibility(View.GONE);
 
             foodImage.setOnClickListener(this);
             more.setOnClickListener(this);
@@ -92,19 +101,20 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             }
             else if (v.equals(more))
             {
-                switch (delete.getVisibility()) {
+                switch (deleteCardView.getVisibility()) {
                     case View.GONE:
-                        delete.setVisibility(View.VISIBLE);
+                        showMore(getItemView(getAdapterPosition()),0.125);
+                        //deleteCardView.setVisibility(View.VISIBLE);
                         break;
                     case View.VISIBLE:
-                        delete.setVisibility(View.GONE);
+                        hideMore(getItemView(getAdapterPosition()),0.125);
                         break;
                 }
                 for (int x=0;x<itemViewList.size();x++)
                 {
                     if (x!=getAdapterPosition())
                     {
-                        itemViewList.get(x).findViewById(R.id.item_recipeList_delete).setVisibility(View.GONE);
+                        hideMore(itemViewList.get(x),0.125);
                     }
                 }
             }
@@ -114,6 +124,55 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             }
         }
     }
+
+    private void showMore(View itemView,double second)
+    {
+        CardView deleteCardView = itemView.findViewById(R.id.item_recipeList_deleteCardView);
+        if (deleteCardView.getVisibility()!=View.VISIBLE)
+        {
+            TranslateAnimation translateAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            translateAnimation.setDuration((long) (second*1000));
+
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+            alphaAnimation.setDuration((long) (second*1000));
+
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(translateAnimation);
+            animationSet.addAnimation(alphaAnimation);
+
+            deleteCardView.setAnimation(animationSet);
+            deleteCardView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideMore(View itemView,double second)
+    {
+        CardView deleteCardView = itemView.findViewById(R.id.item_recipeList_deleteCardView);
+        if (deleteCardView.getVisibility()!=View.GONE)
+        {
+            TranslateAnimation translateAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            translateAnimation.setDuration((long) (second*1000));
+
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
+            alphaAnimation.setDuration((long) (second*1000));
+
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(translateAnimation);
+            animationSet.addAnimation(alphaAnimation);
+
+            deleteCardView.setAnimation(animationSet);
+            deleteCardView.setVisibility(View.GONE);
+        }
+    }
+
 
     public interface OnFoodListItemClickListener {
         void onFoodImageClick(int clickedItemIndex);
