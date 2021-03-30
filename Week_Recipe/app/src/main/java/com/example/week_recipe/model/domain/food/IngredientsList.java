@@ -1,5 +1,8 @@
 package com.example.week_recipe.model.domain.food;
 
+import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.example.week_recipe.utility.MyString;
+
 import java.util.ArrayList;
 
 public class IngredientsList {
@@ -13,6 +16,11 @@ public class IngredientsList {
     private boolean hasIngredients(Ingredients ingredients)
     {
         return getByName(ingredients.getName())!=null;
+    }
+
+    public boolean isEmpty()
+    {
+        return ingredientsList.isEmpty();
     }
 
     public String add(Ingredients ingredients)
@@ -37,6 +45,28 @@ public class IngredientsList {
             {
                 return ingredientsList.get(x);
             }
+        }
+        return null;
+    }
+
+    public IngredientsList getListByName(String name)
+    {
+        IngredientsList searchList = new IngredientsList();
+        for (int x=0;x<ingredientsList.size();x++)
+        {
+            if (MyString.haveOrInside(name,ingredientsList.get(x).getName()))
+            {
+                searchList.add(ingredientsList.get(x));
+            }
+        }
+        return searchList;
+    }
+
+    public Ingredients getByIndex(int index)
+    {
+        if (index>=0&&index<ingredientsList.size())
+        {
+            return ingredientsList.get(index);
         }
         return null;
     }

@@ -7,7 +7,7 @@
     android:layout_height="130dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/item_recipeList_cardView"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginTop="5dp"
@@ -15,9 +15,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="@color/background_1"
-        android:foreground="@drawable/ripple_foreground"
-        android:clickable="true"
-        android:focusable="true"
         app:cardCornerRadius="25dp"
         app:cardElevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,27 +22,70 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="lollipop">
 
-        <ImageView
-            android:id="@+id/item_recipeList_foodImage"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="@color/background_1"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_action_food" />
 
-        <TextView
-            android:id="@+id/item_recipeList_foodName"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="90dp"
-            android:background="@color/textView_Background1"
-            android:textColor="@color/textView_Text1"
-            android:gravity="center"
-            android:text="@string/nullData"
-            android:textSize="20sp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            tools:ignore="RtlSymmetry" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/item_recipeList_foodImage"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/background_1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_action_food"
+                android:foreground="@drawable/ripple_foreground"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_recipeList_foodName"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/textView_Background1"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/nullData"
+                android:textColor="@color/textView_Text1"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageView
+                android:id="@+id/item_recipeList_delete"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="#FF0000"
+                android:src="@drawable/ic_button_delete"
+                android:foreground="@drawable/ripple_foreground"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recipeList_foodImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/item_recipeList_more"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_foreground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_button_more"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

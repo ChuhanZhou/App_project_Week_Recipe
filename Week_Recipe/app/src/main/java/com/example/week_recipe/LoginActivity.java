@@ -37,14 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         accountEditText.setText("Email@gmail.com");
         passwordEditText.setText("0");
         clickLoginButton();
-
-        //System.out.println(userPicture.getDrawable().g.toString());
-
-        //Resources resources = this.getBaseContext().getResources();
-        //userPicture.setImageDrawable(resources.getDrawable(R.drawable.user_picture));
-
-        //Bitmap bitmap = ((BitmapDrawable)userPicture.getDrawable()).getBitmap();
-        //userPicture.setImageBitmap(TransformPicture.getRoundedCornerBitmap(bitmap));
     }
 
     @Override

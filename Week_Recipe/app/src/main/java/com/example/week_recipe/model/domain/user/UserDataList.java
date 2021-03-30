@@ -1,5 +1,8 @@
 package com.example.week_recipe.model.domain.user;
 
+import com.example.week_recipe.model.domain.food.IngredientsList;
+import com.example.week_recipe.utility.MyString;
+
 import java.util.ArrayList;
 
 public class UserDataList {
@@ -40,6 +43,19 @@ public class UserDataList {
             }
         }
         return null;
+    }
+
+    public UserDataList getByUserName(String userName)
+    {
+        UserDataList searchList = new UserDataList();
+        for (int x=0;x<userDataList.size();x++)
+        {
+            if (MyString.haveOrInside(userName,userDataList.get(x).getUserName()))
+            {
+                searchList.add(userDataList.get(x));
+            }
+        }
+        return searchList;
     }
 
     public void remove(UserData userData)

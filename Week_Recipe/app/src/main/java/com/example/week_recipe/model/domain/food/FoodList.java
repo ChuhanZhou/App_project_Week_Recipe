@@ -1,5 +1,7 @@
 package com.example.week_recipe.model.domain.food;
 
+import com.example.week_recipe.utility.MyString;
+
 import java.util.ArrayList;
 
 public class FoodList {
@@ -42,6 +44,19 @@ public class FoodList {
         return null;
     }
 
+    public FoodList getListByName(String name)
+    {
+        FoodList searchList = new FoodList();
+        for (int x=0;x<foodList.size();x++)
+        {
+            if (MyString.haveOrInside(name,foodList.get(x).getName()))
+            {
+                searchList.add(foodList.get(x));
+            }
+        }
+        return searchList;
+    }
+
     public Food getByIndex(int index)
     {
         if (index>=0&&index<foodList.size())
@@ -66,22 +81,26 @@ public class FoodList {
 
     public String update(Food oldFood,Food newFood)
     {
-        if (hasFood(oldFood))
+        if (oldFood!=null&&newFood!=null)
         {
-            if (!hasFood(newFood)||oldFood.getName().equals(newFood.getName()))
+            if (hasFood(oldFood))
             {
-                for (int x=0;x<foodList.size();x++)
+                if (!hasFood(newFood)||oldFood.getName().equals(newFood.getName()))
                 {
-                    if (foodList.get(x).getName().equals(oldFood.getName()))
+                    for (int x=0;x<foodList.size();x++)
                     {
-                        foodList.set(x,newFood);
-                        return null;
+                        if (foodList.get(x).getName().equals(oldFood.getName()))
+                        {
+                            foodList.set(x,newFood);
+                            return null;
+                        }
                     }
                 }
+                return "The new food name [" + newFood.getName() + "] is used";
             }
-            return "The new food name [" + newFood.getName() + "] is used";
+            return "Can't find old food [" + oldFood.getName() + "]";
         }
-        return "Can't find old food [" + oldFood.getName() + "]";
+        return "Input null!";
     }
 
     public void remove(Food food)
@@ -94,6 +113,11 @@ public class FoodList {
                 break;
             }
         }
+    }
+
+    public void remove(int index)
+    {
+        foodList.remove(index);
     }
 
     public FoodList copy()

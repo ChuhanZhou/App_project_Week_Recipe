@@ -5,6 +5,9 @@
     <string name="input_password">Password:</string>
     <string name="input_confirmPassword">Confirm：</string>
     <string name="input_UserName">User Name:</string>
+    <string name="input_FoodName">Food Name:</string>
+    <string name="input_FoodType">Food Type:</string>
+    <string name="input_FoodIngredients">Food Ingredients:</string>
 
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
@@ -12,6 +15,12 @@
     <string name="button_back">Back</string>
 
     <string name="text_registerTitle">New User</string>
+    <string name="text_noFood">No food now</string>
+    <string name="text_noIngredient">No Ingredient</string>
+
+    <string name="foodType_meat">Meat</string>
+    <string name="foodType_vegetarian">Vegetarian</string>
+    <string name="foodType_other">Other</string>
 
     <string name="nullData">null</string>
 
@@ -23,5 +32,7 @@
     <string name="title_breakfast">Breakfast</string>
     <string name="title_lunch">Lunch</string>
     <string name="title_dinner">Dinner</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

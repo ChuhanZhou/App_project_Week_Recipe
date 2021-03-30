@@ -7,6 +7,11 @@
 
     <fragment
         android:id="@+id/nav_todayRecipeFragment"
+        android:name="com.example.week_recipe.RecipeWithDateFragment"
+        android:label="@string/title_todayRecipe"
+        tools:layout="@layout/fragment_recipe_with_date" />
+    <fragment
+        android:id="@+id/nav_dailyRecipeFragment"
         android:name="com.example.week_recipe.DailyRecipeFragment"
         android:label="@string/title_todayRecipe"
         tools:layout="@layout/fragment_daily_recipe" />

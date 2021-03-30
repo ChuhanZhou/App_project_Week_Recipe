@@ -3,12 +3,14 @@ package com.example.week_recipe;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.week_recipe.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.Food;
@@ -16,34 +18,58 @@ import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 
-public class FoodListFragment extends Fragment {
+public class FoodListFragment extends Fragment implements FoodListAdapter.OnFoodListItemClickListener{
+
+    private View view;
+    private TextView noDataTextView;
+    private FoodList foodList;
+    private FoodListAdapter foodListAdapter;
+    private RecyclerView foodListView;
+    private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_food_list, container, false);
-        FoodList foodList = new FoodList();
-        foodList.add(new Food("鸡汤", FoodType.Meat,new IngredientsList(),R.drawable.jitang_picture));
-        foodList.add(new Food("西红柿蛋汤", FoodType.Vegetarian,new IngredientsList()));
-        foodList.add(new Food("红烧牛肉", FoodType.Meat,new IngredientsList(),R.drawable.ic_action_settings));
-        foodList.add(new Food("炒青菜", FoodType.Vegetarian,new IngredientsList(),R.drawable.user_picture));
-        foodList.add(new Food("水煮白菜", FoodType.Vegetarian,new IngredientsList(),R.drawable.ic_action_home));
-        foodList.add(new Food("麻婆豆腐", FoodType.Vegetarian,new IngredientsList(),R.drawable.ic_action_user_info));
-        bind(view,foodList);
+        view = inflater.inflate(R.layout.fragment_food_list, container, false);
         return view;
     }
 
-    public static void bind(View view,FoodList foodList)
+    public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener)
     {
-        RecyclerView foodListView;
-        FoodListAdapter foodListAdapter;
-        foodListView = view.findViewById(R.id.fragment_todayRecipe_recyclerView);
+        this.foodList = foodList;
+        onFoodListItemClickListener = listener;
+        foodListView = view.findViewById(R.id.fragment_foodList_recyclerView);
+        foodListAdapter = new FoodListAdapter(this.foodList,this);
+        noDataTextView = view.findViewById(R.id.fragment_foodList_noDataTextView);
+
+        setNoDataTextViewVisibility();
+
         foodListView.hasFixedSize();
         foodListView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        foodListAdapter = new FoodListAdapter(foodList);
         foodListView.setAdapter(foodListAdapter);
+    }
 
+    private void setNoDataTextViewVisibility()
+    {
+        if (foodList==null||foodList.getSize()==0)
+        {
+            noDataTextView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            noDataTextView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onFoodImageClick(int clickedItemIndex) {
+        onFoodListItemClickListener.onFoodImageClick(clickedItemIndex);
+    }
+
+    @Override
+    public void onDeleteClick(int clickedItemIndex) {
+        onFoodListItemClickListener.onDeleteClick(clickedItemIndex);
     }
 }

@@ -1,64 +1,100 @@
 package com.example.week_recipe;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DailyRecipeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.week_recipe.adapter.FoodListAdapter;
+import com.example.week_recipe.model.domain.food.Food;
+import com.example.week_recipe.model.domain.food.FoodList;
+import com.example.week_recipe.model.domain.food.FoodType;
+import com.example.week_recipe.model.domain.food.IngredientsList;
+import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.google.android.material.tabs.TabLayout;
+
+import java.time.LocalDate;
+
 public class DailyRecipeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    @SuppressLint("StaticFieldLeak")
+    private View view;
+    private View fragmentView;
+    private TabLayout tabLayout;
+    private DailyRecipe dailyRecipe;
+    private int tabPosition = 0;
+    private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DailyRecipeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DailyRecipeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DailyRecipeFragment newInstance(String param1, String param2) {
-        DailyRecipeFragment fragment = new DailyRecipeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daily_recipe, container, false);
+        view = inflater.inflate(R.layout.fragment_daily_recipe, container, false);
+        return view;
+    }
+
+    public void bind(DailyRecipe dailyRecipe, FoodListAdapter.OnFoodListItemClickListener listener)
+    {
+        onFoodListItemClickListener = listener;
+        fragmentView = view.findViewById(R.id.fragment_dailyRecipe_fragment);
+        tabLayout = view.findViewById(R.id.fragment_dailyRecipe_tabLayout);
+        this.dailyRecipe = dailyRecipe;
+
+        tabLayout.selectTab(tabLayout.getTabAt(tabPosition));
+        updateFragment();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tabPosition = tabLayout.getSelectedTabPosition();
+                updateFragment();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void updateFragment()
+    {
+        FoodListFragment fragment = FragmentManager.findFragment(fragmentView);
+        if (dailyRecipe!=null)
+        {
+            switch (tabPosition)
+            {
+                case 0:
+                    fragment.bind(dailyRecipe.getBreakfast(),onFoodListItemClickListener);
+                    break;
+                case 1:
+                    fragment.bind(dailyRecipe.getLunch(),onFoodListItemClickListener);
+                    break;
+                case 2:
+                    fragment.bind(dailyRecipe.getDinner(),onFoodListItemClickListener);
+                    break;
+            }
+        }
+        else
+        {
+            fragment.bind(null,onFoodListItemClickListener);
+        }
+    }
+
+    public int getTabPosition() {
+        return tabPosition;
     }
 }
