@@ -66,7 +66,6 @@ public class FoodInformationFragment extends Fragment {
         }
         else
         {
-            System.out.println(1);
             foodIngredientsTextView.setText(R.string.text_noIngredient);
         }
     }

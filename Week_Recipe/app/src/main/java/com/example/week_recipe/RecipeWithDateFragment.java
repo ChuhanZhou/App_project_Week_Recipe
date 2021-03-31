@@ -146,4 +146,9 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
         viewModel.deleteFood(fragment.getTabPosition(),clickedItemIndex);
     }
+
+    @Override
+    public void onLikeClick(int clickedItemIndex) {
+
+    }
 }

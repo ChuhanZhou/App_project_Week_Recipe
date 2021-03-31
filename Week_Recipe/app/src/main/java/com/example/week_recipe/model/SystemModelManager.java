@@ -109,13 +109,90 @@ public class SystemModelManager implements SystemModel{
     }
 
     @Override
-    public String addFavoriteFood(Food favoriteFood) {
-        return userData.getFavoriteFoodList().add(favoriteFood);
+    public String updateFood(Food oldFood, Food newFood) {
+        String result = null;
+        //update food in favourite food list
+        if (userData.getFavoriteFoodList().hasFood(oldFood))
+        {
+            result = userData.getFavoriteFoodList().update(oldFood, newFood);
+        }
+        if (result!=null)
+        {
+            return result;
+        }
+        //update food in my daily recipe list
+        for (int x=0;x<userData.getMyDailyRecipeList().getSize();x++)
+        {
+            //breakfast
+            if (userData.getMyDailyRecipeList().getByIndex(x).getBreakfast().hasFood(oldFood))
+            {
+                result = userData.getMyDailyRecipeList().getByIndex(x).getBreakfast().update(oldFood, newFood);
+            }
+            if (result!=null)
+            {
+                return result;
+            }
+            //lunch
+            if (userData.getMyDailyRecipeList().getByIndex(x).getLunch().hasFood(oldFood))
+            {
+                result = userData.getMyDailyRecipeList().getByIndex(x).getLunch().update(oldFood, newFood);
+            }
+            if (result!=null)
+            {
+                return result;
+            }
+            //dinner
+            if (userData.getMyDailyRecipeList().getByIndex(x).getDinner().hasFood(oldFood))
+            {
+                result = userData.getMyDailyRecipeList().getByIndex(x).getDinner().update(oldFood, newFood);
+            }
+            if (result!=null)
+            {
+                return result;
+            }
+        }
+        //update food in favorite week recipe list
+        for (int i=0;i<userData.getFavoriteWeekRecipeList().size();i++)
+        {
+            RecipeList recipeList = userData.getFavoriteWeekRecipeByIndex(i);
+            for (int x=0;x<recipeList.getSize();x++)
+            {
+                //breakfast
+                if (recipeList.getByIndex(x).getBreakfast().hasFood(oldFood))
+                {
+                    result = recipeList.getByIndex(x).getBreakfast().update(oldFood, newFood);
+                }
+                if (result!=null)
+                {
+                    return result;
+                }
+                //lunch
+                if (recipeList.getByIndex(x).getLunch().hasFood(oldFood))
+                {
+                    result = recipeList.getByIndex(x).getLunch().update(oldFood, newFood);
+                }
+                if (result!=null)
+                {
+                    return result;
+                }
+                //dinner
+                if (recipeList.getByIndex(x).getDinner().hasFood(oldFood))
+                {
+                    result = recipeList.getByIndex(x).getDinner().update(oldFood, newFood);
+                }
+                if (result!=null)
+                {
+                    return result;
+                }
+            }
+        }
+        property.firePropertyChange("updateFood",oldFood,newFood);
+        return null;
     }
 
     @Override
-    public String updateFavoriteFood(Food oldFavoriteFood,Food newFavoriteFood) {
-        return userData.getFavoriteFoodList().update(oldFavoriteFood, newFavoriteFood);
+    public String addFavoriteFood(Food favoriteFood) {
+        return userData.getFavoriteFoodList().add(favoriteFood);
     }
 
     @Override

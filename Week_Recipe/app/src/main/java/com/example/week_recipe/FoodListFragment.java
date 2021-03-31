@@ -18,14 +18,14 @@ import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 
-public class FoodListFragment extends Fragment implements FoodListAdapter.OnFoodListItemClickListener{
+public class FoodListFragment extends Fragment{
 
     private View view;
     private TextView noDataTextView;
     private FoodList foodList;
     private FoodListAdapter foodListAdapter;
     private RecyclerView foodListView;
-    private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
+    //private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,9 +38,8 @@ public class FoodListFragment extends Fragment implements FoodListAdapter.OnFood
     public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener)
     {
         this.foodList = foodList;
-        onFoodListItemClickListener = listener;
         foodListView = view.findViewById(R.id.fragment_foodList_recyclerView);
-        foodListAdapter = new FoodListAdapter(this.foodList,this);
+        foodListAdapter = new FoodListAdapter(this.foodList,listener);
         noDataTextView = view.findViewById(R.id.fragment_foodList_noDataTextView);
 
         setNoDataTextViewVisibility();
@@ -63,13 +62,18 @@ public class FoodListFragment extends Fragment implements FoodListAdapter.OnFood
         }
     }
 
-    @Override
-    public void onFoodImageClick(int clickedItemIndex) {
-        onFoodListItemClickListener.onFoodImageClick(clickedItemIndex);
-    }
-
-    @Override
-    public void onDeleteClick(int clickedItemIndex) {
-        onFoodListItemClickListener.onDeleteClick(clickedItemIndex);
-    }
+    //@Override
+    //public void onFoodImageClick(int clickedItemIndex) {
+    //    onFoodListItemClickListener.onFoodImageClick(clickedItemIndex);
+    //}
+//
+    //@Override
+    //public void onDeleteClick(int clickedItemIndex) {
+    //    onFoodListItemClickListener.onDeleteClick(clickedItemIndex);
+    //}
+//
+    //@Override
+    //public void onLikeClick(int clickedItemIndex) {
+    //
+    //}
 }

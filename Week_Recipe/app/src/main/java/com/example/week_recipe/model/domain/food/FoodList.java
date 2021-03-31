@@ -13,7 +13,7 @@ public class FoodList {
         foodList = new ArrayList<>();
     }
 
-    private boolean hasFood(Food food)
+    public boolean hasFood(Food food)
     {
         return getByName(food.getName())!=null;
     }
