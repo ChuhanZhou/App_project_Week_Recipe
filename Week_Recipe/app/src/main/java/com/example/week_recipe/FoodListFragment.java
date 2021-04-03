@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +27,6 @@ public class FoodListFragment extends Fragment{
     private FoodList foodList;
     private FoodListAdapter foodListAdapter;
     private RecyclerView foodListView;
-    //private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,11 +36,11 @@ public class FoodListFragment extends Fragment{
         return view;
     }
 
-    public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener)
+    public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
         this.foodList = foodList;
         foodListView = view.findViewById(R.id.fragment_foodList_recyclerView);
-        foodListAdapter = new FoodListAdapter(this.foodList,listener);
+        foodListAdapter = new FoodListAdapter(this.foodList,listener,hasMore,hasDelete,hasLike,favouriteFoodList.getValue());
         noDataTextView = view.findViewById(R.id.fragment_foodList_noDataTextView);
 
         setNoDataTextViewVisibility();
@@ -48,6 +49,7 @@ public class FoodListFragment extends Fragment{
         foodListView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         foodListView.setAdapter(foodListAdapter);
+        addListener(favouriteFoodList);
     }
 
     private void setNoDataTextViewVisibility()
@@ -62,18 +64,16 @@ public class FoodListFragment extends Fragment{
         }
     }
 
-    //@Override
-    //public void onFoodImageClick(int clickedItemIndex) {
-    //    onFoodListItemClickListener.onFoodImageClick(clickedItemIndex);
-    //}
-//
-    //@Override
-    //public void onDeleteClick(int clickedItemIndex) {
-    //    onFoodListItemClickListener.onDeleteClick(clickedItemIndex);
-    //}
-//
-    //@Override
-    //public void onLikeClick(int clickedItemIndex) {
-    //
-    //}
+    private void addListener(LiveData<FoodList> favouriteFoodList)
+    {
+        if (favouriteFoodList!=null)
+        {
+            favouriteFoodList.observe(this, new Observer<FoodList>() {
+                @Override
+                public void onChanged(FoodList foodList) {
+                    foodListAdapter.updateLike(foodList);
+                }
+            });
+        }
+    }
 }

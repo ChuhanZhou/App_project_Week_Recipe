@@ -40,7 +40,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     private RecipeWithDateViewModel viewModel;
     private TabLayout tabLayout;
     private View fragmentView;
-    private RecyclerView foodListRecyclerView;
+    //private RecyclerView foodListRecyclerView;
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -64,9 +64,9 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         View view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
         fragmentView = view.findViewById(R.id.fragment_recipeWithDate_fragment);
         tabLayout = view.findViewById(R.id.fragment_recipeWithDate_tabLayout);
-        foodListRecyclerView = view.findViewById(R.id.fragment_foodList_recyclerView);
 
         tabLayout.selectTab(tabLayout.getTabAt(1));
+        viewModel = new ViewModelProvider(this).get(RecipeWithDateViewModel.class);
         bind();
         return view;
     }
@@ -75,7 +75,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     private void bind()
     {
         DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
-        viewModel = new ViewModelProvider(this).get(RecipeWithDateViewModel.class);
+
         viewModel.getShowDateText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -85,7 +85,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         viewModel.getShowRecipe().observe(this, new Observer<DailyRecipe>() {
             @Override
             public void onChanged(DailyRecipe dailyRecipe) {
-                fragment.bind(dailyRecipe,RecipeWithDateFragment.this);
+                fragment.bind(dailyRecipe,RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
             }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -149,6 +149,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
     @Override
     public void onLikeClick(int clickedItemIndex) {
-
+        DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
+        viewModel.changeLikeState(fragment.getTabPosition(),clickedItemIndex);
     }
 }

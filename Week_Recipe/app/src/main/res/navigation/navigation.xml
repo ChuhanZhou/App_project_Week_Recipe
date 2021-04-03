@@ -30,4 +30,9 @@
         android:name="com.example.week_recipe.SettingsFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/foodInformationFragment"
+        android:name="com.example.week_recipe.FoodInformationFragment"
+        android:label="fragment_food_information"
+        tools:layout="@layout/fragment_food_information" />
 </navigation>

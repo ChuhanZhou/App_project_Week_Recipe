@@ -16,4 +16,6 @@
     <color name="imageBackground">#ecfcf1</color>
     <color name="textView_Background1">#888888</color>
     <color name="textView_Text1">#ffffff</color>
+    <color name="like_yellow">#FFEB3B</color>
+    <color name="like_white">#FFFFFF</color>
 </resources>

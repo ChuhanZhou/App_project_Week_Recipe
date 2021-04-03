@@ -120,7 +120,7 @@ public class RecipeList {
         RecipeList copy = new RecipeList();
         for (int x=0;x<recipeList.size();x++)
         {
-            copy.add(recipeList.get(x));
+            copy.add(recipeList.get(x).copy());
         }
         return copy;
     }

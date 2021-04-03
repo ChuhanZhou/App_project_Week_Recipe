@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ public class DailyRecipeFragment extends Fragment {
         return view;
     }
 
-    public void bind(DailyRecipe dailyRecipe, FoodListAdapter.OnFoodListItemClickListener listener)
+    public void bind(DailyRecipe dailyRecipe, FoodListAdapter.OnFoodListItemClickListener listener, LiveData<FoodList> favouriteFoodList)
     {
         onFoodListItemClickListener = listener;
         fragmentView = view.findViewById(R.id.fragment_dailyRecipe_fragment);
@@ -49,13 +50,13 @@ public class DailyRecipeFragment extends Fragment {
         this.dailyRecipe = dailyRecipe;
 
         tabLayout.selectTab(tabLayout.getTabAt(tabPosition));
-        updateFragment();
+        updateFragment(favouriteFoodList);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tabPosition = tabLayout.getSelectedTabPosition();
-                updateFragment();
+                updateFragment(favouriteFoodList);
             }
 
             @Override
@@ -70,7 +71,7 @@ public class DailyRecipeFragment extends Fragment {
         });
     }
 
-    private void updateFragment()
+    private void updateFragment(LiveData<FoodList> favouriteFoodList)
     {
         FoodListFragment fragment = FragmentManager.findFragment(fragmentView);
         if (dailyRecipe!=null)
@@ -78,19 +79,19 @@ public class DailyRecipeFragment extends Fragment {
             switch (tabPosition)
             {
                 case 0:
-                    fragment.bind(dailyRecipe.getBreakfast(),onFoodListItemClickListener);
+                    fragment.bind(dailyRecipe.getBreakfast(),onFoodListItemClickListener,true,true,true,favouriteFoodList);
                     break;
                 case 1:
-                    fragment.bind(dailyRecipe.getLunch(),onFoodListItemClickListener);
+                    fragment.bind(dailyRecipe.getLunch(),onFoodListItemClickListener,true,true,true,favouriteFoodList);
                     break;
                 case 2:
-                    fragment.bind(dailyRecipe.getDinner(),onFoodListItemClickListener);
+                    fragment.bind(dailyRecipe.getDinner(),onFoodListItemClickListener,true,true,true,favouriteFoodList);
                     break;
             }
         }
         else
         {
-            fragment.bind(null,onFoodListItemClickListener);
+            fragment.bind(null,onFoodListItemClickListener,true,true,true,favouriteFoodList);
         }
     }
 

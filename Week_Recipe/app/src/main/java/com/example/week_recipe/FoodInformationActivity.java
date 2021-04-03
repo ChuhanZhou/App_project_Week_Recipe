@@ -10,27 +10,52 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.week_recipe.model.domain.food.Food;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 public class FoodInformationActivity extends AppCompatActivity {
 
     private Button backButton;
-    private View fragmentView;
+    private FloatingActionButton editButton;
+    private FoodInformationFragment fragment;
+    private Food showFood;
+    private Gson gson;
+    private boolean clickEditButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_information);
+        clickEditButton = false;
+        gson = new Gson();
         bind();
         setListener();
     }
 
+    @Override
+    protected void onRestart() {
+        clickEditButton = false;
+        super.onRestart();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 2 && resultCode == 1)
+        {
+            showFood = gson.fromJson(data.getExtras().getString("updateShowFood"),Food.class);
+            fragment.bind(showFood);
+            clickEditButton = false;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void bind()
     {
-        fragmentView = findViewById(R.id.foodInformation_fragment);
+        View fragmentView = findViewById(R.id.foodInformation_fragment);
         backButton = findViewById(R.id.foodInformation_backButton);
-        FoodInformationFragment fragment = FragmentManager.findFragment(fragmentView);
-        Food showFood = new Gson().fromJson(getIntent().getExtras().getString("showFood"),Food.class);
+        editButton = findViewById(R.id.foodInformation_editFoodButton);
+        fragment = FragmentManager.findFragment(fragmentView);
+        this.showFood = gson.fromJson(getIntent().getExtras().getString("showFood"),Food.class);
         fragment.bind(showFood);
     }
 
@@ -42,10 +67,27 @@ public class FoodInformationActivity extends AppCompatActivity {
                 clickBackButton();
             }
         });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickEditButton();
+            }
+        });
     }
 
     private void clickBackButton()
     {
         finish();
+    }
+
+    private void clickEditButton()
+    {
+        if (!clickEditButton)
+        {
+            clickEditButton = true;
+            Intent intent = new Intent(getApplicationContext(),EditFoodInformationActivity.class);
+            intent.putExtra("editFood", new Gson().toJson(showFood));
+            startActivityForResult(intent,2);
+        }
     }
 }

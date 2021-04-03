@@ -25,7 +25,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="C:\Users\Think\AppData\Local\Temp\round_star_24.xml" />
-                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -83,7 +83,6 @@
                                   <option name="values">
                                     <map>
                                       <entry key="outputName" value="ic_button_star_like" />
-                                      <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="ffff00" />
                                     </map>
                                   </option>

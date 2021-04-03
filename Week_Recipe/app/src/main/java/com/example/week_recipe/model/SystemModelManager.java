@@ -109,16 +109,28 @@ public class SystemModelManager implements SystemModel{
     }
 
     @Override
-    public String updateFood(Food oldFood, Food newFood) {
-        String result = null;
+    public String updateFoodOfAll(Food oldFood, Food newFood) {
+        String result = updateFood(userData.copy(),oldFood,newFood);
+        if (result==null)
+        {
+            result = updateFood(userData,oldFood,newFood);
+            property.firePropertyChange("updateFood",oldFood,newFood);
+        }
+        return result;
+    }
+
+    private String updateFood(UserData userData,Food oldFood, Food newFood)
+    {
+        String initResult = "Can't find old food [" + oldFood.getName() + "]";
+        String result = initResult;
         //update food in favourite food list
         if (userData.getFavoriteFoodList().hasFood(oldFood))
         {
             result = userData.getFavoriteFoodList().update(oldFood, newFood);
-        }
-        if (result!=null)
-        {
-            return result;
+            if (result!=null)
+            {
+                return result;
+            }
         }
         //update food in my daily recipe list
         for (int x=0;x<userData.getMyDailyRecipeList().getSize();x++)
@@ -128,7 +140,7 @@ public class SystemModelManager implements SystemModel{
             {
                 result = userData.getMyDailyRecipeList().getByIndex(x).getBreakfast().update(oldFood, newFood);
             }
-            if (result!=null)
+            if (result!=null&&!result.equals(initResult))
             {
                 return result;
             }
@@ -137,7 +149,7 @@ public class SystemModelManager implements SystemModel{
             {
                 result = userData.getMyDailyRecipeList().getByIndex(x).getLunch().update(oldFood, newFood);
             }
-            if (result!=null)
+            if (result!=null&&!result.equals(initResult))
             {
                 return result;
             }
@@ -146,7 +158,7 @@ public class SystemModelManager implements SystemModel{
             {
                 result = userData.getMyDailyRecipeList().getByIndex(x).getDinner().update(oldFood, newFood);
             }
-            if (result!=null)
+            if (result!=null&&!result.equals(initResult))
             {
                 return result;
             }
@@ -162,7 +174,7 @@ public class SystemModelManager implements SystemModel{
                 {
                     result = recipeList.getByIndex(x).getBreakfast().update(oldFood, newFood);
                 }
-                if (result!=null)
+                if (result!=null&&!result.equals(initResult))
                 {
                     return result;
                 }
@@ -171,7 +183,7 @@ public class SystemModelManager implements SystemModel{
                 {
                     result = recipeList.getByIndex(x).getLunch().update(oldFood, newFood);
                 }
-                if (result!=null)
+                if (result!=null&&!result.equals(initResult))
                 {
                     return result;
                 }
@@ -180,24 +192,29 @@ public class SystemModelManager implements SystemModel{
                 {
                     result = recipeList.getByIndex(x).getDinner().update(oldFood, newFood);
                 }
-                if (result!=null)
+                if (result!=null&&!result.equals(initResult))
                 {
                     return result;
                 }
             }
         }
-        property.firePropertyChange("updateFood",oldFood,newFood);
-        return null;
+        return result;
     }
 
     @Override
     public String addFavoriteFood(Food favoriteFood) {
-        return userData.getFavoriteFoodList().add(favoriteFood);
+        String result = userData.getFavoriteFoodList().add(favoriteFood);
+        if (result == null)
+        {
+            property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood);
+        }
+        return result;
     }
 
     @Override
     public void removeFavoriteFood(Food favoriteFood) {
         userData.getFavoriteFoodList().remove(favoriteFood);
+        property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood);
     }
 
     @Override

@@ -18,7 +18,7 @@ public interface SystemModel extends NamedPropertyChangeSubject {
     String updateDailyRecipe(DailyRecipe dailyRecipe);
     void removeDailyRecipe(DailyRecipe dailyRecipe);
 
-    String updateFood(Food oldFood,Food newFood);
+    String updateFoodOfAll(Food oldFood,Food newFood);
 
     String addFavoriteFood(Food favoriteFood);
     void removeFavoriteFood(Food favoriteFood);

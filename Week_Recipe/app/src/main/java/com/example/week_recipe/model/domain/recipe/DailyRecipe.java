@@ -11,12 +11,20 @@ public class DailyRecipe {
     private FoodList lunch;
     private FoodList dinner;
 
-    public DailyRecipe(LocalDate date,FoodList breakfast,FoodList lunch,FoodList dinner)
-    {
+    public DailyRecipe(LocalDate date, FoodList breakfast, FoodList lunch, FoodList dinner) {
         this.date = date;
-        this.breakfast = breakfast;
-        this.lunch = lunch;
-        this.dinner = dinner;
+        this.breakfast = new FoodList();
+        this.lunch = new FoodList();
+        this.dinner = new FoodList();
+        if (breakfast != null) {
+            this.breakfast = breakfast;
+        }
+        if (lunch != null) {
+            this.lunch = lunch;
+        }
+        if (dinner != null) {
+            this.dinner = dinner;
+        }
     }
 
     public LocalDate getDate() {
@@ -51,8 +59,7 @@ public class DailyRecipe {
         this.dinner = dinner;
     }
 
-    public DailyRecipe copy()
-    {
-        return new DailyRecipe(date,breakfast.copy(),lunch.copy(),dinner.copy());
+    public DailyRecipe copy() {
+        return new DailyRecipe(date, breakfast.copy(), lunch.copy(), dinner.copy());
     }
 }

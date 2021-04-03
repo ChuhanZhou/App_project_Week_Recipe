@@ -2,6 +2,7 @@ package com.example.week_recipe.adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +27,53 @@ import java.util.ArrayList;
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
 
     private final FoodList foodList;
+    private final FoodList favouriteFoodList;
     private final OnFoodListItemClickListener onFoodListItemClickListener;
-    private ArrayList<View> itemViewList;
+    private ArrayList<ViewHolder> viewHolderList;
+    private final boolean hasMore;
+    private final boolean hasDelete;
+    private final boolean hasLike;
 
-    public FoodListAdapter(FoodList foodList, OnFoodListItemClickListener listener) {
-        itemViewList = new ArrayList<>();
+    public FoodListAdapter(FoodList foodList, OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, FoodList favouriteFoodList) {
+        viewHolderList = new ArrayList<>();
         if (foodList == null) {
             this.foodList = new FoodList();
         } else {
             this.foodList = foodList;
         }
         onFoodListItemClickListener = listener;
+        this.hasMore = hasMore;
+        this.hasDelete = hasDelete;
+        this.hasLike = hasLike;
+        this.favouriteFoodList = favouriteFoodList;
+    }
+
+    public void updateLike(FoodList favouriteFoodList)
+    {
+        if (hasLike&&favouriteFoodList!=null)
+        {
+            for (int x=0;x<viewHolderList.size();x++)
+            {
+                changeLikeState( viewHolderList.get(x),favouriteFoodList.hasFood(foodList.getByIndex(x)));
+            }
+        }
+    }
+
+    private void changeLikeState(ViewHolder viewHolder,boolean isLike)
+    {
+        if (hasLike)
+        {
+            if (isLike)
+            {
+                viewHolder.like.setImageResource(R.drawable.ic_button_star_like);
+                viewHolder.like.setBackgroundResource(R.color.like_yellow);
+            }
+            else
+            {
+                viewHolder.like.setImageResource(R.drawable.ic_button_star);
+                viewHolder.like.setBackgroundResource(R.color.like_white);
+            }
+        }
     }
 
     @NonNull
@@ -44,14 +81,16 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.food_list_item, parent, false);
-        itemViewList.add(view);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+        viewHolderList.add(viewHolder);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.foodName.setText(foodList.getByIndex(position).getName());
         holder.foodImage.setImageResource(foodList.getByIndex(position).getImageId());
+        changeLikeState(holder,favouriteFoodList!=null&&favouriteFoodList.hasFood(foodList.getByIndex(position)));
     }
 
     @Override
@@ -59,19 +98,19 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         return foodList.getSize();
     }
 
-
-    public View getItemView(int position) {
-        return itemViewList.get(position);
+    public ViewHolder getItemViewHolder(int position) {
+        return viewHolderList.get(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView foodName;
-        ImageView foodImage;
-        ImageView more;
-        ImageView delete;
-        ImageView like;
-        CardView cardView;
-        CardView deleteCardView;
+        private final TextView foodName;
+        private final ImageView foodImage;
+        private final ImageView more;
+        private final ImageView delete;
+        private final ImageView like;
+        //private final CardView cardView;
+        private final CardView deleteCardView;
+        private final CardView likeCardView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -80,42 +119,72 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             more = itemView.findViewById(R.id.item_recipeList_more);
             delete = itemView.findViewById(R.id.item_recipeList_delete);
             like = itemView.findViewById(R.id.item_recipeList_like);
-            cardView = itemView.findViewById(R.id.item_recipeList_cardView);
+            //cardView = itemView.findViewById(R.id.item_recipeList_cardView);
             deleteCardView = itemView.findViewById(R.id.item_recipeList_deleteCardView);
-            deleteCardView.setVisibility(View.GONE);
-            itemView.findViewById(R.id.item_recipeList_likeCardView).setVisibility(View.GONE);
+            likeCardView = itemView.findViewById(R.id.item_recipeList_likeCardView);
 
+            deleteCardView.setVisibility(View.GONE);
+            likeCardView.setVisibility(View.GONE);
+
+            if (!hasMore) {
+                more.setVisibility(View.GONE);
+            } else {
+                more.setOnClickListener(this);
+                if (hasDelete) {
+                    delete.setOnClickListener(this);
+                }
+                if (hasLike) {
+                    like.setOnClickListener(this);
+                }
+            }
             foodImage.setOnClickListener(this);
-            more.setOnClickListener(this);
-            delete.setOnClickListener(this);
-            like.setOnClickListener(this);
+        }
+
+        private boolean isShowMore()
+        {
+            return deleteCardView.getVisibility() == View.VISIBLE || likeCardView.getVisibility() == View.VISIBLE;
         }
 
         @Override
         public void onClick(View v) {
-            if (v.equals(foodImage)) {
+            if (v.equals(foodImage))
+            {
                 onFoodListItemClickListener.onFoodImageClick(getAdapterPosition());
-            } else if (v.equals(more)) {
-                switch (deleteCardView.getVisibility()) {
-                    case View.GONE:
-                        showMore(getItemView(getAdapterPosition()).findViewById(R.id.item_recipeList_deleteCardView), delete, 0.125);
-                        showMore(getItemView(getAdapterPosition()).findViewById(R.id.item_recipeList_likeCardView), like, 0.25);
-                        break;
-                    case View.VISIBLE:
-                        hideMore(getItemView(getAdapterPosition()).findViewById(R.id.item_recipeList_deleteCardView), delete, 0.25);
-                        hideMore(getItemView(getAdapterPosition()).findViewById(R.id.item_recipeList_likeCardView), like, 0.125);
-
-                        break;
-                }
-                for (int x = 0; x < itemViewList.size(); x++) {
-                    if (x != getAdapterPosition()) {
-                        hideMore(itemViewList.get(x).findViewById(R.id.item_recipeList_deleteCardView), itemViewList.get(x).findViewById(R.id.item_recipeList_delete), 0.25);
-                        hideMore(itemViewList.get(x).findViewById(R.id.item_recipeList_likeCardView), itemViewList.get(x).findViewById(R.id.item_recipeList_like), 0.125);
+            }
+            else if (v.equals(more) && hasMore)
+            {
+                if (isShowMore()) {
+                    if (hasDelete) {
+                        hideMore(deleteCardView, delete, 0.25);
+                    }
+                    if (hasLike) {
+                        hideMore(likeCardView, like, 0.125);
+                    }
+                } else {
+                    if (hasDelete) {
+                        showMore(deleteCardView, delete, 0.125);
+                    }
+                    if (hasLike) {
+                        showMore(likeCardView, like, 0.25);
                     }
                 }
-            } else if (v.equals(delete)) {
+                for (int x = 0; x < viewHolderList.size(); x++) {
+                    if (x != getAdapterPosition()) {
+                        if (hasDelete) {
+                            hideMore(getItemViewHolder(x).deleteCardView, getItemViewHolder(x).delete, 0.25);
+                        }
+                        if (hasLike) {
+                            hideMore(getItemViewHolder(x).likeCardView, getItemViewHolder(x).like, 0.125);
+                        }
+                    }
+                }
+            }
+            else if (v.equals(delete) && hasDelete)
+            {
                 onFoodListItemClickListener.onDeleteClick(getAdapterPosition());
-            } else if (v.equals(like)) {
+            }
+            else if (v.equals(like) && hasLike)
+            {
                 onFoodListItemClickListener.onLikeClick(getAdapterPosition());
             }
         }
@@ -140,7 +209,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             animationSet.addAnimation(translateAnimation);
             animationSet.addAnimation(alphaAnimation);
 
-            insideView.setAnimation(rotateAnimation);
+            if (insideView != null) {
+                insideView.setAnimation(rotateAnimation);
+            }
 
             view.setAnimation(animationSet);
             view.setVisibility(View.VISIBLE);
@@ -150,10 +221,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     private void hideMore(View view, View insideView, double second) {
         if (view.getVisibility() != View.GONE) {
             TranslateAnimation translateAnimation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 1.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 0.0f);
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
             translateAnimation.setDuration((long) (second * 1000));
 
             AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
@@ -166,12 +237,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             animationSet.addAnimation(translateAnimation);
             animationSet.addAnimation(alphaAnimation);
 
-            insideView.setAnimation(rotateAnimation);
+            if (insideView != null) {
+                insideView.setAnimation(rotateAnimation);
+            }
+
             view.setAnimation(animationSet);
             view.setVisibility(View.GONE);
         }
     }
-
 
     public interface OnFoodListItemClickListener {
         void onFoodImageClick(int clickedItemIndex);
