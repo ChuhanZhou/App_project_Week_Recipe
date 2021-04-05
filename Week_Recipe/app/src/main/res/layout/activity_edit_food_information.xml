@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".EditFoodInformationActivity">
 
+    <fragment
+        android:id="@+id/editFoodInformation_fragment"
+        android:name="com.example.week_recipe.SetFoodInformationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_set_food_information"/>
+
     <Button
         android:id="@+id/editFoodInformation_backButton"
         android:layout_width="wrap_content"
@@ -39,5 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@
     <string name="text_registerTitle">New User</string>
     <string name="text_noFood">No food now</string>
     <string name="text_noIngredient">No Ingredient</string>
+    <string name="text_choosePlease">Choose please</string>
 
     <string name="foodType_meat">Meat</string>
     <string name="foodType_vegetarian">Vegetarian</string>

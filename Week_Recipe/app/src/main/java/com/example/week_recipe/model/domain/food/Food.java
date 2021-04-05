@@ -1,19 +1,25 @@
 package com.example.week_recipe.model.domain.food;
 
-import com.example.week_recipe.R;
+import android.graphics.Bitmap;
+
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class Food {
     private String name;
     private FoodType type;
-    private int imageId;
     private IngredientsList ingredientsList;
+    private Bitmap image;
 
-    public Food(String name,FoodType type,IngredientsList ingredientsList,int imageId)
+    public Food(String name,FoodType type,IngredientsList ingredientsList,Bitmap image)
     {
         this.name = name;
         this.type = type;
         this.ingredientsList = ingredientsList;
-        this.imageId = imageId;
+        if (image!=null)
+        {
+            this.image = image;
+        }
     }
 
     public Food(String name,FoodType type,IngredientsList ingredientsList)
@@ -21,15 +27,24 @@ public class Food {
         this.name = name;
         this.type = type;
         this.ingredientsList = ingredientsList;
-        this.imageId = R.drawable.ic_action_food;
+        image = null;
     }
 
     public void update(Food newFood)
     {
+        image = newFood.image;
         name = newFood.name;
         type = newFood.type;
         ingredientsList = newFood.ingredientsList;
-        imageId = newFood.imageId;
+    }
+
+    public boolean hasImage()
+    {
+        return image!=null;
+    }
+
+    public Bitmap getImage() {
+        return image;
     }
 
     public String getName() {
@@ -40,16 +55,12 @@ public class Food {
         return type;
     }
 
-    public int getImageId() {
-        return imageId;
-    }
-
     public IngredientsList getIngredientsList() {
         return ingredientsList;
     }
 
     public Food copy()
     {
-        return new Food(name,type,ingredientsList.copy(),imageId);
+        return new Food(name,type,ingredientsList.copy(),image);
     }
 }

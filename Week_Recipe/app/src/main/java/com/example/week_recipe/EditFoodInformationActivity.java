@@ -1,6 +1,7 @@
 package com.example.week_recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,6 +17,7 @@ import com.example.week_recipe.ViewModel.RecipeWithDateViewModel;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
+import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -25,7 +27,7 @@ public class EditFoodInformationActivity extends AppCompatActivity {
     private Button backButton;
     private FloatingActionButton saveButton;
     private Food oldFood;
-    private Gson gson;
+    private SetFoodInformationFragment fragment;
     private boolean clickSaveButton;
 
     @Override
@@ -35,7 +37,6 @@ public class EditFoodInformationActivity extends AppCompatActivity {
         //init
         clickSaveButton = false;
         viewModel = new ViewModelProvider(this).get(EditFoodInformationViewModel.class);
-        gson = new Gson();
 
         bind();
         setListener();
@@ -51,8 +52,9 @@ public class EditFoodInformationActivity extends AppCompatActivity {
     {
         backButton = findViewById(R.id.editFoodInformation_backButton);
         saveButton = findViewById(R.id.editFoodInformation_saveButton);
-        oldFood = new Gson().fromJson(getIntent().getExtras().getString("editFood"), Food.class);
-
+        fragment = FragmentManager.findFragment(findViewById(R.id.editFoodInformation_fragment));
+        oldFood = (Food) UiDataCache.getData(getIntent().getExtras().getString("editFood"));
+        fragment.bind(oldFood.copy());
     }
 
     private void setListener()
@@ -81,7 +83,8 @@ public class EditFoodInformationActivity extends AppCompatActivity {
         if (!clickSaveButton)
         {
             clickSaveButton = true;
-            Food newFood = oldFood;
+            Food newFood = fragment.getNewFood();
+            //Food newFood = oldFood;
 
             String result = viewModel.updateFoodInformation(oldFood,newFood);
             if (result!=null)
@@ -92,7 +95,7 @@ public class EditFoodInformationActivity extends AppCompatActivity {
             else
             {
                 Intent intent = new Intent();
-                intent.putExtra("updateShowFood",gson.toJson(newFood));
+                intent.putExtra("updateShowFood",UiDataCache.putData("updateShowFood",newFood));
                 setResult(1,intent);
                 finish();
             }

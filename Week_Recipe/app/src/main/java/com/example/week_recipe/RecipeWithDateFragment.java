@@ -29,6 +29,8 @@ import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.example.week_recipe.utility.MyPicture;
+import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -49,14 +51,14 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
                              Bundle savedInstanceState) {
 
         FoodList foodList0 = new FoodList();
-        foodList0.add(new Food("鸡汤", FoodType.Meat,new IngredientsList(),R.drawable.jitang_picture));
+        foodList0.add(new Food("鸡汤", FoodType.Meat,new IngredientsList()));
         foodList0.add(new Food("西红柿蛋汤", FoodType.Vegetarian,new IngredientsList()));
         FoodList foodList1 = new FoodList();
-        foodList1.add(new Food("红烧牛肉", FoodType.Meat,new IngredientsList(),R.drawable.ic_action_settings));
-        foodList1.add(new Food("炒青菜", FoodType.Vegetarian,new IngredientsList(),R.drawable.user_picture));
+        foodList1.add(new Food("红烧牛肉", FoodType.Meat,new IngredientsList()));
+        foodList1.add(new Food("炒青菜", FoodType.Vegetarian,new IngredientsList()));
         FoodList foodList2 = new FoodList();
-        foodList2.add(new Food("水煮白菜", FoodType.Vegetarian,new IngredientsList(),R.drawable.ic_action_home));
-        foodList2.add(new Food("麻婆豆腐", FoodType.Other,new IngredientsList(),R.drawable.ic_action_user_info));
+        foodList2.add(new Food("水煮白菜", FoodType.Vegetarian,new IngredientsList()));
+        foodList2.add(new Food("麻婆豆腐", FoodType.Other,new IngredientsList()));
         DailyRecipe dailyRecipe = new DailyRecipe(LocalDate.now(),foodList0,foodList1,foodList2);
         SystemModelManager.getSystemModelManager().addDailyRecipe(dailyRecipe);
 
@@ -137,7 +139,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         }
         Context context = getContext();
         Intent intent = new Intent(context,FoodInformationActivity.class);
-        intent.putExtra("showFood", new Gson().toJson(showFood));
+        intent.putExtra("showFood", UiDataCache.putData("showFood",showFood));
         startActivity(intent);
     }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.week_recipe.model.domain.food.Food;
+import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -19,15 +20,12 @@ public class FoodInformationActivity extends AppCompatActivity {
     private FloatingActionButton editButton;
     private FoodInformationFragment fragment;
     private Food showFood;
-    private Gson gson;
     private boolean clickEditButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_information);
-        clickEditButton = false;
-        gson = new Gson();
         bind();
         setListener();
     }
@@ -42,7 +40,7 @@ public class FoodInformationActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 2 && resultCode == 1)
         {
-            showFood = gson.fromJson(data.getExtras().getString("updateShowFood"),Food.class);
+            showFood = (Food) UiDataCache.getData(data.getExtras().getString("updateShowFood"));
             fragment.bind(showFood);
             clickEditButton = false;
         }
@@ -55,7 +53,7 @@ public class FoodInformationActivity extends AppCompatActivity {
         backButton = findViewById(R.id.foodInformation_backButton);
         editButton = findViewById(R.id.foodInformation_editFoodButton);
         fragment = FragmentManager.findFragment(fragmentView);
-        this.showFood = gson.fromJson(getIntent().getExtras().getString("showFood"),Food.class);
+        this.showFood = (Food) UiDataCache.getData(getIntent().getExtras().getString("showFood"));
         fragment.bind(showFood);
     }
 
@@ -86,7 +84,7 @@ public class FoodInformationActivity extends AppCompatActivity {
         {
             clickEditButton = true;
             Intent intent = new Intent(getApplicationContext(),EditFoodInformationActivity.class);
-            intent.putExtra("editFood", new Gson().toJson(showFood));
+            intent.putExtra("editFood", UiDataCache.putData("editFood",showFood));
             startActivityForResult(intent,2);
         }
     }

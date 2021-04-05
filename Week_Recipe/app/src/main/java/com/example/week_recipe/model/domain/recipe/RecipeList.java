@@ -4,6 +4,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.week_recipe.model.domain.food.FoodList;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -73,6 +75,21 @@ public class RecipeList {
             date.plusDays(1);
         }
         return weekRecipe;
+    }
+
+    //Non-duplicate food
+    public FoodList getFoodMenu()
+    {
+        FoodList menu = new FoodList();
+        for (int x=0;x<recipeList.size();x++)
+        {
+            FoodList dailyMenu = recipeList.get(x).getFoodMenu();
+            for (int i=0;i<dailyMenu.getSize();i++)
+            {
+                menu.add(dailyMenu.getByIndex(i));
+            }
+        }
+        return menu;
     }
 
     public String update(DailyRecipe dailyRecipe)

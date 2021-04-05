@@ -89,7 +89,15 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.foodName.setText(foodList.getByIndex(position).getName());
-        holder.foodImage.setImageResource(foodList.getByIndex(position).getImageId());
+        if (foodList.getByIndex(position).hasImage())
+        {
+            holder.foodImage.setImageBitmap(foodList.getByIndex(position).getImage());
+            holder.foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        else
+        {
+            holder.foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        }
         changeLikeState(holder,favouriteFoodList!=null&&favouriteFoodList.hasFood(foodList.getByIndex(position)));
     }
 

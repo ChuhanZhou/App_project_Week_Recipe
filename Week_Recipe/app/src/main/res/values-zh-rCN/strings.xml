@@ -17,6 +17,7 @@
     <string name="text_registerTitle">新用户</string>
     <string name="text_noFood">无食物</string>
     <string name="text_noIngredient">无食材</string>
+    <string name="text_choosePlease">请选择</string>
 
     <string name="foodType_meat">荤菜</string>
     <string name="foodType_vegetarian">素菜</string>

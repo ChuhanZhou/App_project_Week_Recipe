@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.week_recipe.model.LoginModel;
 import com.example.week_recipe.model.LoginModelManager;
+import com.example.week_recipe.utility.MyPicture;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyPicture.setContext(getApplicationContext());
         init();
         setContentView(R.layout.activity_login);
         bind();

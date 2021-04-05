@@ -59,6 +59,21 @@ public class DailyRecipe {
         this.dinner = dinner;
     }
 
+    //Non-duplicate food
+    public FoodList getFoodMenu()
+    {
+        FoodList menu = new FoodList();
+        FoodList[] listOfFoodList = {breakfast,lunch,dinner};
+        for (int x=0;x<listOfFoodList.length;x++)
+        {
+            for (int i=0;i<listOfFoodList[x].getSize();i++)
+            {
+                menu.add(listOfFoodList[x].getByIndex(i));
+            }
+        }
+        return menu;
+    }
+
     public DailyRecipe copy() {
         return new DailyRecipe(date, breakfast.copy(), lunch.copy(), dinner.copy());
     }

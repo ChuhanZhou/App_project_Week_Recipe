@@ -34,7 +34,15 @@ public class FoodInformationFragment extends Fragment {
         TextView foodTypeTextView = view.findViewById(R.id.fragment_foodInformation_foodTypeTextView);
         TextView foodIngredientsTextView = view.findViewById(R.id.fragment_foodInformation_foodIngredientsTextView);
 
-        foodImage.setImageResource(food.getImageId());
+        if (food.hasImage())
+        {
+            foodImage.setImageBitmap(food.getImage());
+            foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        else
+        {
+            foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        }
         foodNameTextView.setText(food.getName());
         switch (food.getType())
         {
