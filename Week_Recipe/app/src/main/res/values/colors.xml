@@ -18,4 +18,5 @@
     <color name="textView_Text1">#ffffff</color>
     <color name="like_yellow">#FFEB3B</color>
     <color name="like_white">#FFFFFF</color>
+    <color name="button_onClick">#aaaaaa</color>
 </resources>

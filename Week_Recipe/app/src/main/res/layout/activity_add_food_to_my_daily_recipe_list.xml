@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddFoodToMyDailyRecipeListActivity">
+
+    <fragment
+        android:id="@+id/addFoodToMyDailyRecipeList_setFoodInformationFragment"
+        android:name="com.example.week_recipe.SetFoodInformationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_set_food_information"/>
+
+    <fragment
+        android:id="@+id/addFoodToMyDailyRecipeList_searchFragment"
+        android:name="com.example.week_recipe.SearchFoodFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_search_food"/>
+
+    <TextView
+        android:id="@+id/addFoodToMyDailyRecipeList_createFoodTextView"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@drawable/top_radius_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_top_radius_background"
+        android:gravity="center"
+        android:text="@string/text_createNewFood"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.75" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

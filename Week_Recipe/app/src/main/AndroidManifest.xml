@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Week_Recipe">
+        <activity android:name=".AddFoodToMyDailyRecipeListActivity"/>
         <activity android:name=".EditFoodInformationActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

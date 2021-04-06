@@ -52,6 +52,8 @@ public class SetFoodInformationFragment extends Fragment {
                 {
                     Uri uri = data.getData();
                     foodImage.setImageURI(uri);
+                    //make sure the image can be shown when the image is too big
+                    foodImage.setImageDrawable(foodImage.getDrawable());
                     foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
                 break;
@@ -150,5 +152,11 @@ public class SetFoodInformationFragment extends Fragment {
                 break;
         }
         return new Food(foodNameEditText.getText().toString(),newFoodType,ingredientsList,MyPicture.drawableToBitmap(foodImage.getDrawable()));
+    }
+
+    @Nullable
+    @Override
+    public View getView() {
+        return view;
     }
 }

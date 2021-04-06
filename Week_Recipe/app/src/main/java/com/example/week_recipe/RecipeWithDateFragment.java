@@ -41,7 +41,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
     private RecipeWithDateViewModel viewModel;
     private TabLayout tabLayout;
-    private View fragmentView;
+    private DailyRecipeFragment fragment;
     //private RecyclerView foodListRecyclerView;
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -64,11 +64,12 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
-        fragmentView = view.findViewById(R.id.fragment_recipeWithDate_fragment);
+        fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_fragment));
         tabLayout = view.findViewById(R.id.fragment_recipeWithDate_tabLayout);
 
         tabLayout.selectTab(tabLayout.getTabAt(1));
         viewModel = new ViewModelProvider(this).get(RecipeWithDateViewModel.class);
+        fragment.bind(viewModel.getShowRecipe().getValue(),RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
         bind();
         return view;
     }
@@ -76,8 +77,6 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     @SuppressLint("FragmentLiveDataObserve")
     private void bind()
     {
-        DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
-
         viewModel.getShowDateText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -118,11 +117,23 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
             }
         });
+        fragment.getAddFoodButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickAddFoodButton();
+            }
+        });
+    }
+
+    private void clickAddFoodButton()
+    {
+        Context context = getContext();
+        Intent intent = new Intent(context,AddFoodToMyDailyRecipeListActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onFoodImageClick(int clickedItemIndex) {
-        DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
         Food showFood = null;
         DailyRecipe dailyRecipe = viewModel.getShowRecipe().getValue();
         switch (fragment.getTabPosition())
@@ -145,13 +156,11 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
     @Override
     public void onDeleteClick(int clickedItemIndex) {
-        DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
         viewModel.deleteFood(fragment.getTabPosition(),clickedItemIndex);
     }
 
     @Override
     public void onLikeClick(int clickedItemIndex) {
-        DailyRecipeFragment fragment = FragmentManager.findFragment(fragmentView);
         viewModel.changeLikeState(fragment.getTabPosition(),clickedItemIndex);
     }
 }

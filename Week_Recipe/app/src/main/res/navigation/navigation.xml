@@ -31,8 +31,17 @@
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/foodInformationFragment"
+        android:id="@+id/nav_foodInformationFragment"
         android:name="com.example.week_recipe.FoodInformationFragment"
         android:label="fragment_food_information"
         tools:layout="@layout/fragment_food_information" />
+    <fragment
+        android:id="@+id/nav_setFoodInformationFragment"
+        android:name="com.example.week_recipe.SetFoodInformationFragment"
+        android:label="fragment_set_food_information"
+        tools:layout="@layout/fragment_set_food_information" />
+    <fragment
+        android:id="@+id/searchFoodFragment"
+        android:name="com.example.week_recipe.SearchFoodFragment"
+        android:label="SearchFoodFragment" />
 </navigation>

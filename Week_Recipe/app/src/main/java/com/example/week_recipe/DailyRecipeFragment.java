@@ -19,6 +19,7 @@ import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ public class DailyRecipeFragment extends Fragment {
     private View fragmentView;
     private TabLayout tabLayout;
     private DailyRecipe dailyRecipe;
+    private FloatingActionButton addFoodButton;
     private int tabPosition = 0;
     private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
 
@@ -47,6 +49,7 @@ public class DailyRecipeFragment extends Fragment {
         onFoodListItemClickListener = listener;
         fragmentView = view.findViewById(R.id.fragment_dailyRecipe_fragment);
         tabLayout = view.findViewById(R.id.fragment_dailyRecipe_tabLayout);
+        addFoodButton = view.findViewById(R.id.fragment_dailyRecipe_addFoodButton);
         this.dailyRecipe = dailyRecipe;
 
         tabLayout.selectTab(tabLayout.getTabAt(tabPosition));
@@ -97,5 +100,9 @@ public class DailyRecipeFragment extends Fragment {
 
     public int getTabPosition() {
         return tabPosition;
+    }
+
+    public FloatingActionButton getAddFoodButton() {
+        return addFoodButton;
     }
 }

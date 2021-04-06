@@ -25,4 +25,32 @@ public class MyString {
         }
         return false;
     }
+
+    public static boolean isNullOrEmptyOrFullOfSpace(String s)
+    {
+        if (s==null)
+        {
+            return true;
+        }
+        if (s.isEmpty())
+        {
+            return true;
+        }
+        char[] charsOfS = s.toCharArray();
+        for (char charsOf : charsOfS) {
+            if (charsOf != ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isNullOrEmpty(String s)
+    {
+        if (s==null)
+        {
+            return true;
+        }
+        return s.isEmpty();
+    }
 }
