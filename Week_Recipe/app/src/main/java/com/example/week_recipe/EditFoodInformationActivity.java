@@ -54,7 +54,7 @@ public class EditFoodInformationActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.editFoodInformation_saveButton);
         fragment = FragmentManager.findFragment(findViewById(R.id.editFoodInformation_fragment));
         oldFood = (Food) UiDataCache.getData(getIntent().getExtras().getString("editFood"));
-        fragment.bind(oldFood.copy());
+        fragment.bind(oldFood.copy(),false);
     }
 
     private void setListener()

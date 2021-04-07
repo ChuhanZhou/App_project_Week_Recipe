@@ -51,6 +51,27 @@ public class UserData {
         return favoriteWeekRecipeList;
     }
 
+    public FoodList getAllFood()
+    {
+        FoodList allFood = new FoodList();
+        for (int x=0;x<favoriteFoodList.getSize();x++)
+        {
+            allFood.add(favoriteFoodList.getByIndex(x));
+        }
+        for (int x=0;x<myDailyRecipeList.getFoodMenu().getSize();x++)
+        {
+            allFood.add(myDailyRecipeList.getFoodMenu().getByIndex(x));
+        }
+        for (int x=0;x<favoriteWeekRecipeList.size();x++)
+        {
+            for (int i=0;i<favoriteWeekRecipeList.get(x).getFoodMenu().getSize();i++)
+            {
+                allFood.add(favoriteWeekRecipeList.get(x).getFoodMenu().getByIndex(x));
+            }
+        }
+        return allFood;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }

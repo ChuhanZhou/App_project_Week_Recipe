@@ -37,7 +37,11 @@ public class AddFoodToMyDailyRecipeListViewModel extends ViewModel implements Pr
 
     public void setAddLocation(LocalDate date,int location)
     {
-        selectDailyRecipe = systemModel.getUserData().getMyDailyRecipeList().getByDate(date);
+        selectDailyRecipe = new DailyRecipe(date);
+        if (systemModel.getUserData().getMyDailyRecipeList().hasDailyRecipe(selectDailyRecipe))
+        {
+            selectDailyRecipe = systemModel.getUserData().getMyDailyRecipeList().getByDate(date);
+        }
         locationOfFoodList = location;
     }
 
@@ -48,18 +52,7 @@ public class AddFoodToMyDailyRecipeListViewModel extends ViewModel implements Pr
 
     private void updateBasicFoodListForSearch()
     {
-        FoodList basicFoodList = new FoodList();
-        FoodList favouriteFoodList = this.favouriteFoodList.getValue();
-        FoodList MenuOfDailyRecipeList = systemModel.getUserData().getMyDailyRecipeList().getFoodMenu();
-        for (int x=0;x<favouriteFoodList.getSize();x++)
-        {
-            basicFoodList.add(favouriteFoodList.getByIndex(x));
-        }
-        for (int x=0;x<MenuOfDailyRecipeList.getSize();x++)
-        {
-            basicFoodList.add(MenuOfDailyRecipeList.getByIndex(x));
-        }
-        basicFoodListForSearch.setValue(basicFoodList);
+        basicFoodListForSearch.setValue(systemModel.getUserData().getAllFood());
     }
 
     public LiveData<FoodList> getBasicFoodListForSearch() {

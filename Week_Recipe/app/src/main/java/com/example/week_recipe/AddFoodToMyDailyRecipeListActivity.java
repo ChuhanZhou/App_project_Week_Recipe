@@ -164,11 +164,21 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
     {
         if (isSearching)
         {
-
+            isSearching = false;
+            setFoodInformationFragment.bind(searchFragment.getFoodNameEditText().getText().toString(),true);
+            updateFragment();
         }
         else
         {
-
+            String result = viewModel.addFoodToMyDailyRecipeList(setFoodInformationFragment.getNewFood());
+            if (result!=null)
+            {
+                toastPrint(result);
+            }
+            else
+            {
+                finish();
+            }
         }
     }
 

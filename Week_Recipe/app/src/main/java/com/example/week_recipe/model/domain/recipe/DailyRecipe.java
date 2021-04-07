@@ -12,10 +12,7 @@ public class DailyRecipe {
     private FoodList dinner;
 
     public DailyRecipe(LocalDate date, FoodList breakfast, FoodList lunch, FoodList dinner) {
-        this.date = date;
-        this.breakfast = new FoodList();
-        this.lunch = new FoodList();
-        this.dinner = new FoodList();
+        this(date);
         if (breakfast != null) {
             this.breakfast = breakfast;
         }
@@ -25,6 +22,19 @@ public class DailyRecipe {
         if (dinner != null) {
             this.dinner = dinner;
         }
+    }
+
+    public DailyRecipe(LocalDate date)
+    {
+        this.date = date;
+        this.breakfast = new FoodList();
+        this.lunch = new FoodList();
+        this.dinner = new FoodList();
+    }
+
+    public DailyRecipe()
+    {
+        this(null);
     }
 
     public LocalDate getDate() {

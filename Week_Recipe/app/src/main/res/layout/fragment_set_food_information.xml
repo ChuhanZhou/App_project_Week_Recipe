@@ -49,6 +49,15 @@
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.4" />
 
+    <TextView
+        android:id="@+id/fragment_setFoodInformation_foodNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nullData"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_setFoodInformation_textView1"
+        app:layout_constraintStart_toEndOf="@+id/fragment_setFoodInformation_textView1"
+        app:layout_constraintTop_toTopOf="@+id/fragment_setFoodInformation_textView1" />
 
     <TextView
         android:id="@+id/fragment_setFoodInformation_textView2"

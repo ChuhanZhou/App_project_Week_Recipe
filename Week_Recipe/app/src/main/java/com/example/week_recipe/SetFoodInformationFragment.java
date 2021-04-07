@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +32,12 @@ public class SetFoodInformationFragment extends Fragment {
     private View view;
     private ImageView foodImage;
     private EditText foodNameEditText;
+    private TextView foodNameTextView;
     private Spinner foodTypeSpinner;
     private TextView foodIngredientsTextView;
     private IngredientsList ingredientsList;
     private FloatingActionButton chooseImageButton;
+    private boolean lockName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,13 +65,17 @@ public class SetFoodInformationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void bind(Food food)
+    public void bind(Food food,boolean lockName)
     {
+        this.lockName = lockName;
         foodImage = view.findViewById(R.id.fragment_setFoodInformation_foodImage);
         foodNameEditText = view.findViewById(R.id.fragment_setFoodInformation_foodNameEditText);
+        foodNameTextView = view.findViewById(R.id.fragment_setFoodInformation_foodNameTextView);
         foodTypeSpinner = view.findViewById(R.id.fragment_setFoodInformation_foodTypeSpinner);
         foodIngredientsTextView = view.findViewById(R.id.fragment_setFoodInformation_foodIngredientsTextView);
         chooseImageButton = view.findViewById(R.id.fragment_setFoodInformation_chooseImageButton);
+        setListener();
+        updateNameView();
 
         if (food.hasImage())
         {
@@ -113,8 +121,12 @@ public class SetFoodInformationFragment extends Fragment {
         {
             foodIngredientsTextView.setText(R.string.text_noIngredient);
         }
+    }
 
-        setListener();
+    public void bind(String foodName,boolean lockName)
+    {
+        Food food = new Food(foodName,FoodType.Meat,null);
+        bind(food,lockName);
     }
 
     private void setListener()
@@ -125,6 +137,36 @@ public class SetFoodInformationFragment extends Fragment {
                 selectImageFromLocal();
             }
         });
+        foodNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                foodNameTextView.setText(foodNameEditText.getText());
+            }
+        });
+    }
+
+    private void updateNameView()
+    {
+        if (lockName)
+        {
+            foodNameEditText.setVisibility(View.GONE);
+            foodNameTextView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            foodNameEditText.setVisibility(View.VISIBLE);
+            foodNameTextView.setVisibility(View.GONE);
+        }
     }
 
     private void selectImageFromLocal() {
@@ -150,6 +192,10 @@ public class SetFoodInformationFragment extends Fragment {
             default:
                 newFoodType = FoodType.Other;
                 break;
+        }
+        if (foodImage.getScaleType()==ImageView.ScaleType.FIT_CENTER)
+        {
+            return new Food(foodNameEditText.getText().toString(),newFoodType,ingredientsList);
         }
         return new Food(foodNameEditText.getText().toString(),newFoodType,ingredientsList,MyPicture.drawableToBitmap(foodImage.getDrawable()));
     }

@@ -13,9 +13,7 @@ public class Food {
 
     public Food(String name,FoodType type,IngredientsList ingredientsList,Bitmap image)
     {
-        this.name = name;
-        this.type = type;
-        this.ingredientsList = ingredientsList;
+        this(name, type, ingredientsList);
         if (image!=null)
         {
             this.image = image;
@@ -26,7 +24,11 @@ public class Food {
     {
         this.name = name;
         this.type = type;
-        this.ingredientsList = ingredientsList;
+        this.ingredientsList = new IngredientsList();
+        if (ingredientsList!=null)
+        {
+            this.ingredientsList = ingredientsList;
+        }
         image = null;
     }
 

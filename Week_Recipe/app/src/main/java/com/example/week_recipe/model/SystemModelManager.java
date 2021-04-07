@@ -110,12 +110,18 @@ public class SystemModelManager implements SystemModel{
 
     @Override
     public String updateFoodOfAll(Food oldFood, Food newFood) {
-        String result = updateFood(userData.copy(),oldFood,newFood);
-        if (result==null)
+        String result = userData.copy().getAllFood().update(oldFood, newFood);
+        if (result!=null)
         {
-            result = updateFood(userData,oldFood,newFood);
-            property.firePropertyChange("updateFood",oldFood,newFood);
+            return result;
         }
+        result = updateFood(userData.copy(),oldFood,newFood);
+        if (result!=null)
+        {
+            return result;
+        }
+        result = updateFood(userData,oldFood,newFood);
+        property.firePropertyChange("updateFood",oldFood,newFood);
         return result;
     }
 
