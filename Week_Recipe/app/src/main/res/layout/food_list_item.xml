@@ -79,7 +79,7 @@
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="27.5dp"
                 app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/item_recipeList_foodImage"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/item_recipeList_more"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toStartOf="parent"

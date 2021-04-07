@@ -59,12 +59,6 @@ public class HomePageActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController,appBarConfiguration)||super.onSupportNavigateUp();
     }
 
-    @Override
-    public void onBackPressed() {
-        System.out.println(2);
-        super.onBackPressed();
-    }
-
     private void init()
     {
         systemModel = SystemModelManager.getSystemModelManager();

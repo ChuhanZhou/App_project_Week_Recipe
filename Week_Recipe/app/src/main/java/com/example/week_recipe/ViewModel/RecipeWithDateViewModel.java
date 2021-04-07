@@ -12,7 +12,6 @@ import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
-import com.example.week_recipe.utility.NamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -128,6 +127,7 @@ public class RecipeWithDateViewModel extends ViewModel implements PropertyChange
                 break;
             case "updateFood":
                 showRecipe.setValue(systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate));
+                favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
                 break;
         }
     }

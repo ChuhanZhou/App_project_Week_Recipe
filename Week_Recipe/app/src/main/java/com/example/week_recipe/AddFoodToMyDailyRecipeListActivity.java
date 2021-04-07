@@ -1,11 +1,14 @@
 package com.example.week_recipe;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,11 +16,17 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.week_recipe.ViewModel.AddFoodToMyDailyRecipeListViewModel;
 import com.example.week_recipe.ViewModel.EditFoodInformationViewModel;
 import com.example.week_recipe.adapter.FoodListAdapter;
+import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
+import com.example.week_recipe.utility.UiDataCache;
+import com.google.gson.Gson;
+
+import java.time.LocalDate;
 
 public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implements FoodListAdapter.OnFoodListItemClickListener {
 
@@ -29,6 +38,7 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
     private LiveData<FoodList> favouriteFoodList;
     private boolean isSearching;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +49,20 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
         setFoodInformationFragment = FragmentManager.findFragment(findViewById(R.id.addFoodToMyDailyRecipeList_setFoodInformationFragment));
         createFoodTextView = findViewById(R.id.addFoodToMyDailyRecipeList_createFoodTextView);
         viewModel = new ViewModelProvider(this).get(AddFoodToMyDailyRecipeListViewModel.class);
+        viewModel.setAddLocation((LocalDate) UiDataCache.getData(getIntent().getExtras().getString("date")),getIntent().getExtras().getInt("location"));
         basicFoodList = viewModel.getBasicFoodListForSearch();
         favouriteFoodList = viewModel.getFavouriteFoodList();
 
-        searchFragment.bind(basicFoodList.getValue(),this,true,false,true,favouriteFoodList);
+        searchFragment.bind(basicFoodList.getValue(),this,false,false,true,favouriteFoodList);
         updateFragment();
         updateCreateFoodTextViewVisibility();
         setListener();
+    }
+
+    private void toastPrint(String information)
+    {
+        Context context = getApplicationContext();
+        Toast.makeText(context,information,Toast.LENGTH_SHORT).show();
     }
 
     private void setListener()
@@ -157,7 +174,15 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
 
     @Override
     public void onFoodImageClick(int clickedItemIndex) {
-
+        String result = viewModel.addFoodToMyDailyRecipeList(searchFragment.getShowList().getByIndex(clickedItemIndex));
+        if (result!=null)
+        {
+            toastPrint(result);
+        }
+        else
+        {
+            finish();
+        }
     }
 
     @Override

@@ -6,35 +6,26 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.week_recipe.ViewModel.RecipeWithDateViewModel;
 import com.example.week_recipe.adapter.FoodListAdapter;
-import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
-import com.example.week_recipe.utility.MyPicture;
 import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 
 public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.OnFoodListItemClickListener {
@@ -89,6 +80,12 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
                 fragment.bind(dailyRecipe,RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
             }
         });
+        viewModel.getFavouriteFoodList().observe(this, new Observer<FoodList>() {
+            @Override
+            public void onChanged(FoodList foodList) {
+
+            }
+        });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -129,6 +126,8 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     {
         Context context = getContext();
         Intent intent = new Intent(context,AddFoodToMyDailyRecipeListActivity.class);
+        intent.putExtra("date",UiDataCache.putData("searchDate",viewModel.getShowDate()));
+        intent.putExtra("location",fragment.getTabPosition());
         startActivity(intent);
     }
 

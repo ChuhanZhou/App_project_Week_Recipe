@@ -31,6 +31,7 @@ public class SearchFoodFragment extends Fragment {
     private CardView backCardView;
     private FoodList basicFoodList;
     private FoodListFragment fragment;
+    private FoodList showList;
 
     private FoodListAdapter.OnFoodListItemClickListener listener;
     private boolean hasMore;
@@ -49,6 +50,7 @@ public class SearchFoodFragment extends Fragment {
     public void bind(FoodList basicFoodList, FoodListAdapter.OnFoodListItemClickListener listener,boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
         this.basicFoodList = basicFoodList;
+        showList = basicFoodList;
         this.listener = listener;
         this.hasMore = hasMore;
         this.hasDelete = hasDelete;
@@ -127,17 +129,15 @@ public class SearchFoodFragment extends Fragment {
     private void showSearchResult()
     {
         String searchText = foodNameEditText.getText().toString();
-
         if (MyString.isNullOrEmpty(searchText))
         {
-            fragment.bind(basicFoodList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
+            showList = basicFoodList;
         }
         else
         {
-            FoodList showList = basicFoodList.getListByName(searchText);
-            fragment.bind(showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
+            showList = basicFoodList.getListByName(searchText);
         }
-
+        fragment.bind(showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
     }
 
     private void clearText()
@@ -164,6 +164,10 @@ public class SearchFoodFragment extends Fragment {
             return false;
         }
         return basicFoodList.getByName(searchText)==null;
+    }
+
+    public FoodList getShowList() {
+        return showList;
     }
 
     public EditText getFoodNameEditText() {

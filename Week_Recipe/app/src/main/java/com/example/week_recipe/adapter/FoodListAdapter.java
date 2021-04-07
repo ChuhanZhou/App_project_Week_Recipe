@@ -131,19 +131,25 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             deleteCardView = itemView.findViewById(R.id.item_recipeList_deleteCardView);
             likeCardView = itemView.findViewById(R.id.item_recipeList_likeCardView);
 
-            deleteCardView.setVisibility(View.GONE);
-            likeCardView.setVisibility(View.GONE);
+            if (hasMore||!hasDelete)
+            {
+                deleteCardView.setVisibility(View.GONE);
+            }
+            if (hasMore||!hasLike)
+            {
+                likeCardView.setVisibility(View.GONE);
+            }
 
             if (!hasMore) {
-                more.setVisibility(View.GONE);
+                more.setVisibility(View.INVISIBLE);
             } else {
                 more.setOnClickListener(this);
-                if (hasDelete) {
-                    delete.setOnClickListener(this);
-                }
-                if (hasLike) {
-                    like.setOnClickListener(this);
-                }
+            }
+            if (hasDelete) {
+                delete.setOnClickListener(this);
+            }
+            if (hasLike) {
+                like.setOnClickListener(this);
             }
             foodImage.setOnClickListener(this);
         }

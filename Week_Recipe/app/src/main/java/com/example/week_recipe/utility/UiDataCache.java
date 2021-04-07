@@ -1,8 +1,5 @@
 package com.example.week_recipe.utility;
 
-import com.example.week_recipe.model.domain.food.Food;
-import com.google.gson.Gson;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,9 +13,7 @@ public class UiDataCache {
 
     public static String putData(String key,Object data)
     {
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(data));
-        dataCache.put(key, gson.fromJson(gson.toJson(data), Food.class));
+        dataCache.put(key, data);
         return key;
     }
 }
