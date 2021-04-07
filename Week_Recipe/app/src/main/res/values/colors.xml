@@ -19,4 +19,5 @@
     <color name="like_yellow">#FFEB3B</color>
     <color name="like_white">#FFFFFF</color>
     <color name="button_onClick">#aaaaaa</color>
+    <color name="button_background1">#E91E63</color>
 </resources>

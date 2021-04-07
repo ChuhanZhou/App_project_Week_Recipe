@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.utility.UiDataCache;
+import com.example.week_recipe.view.fragment.FoodInformationFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 public class FoodInformationActivity extends AppCompatActivity {
 
@@ -40,7 +41,7 @@ public class FoodInformationActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 2 && resultCode == 1)
         {
-            showFood = (Food) UiDataCache.getData(data.getExtras().getString("updateShowFood"));
+            showFood = (Food) UiDataCache.getData(data.getExtras().getString("showFood"));
             fragment.bind(showFood);
             clickEditButton = false;
         }

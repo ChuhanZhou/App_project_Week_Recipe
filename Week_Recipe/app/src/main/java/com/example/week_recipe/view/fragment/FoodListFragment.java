@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
@@ -36,6 +37,10 @@ public class FoodListFragment extends Fragment{
         return view;
     }
 
+    public void onBack() {
+        foodListAdapter.stopAnimation();
+    }
+
     public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
         this.foodList = foodList;
@@ -47,9 +52,16 @@ public class FoodListFragment extends Fragment{
 
         foodListView.hasFixedSize();
         foodListView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
         foodListView.setAdapter(foodListAdapter);
         addListener(favouriteFoodList);
+    }
+
+    public void updateFoodList(FoodList foodList,boolean showAnimation)
+    {
+        this.foodList = foodList;
+        foodListAdapter.updateFoodList(this.foodList,showAnimation);
+        foodListView.setAdapter(foodListAdapter);
+        setNoDataTextViewVisibility();
     }
 
     private void setNoDataTextViewVisibility()

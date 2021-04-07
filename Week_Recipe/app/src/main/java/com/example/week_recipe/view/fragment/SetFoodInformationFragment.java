@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -20,10 +20,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyPicture;
+import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SetFoodInformationFragment extends Fragment {
@@ -57,7 +59,7 @@ public class SetFoodInformationFragment extends Fragment {
                     Uri uri = data.getData();
                     foodImage.setImageURI(uri);
                     //make sure the image can be shown when the image is too big
-                    foodImage.setImageDrawable(foodImage.getDrawable());
+                    foodImage.setImageBitmap(MyPicture.drawableToBitmap(foodImage.getDrawable()));
                     foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
                 break;

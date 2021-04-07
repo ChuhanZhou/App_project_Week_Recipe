@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.activity;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,12 +11,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.*;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
+import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,6 +33,7 @@ public class HomePageActivity extends AppCompatActivity {
     private DrawerLayout layout;
     private BottomNavigationView bottomNavigationView;
     private NavigationView navigationDrawer;
+    private View fragment;
     private TextView userNameTextView;
 
     @Override
@@ -39,7 +44,6 @@ public class HomePageActivity extends AppCompatActivity {
         bind();
         updateInfo();
         setBottomNavVisibility();
-
     }
 
     @Override
@@ -67,6 +71,7 @@ public class HomePageActivity extends AppCompatActivity {
     private void bind()
     {
         layout = findViewById(R.id.homepage_constraintLayout);
+        fragment = findViewById(R.id.homePage_fragment);
         //navigation
         toolbar = findViewById(R.id.homePage_toolbar);
         setSupportActionBar(toolbar);
@@ -76,7 +81,6 @@ public class HomePageActivity extends AppCompatActivity {
                 .setOpenableLayout(layout)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
         //bottom navigation
         bottomNavigationView = findViewById(R.id.homePage_bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

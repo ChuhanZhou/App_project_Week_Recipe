@@ -1,7 +1,6 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,14 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.week_recipe.ViewModel.EditFoodInformationViewModel;
-import com.example.week_recipe.ViewModel.RecipeWithDateViewModel;
+import com.example.week_recipe.R;
+import com.example.week_recipe.view.fragment.SetFoodInformationFragment;
+import com.example.week_recipe.viewModel.EditFoodInformationViewModel;
 import com.example.week_recipe.model.domain.food.Food;
-import com.example.week_recipe.model.domain.food.FoodType;
-import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 public class EditFoodInformationActivity extends AppCompatActivity {
 
@@ -34,6 +31,7 @@ public class EditFoodInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_food_information);
+
         //init
         clickSaveButton = false;
         viewModel = new ViewModelProvider(this).get(EditFoodInformationViewModel.class);
@@ -95,7 +93,7 @@ public class EditFoodInformationActivity extends AppCompatActivity {
             else
             {
                 Intent intent = new Intent();
-                intent.putExtra("updateShowFood",UiDataCache.putData("updateShowFood",newFood));
+                intent.putExtra("showFood",UiDataCache.putData("showFood",newFood));
                 setResult(1,intent);
                 finish();
             }

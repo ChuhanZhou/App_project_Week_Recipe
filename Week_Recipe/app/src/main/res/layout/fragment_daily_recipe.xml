@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DailyRecipeFragment">
+    tools:context=".view.fragment.DailyRecipeFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fragment_dailyRecipe_tabLayout"
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/fragment_dailyRecipe_fragment"
-        android:name="com.example.week_recipe.FoodListFragment"
+        android:name="com.example.week_recipe.view.fragment.FoodListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,6 +47,7 @@
         tools:layout="@layout/fragment_food_list"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Button_Add"
         android:id="@+id/fragment_dailyRecipe_addFoodButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,8 +56,6 @@
         android:layout_marginBottom="25dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/background_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"

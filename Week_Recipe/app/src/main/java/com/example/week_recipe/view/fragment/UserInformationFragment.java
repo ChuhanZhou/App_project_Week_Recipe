@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.utility.MyPicture;

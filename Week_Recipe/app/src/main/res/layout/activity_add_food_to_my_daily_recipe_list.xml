@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFoodToMyDailyRecipeListActivity">
+    tools:context=".view.activity.AddFoodToMyDailyRecipeListActivity">
 
     <fragment
         android:id="@+id/addFoodToMyDailyRecipeList_setFoodInformationFragment"
-        android:name="com.example.week_recipe.SetFoodInformationFragment"
+        android:name="com.example.week_recipe.view.fragment.SetFoodInformationFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/addFoodToMyDailyRecipeList_searchFragment"
-        android:name="com.example.week_recipe.SearchFoodFragment"
+        android:name="com.example.week_recipe.view.fragment.SearchFoodFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,6 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="@drawable/top_radius_background"
+        android:textColor="@color/textView_Text1"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple_top_radius_background"

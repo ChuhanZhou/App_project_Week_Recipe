@@ -1,4 +1,4 @@
-package com.example.week_recipe.ViewModel;
+package com.example.week_recipe.viewModel;
 
 import android.os.Build;
 

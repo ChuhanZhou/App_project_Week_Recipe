@@ -13,18 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Week_Recipe">
-        <activity android:name=".AddFoodToMyDailyRecipeListActivity"/>
-        <activity android:name=".EditFoodInformationActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".view.activity.AddFoodToMyDailyRecipeListActivity"/>
+        <activity android:name=".view.activity.EditFoodInformationActivity" />
+        <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomePageActivity" />
-        <activity android:name=".FoodInformationActivity" />
+        <activity android:name=".view.activity.RegisterActivity" />
+        <activity android:name=".view.activity.HomePageActivity" />
+        <activity android:name=".view.activity.FoodInformationActivity" />
     </application>
 
 </manifest>

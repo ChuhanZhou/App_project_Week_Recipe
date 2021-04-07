@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
 
 
@@ -62,7 +63,6 @@ public class FoodInformationFragment extends Fragment {
 
         if (!food.getIngredientsList().isEmpty())
         {
-            System.out.println(2);
             String foodIngredients = "";
             foodIngredients +=  food.getIngredientsList().getByIndex(0).getName();
 

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditFoodInformationActivity">
+    tools:context=".view.activity.EditFoodInformationActivity">
 
     <fragment
         android:id="@+id/editFoodInformation_fragment"
-        android:name="com.example.week_recipe.SetFoodInformationFragment"
+        android:name="com.example.week_recipe.view.fragment.SetFoodInformationFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,6 +34,7 @@
         android:layout_marginStart="10dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Button_Save"
         android:id="@+id/editFoodInformation_saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,8 +43,6 @@
         android:layout_marginBottom="25dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_menu_save"
-        app:backgroundTint="@color/background_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"

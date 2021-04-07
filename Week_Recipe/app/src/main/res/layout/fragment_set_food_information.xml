@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SetFoodInformationFragment">
+    tools:context=".view.fragment.SetFoodInformationFragment">
 
     <ImageView
         android:id="@+id/fragment_setFoodInformation_foodImage"
@@ -119,20 +119,20 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_setFoodInformation_chooseImageButton"
+        style="@style/Button_Edit"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_menu_edit"
-        app:backgroundTint="@color/background_1"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_setFoodInformation_textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        app:rippleColor="#FFFFFF" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

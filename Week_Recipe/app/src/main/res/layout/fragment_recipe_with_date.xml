@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeWithDateFragment">
+    tools:context=".view.fragment.RecipeWithDateFragment">
 
 
     <com.google.android.material.tabs.TabLayout
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/fragment_recipeWithDate_fragment"
-        android:name="com.example.week_recipe.DailyRecipeFragment"
+        android:name="com.example.week_recipe.view.fragment.DailyRecipeFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

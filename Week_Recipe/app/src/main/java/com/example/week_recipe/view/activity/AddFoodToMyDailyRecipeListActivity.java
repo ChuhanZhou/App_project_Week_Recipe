@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +18,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.week_recipe.ViewModel.AddFoodToMyDailyRecipeListViewModel;
-import com.example.week_recipe.ViewModel.EditFoodInformationViewModel;
+import com.example.week_recipe.R;
+import com.example.week_recipe.view.fragment.SearchFoodFragment;
+import com.example.week_recipe.view.fragment.SetFoodInformationFragment;
+import com.example.week_recipe.viewModel.AddFoodToMyDailyRecipeListViewModel;
 import com.example.week_recipe.adapter.FoodListAdapter;
-import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.utility.UiDataCache;
-import com.google.gson.Gson;
 
 import java.time.LocalDate;
 
@@ -57,6 +57,12 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
         updateFragment();
         updateCreateFoodTextViewVisibility();
         setListener();
+    }
+
+    @Override
+    public void onBackPressed() {
+        searchFragment.onBack();
+        super.onBackPressed();
     }
 
     private void toastPrint(String information)

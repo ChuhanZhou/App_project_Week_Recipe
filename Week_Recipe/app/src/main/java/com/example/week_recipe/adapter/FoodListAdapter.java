@@ -1,15 +1,11 @@
 package com.example.week_recipe.adapter;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -20,21 +16,24 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 
 import java.util.ArrayList;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
 
-    private final FoodList foodList;
-    private final FoodList favouriteFoodList;
+    private FoodList foodList;
+    private FoodList favouriteFoodList;
     private final OnFoodListItemClickListener onFoodListItemClickListener;
     private ArrayList<ViewHolder> viewHolderList;
     private final boolean hasMore;
     private final boolean hasDelete;
     private final boolean hasLike;
+    private boolean showAnimation;
 
     public FoodListAdapter(FoodList foodList, OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, FoodList favouriteFoodList) {
+        showAnimation = true;
         viewHolderList = new ArrayList<>();
         if (foodList == null) {
             this.foodList = new FoodList();
@@ -50,11 +49,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     public void updateLike(FoodList favouriteFoodList)
     {
-        if (hasLike&&favouriteFoodList!=null)
+        this.favouriteFoodList = favouriteFoodList;
+        if (hasLike&&this.favouriteFoodList!=null)
         {
             for (int x=0;x<viewHolderList.size();x++)
             {
-                changeLikeState( viewHolderList.get(x),favouriteFoodList.hasFood(foodList.getByIndex(x)));
+                changeLikeState( viewHolderList.get(x),this.favouriteFoodList.hasFood(foodList.getByIndex(x)));
             }
         }
     }
@@ -76,6 +76,31 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         }
     }
 
+    public void updateFoodList(FoodList foodList,boolean showAnimation)
+    {
+        this.showAnimation = showAnimation;
+        if (foodList == null) {
+            this.foodList = new FoodList();
+        } else {
+            this.foodList = foodList;
+        }
+    }
+
+    private void updateItem(ViewHolder holder, Food food)
+    {
+        holder.foodName.setText(food.getName());
+        if (food.hasImage())
+        {
+            holder.foodImage.setImageBitmap(food.getImage());
+            holder.foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        else
+        {
+            holder.foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        }
+        changeLikeState(holder,favouriteFoodList!=null&&favouriteFoodList.hasFood(food));
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -88,17 +113,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.foodName.setText(foodList.getByIndex(position).getName());
-        if (foodList.getByIndex(position).hasImage())
+        updateItem(holder,foodList.getByIndex(position));
+
+        if (position==foodList.getSize()-1&&showAnimation)
         {
-            holder.foodImage.setImageBitmap(foodList.getByIndex(position).getImage());
-            holder.foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            new Thread(()->{showItemView(0.15);}).start();
         }
-        else
-        {
-            holder.foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        }
-        changeLikeState(holder,favouriteFoodList!=null&&favouriteFoodList.hasFood(foodList.getByIndex(position)));
     }
 
     @Override
@@ -110,6 +130,48 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         return viewHolderList.get(position);
     }
 
+    private void showItemView(double second)
+    {
+        for (int x=0;x<viewHolderList.size();x++)
+        {
+            if (showAnimation)
+            {
+                TranslateAnimation waitAnimation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, (x+1)*-1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+                waitAnimation.setDuration((long) ((x+1)*second*1000));
+
+                TranslateAnimation translateAnimation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, (x+2)*-1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+                translateAnimation.setDuration((long) ((x+2)*second*1000));
+                AnimationSet animationSet = new AnimationSet(true);
+                animationSet.addAnimation(waitAnimation);
+                animationSet.addAnimation(translateAnimation);
+
+                viewHolderList.get(x).view.setAnimation(translateAnimation);
+                //viewHolderList.get(x).view.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                for (int i=0;i<x;i++)
+                {
+                    viewHolderList.get(i).view.getAnimation().cancel();
+                }
+                break;
+            }
+        }
+    }
+
+    public void stopAnimation()
+    {
+        showAnimation = false;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView foodName;
         private final ImageView foodImage;
@@ -119,9 +181,11 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         //private final CardView cardView;
         private final CardView deleteCardView;
         private final CardView likeCardView;
+        private final View view;
 
         ViewHolder(View itemView) {
             super(itemView);
+            view = itemView;
             foodName = itemView.findViewById(R.id.item_recipeList_foodName);
             foodImage = itemView.findViewById(R.id.item_recipeList_foodImage);
             more = itemView.findViewById(R.id.item_recipeList_more);
@@ -202,61 +266,65 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 onFoodListItemClickListener.onLikeClick(getAdapterPosition());
             }
         }
-    }
 
-    private void showMore(View view, View insideView, double second) {
-        if (view.getVisibility() != View.VISIBLE) {
-            TranslateAnimation translateAnimation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-            translateAnimation.setDuration((long) (second * 1000));
+        private void showMore(View view, View insideView, double second) {
+            if (view.getVisibility() != View.VISIBLE) {
+                TranslateAnimation translateAnimation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+                translateAnimation.setDuration((long) (second * 1000));
 
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-            alphaAnimation.setDuration((long) (second * 1000));
+                AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+                alphaAnimation.setDuration((long) (second * 1000));
 
-            RotateAnimation rotateAnimation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotateAnimation.setDuration((long) (second * 1000));
+                RotateAnimation rotateAnimation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotateAnimation.setDuration((long) (second * 1000));
 
-            AnimationSet animationSet = new AnimationSet(true);
-            animationSet.addAnimation(translateAnimation);
-            animationSet.addAnimation(alphaAnimation);
+                AnimationSet animationSet = new AnimationSet(true);
+                animationSet.addAnimation(translateAnimation);
+                animationSet.addAnimation(alphaAnimation);
 
-            if (insideView != null) {
-                insideView.setAnimation(rotateAnimation);
+                if (insideView != null) {
+                    insideView.setAnimation(rotateAnimation);
+                }
+
+                view.setAnimation(animationSet);
+                view.setVisibility(View.VISIBLE);
             }
-
-            view.setAnimation(animationSet);
-            view.setVisibility(View.VISIBLE);
         }
-    }
 
-    private void hideMore(View view, View insideView, double second) {
-        if (view.getVisibility() != View.GONE) {
-            TranslateAnimation translateAnimation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-            translateAnimation.setDuration((long) (second * 1000));
+        private void hideMore(View view, View insideView, double second) {
+            if (view.getVisibility() != View.GONE) {
+                TranslateAnimation translateAnimation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+                translateAnimation.setDuration((long) (second * 1000));
 
-            AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-            alphaAnimation.setDuration((long) (second * 1000));
+                AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+                alphaAnimation.setDuration((long) (second * 1000));
 
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotateAnimation.setDuration((long) (second * 1000));
+                RotateAnimation rotateAnimation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotateAnimation.setDuration((long) (second * 1000));
 
-            AnimationSet animationSet = new AnimationSet(true);
-            animationSet.addAnimation(translateAnimation);
-            animationSet.addAnimation(alphaAnimation);
+                AnimationSet animationSet = new AnimationSet(true);
+                animationSet.addAnimation(translateAnimation);
+                animationSet.addAnimation(alphaAnimation);
 
-            if (insideView != null) {
-                insideView.setAnimation(rotateAnimation);
+                if (insideView != null) {
+                    insideView.setAnimation(rotateAnimation);
+                }
+
+                view.setAnimation(animationSet);
+                view.setVisibility(View.GONE);
             }
+        }
 
-            view.setAnimation(animationSet);
-            view.setVisibility(View.GONE);
+        public View getView() {
+            return view;
         }
     }
 

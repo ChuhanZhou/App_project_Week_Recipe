@@ -9,4 +9,26 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Button_Add">
+        <item name="android:src">@drawable/ic_button_add_dark</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+        <item name="background">@color/button_background1</item>
+        <item name="backgroundTint">@color/button_background1</item>
+    </style>
+    <style name="Button_Save">
+        <item name="android:src">@drawable/ic_button_save_dark</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+        <item name="background">@color/button_background1</item>
+        <item name="backgroundTint">@color/button_background1</item>
+    </style>
+    <style name="Button_Edit">
+        <item name="android:src">@drawable/ic_button_edit_dark</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+        <item name="background">@color/button_background1</item>
+        <item name="backgroundTint">@color/button_background1</item>
+    </style>
+
 </resources>

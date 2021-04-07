@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
@@ -13,16 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.adapter.FoodListAdapter;
-import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
-import com.example.week_recipe.model.domain.food.FoodType;
-import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-
-import java.time.LocalDate;
 
 public class DailyRecipeFragment extends Fragment {
 

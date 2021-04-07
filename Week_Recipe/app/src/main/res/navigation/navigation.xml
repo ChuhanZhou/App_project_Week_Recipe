@@ -7,41 +7,41 @@
 
     <fragment
         android:id="@+id/nav_todayRecipeFragment"
-        android:name="com.example.week_recipe.RecipeWithDateFragment"
+        android:name="com.example.week_recipe.view.fragment.RecipeWithDateFragment"
         android:label="@string/title_todayRecipe"
         tools:layout="@layout/fragment_recipe_with_date" />
     <fragment
         android:id="@+id/nav_dailyRecipeFragment"
-        android:name="com.example.week_recipe.DailyRecipeFragment"
+        android:name="com.example.week_recipe.view.fragment.DailyRecipeFragment"
         android:label="@string/title_todayRecipe"
         tools:layout="@layout/fragment_daily_recipe" />
     <fragment
         android:id="@+id/nav_foodListFragment"
-        android:name="com.example.week_recipe.FoodListFragment"
+        android:name="com.example.week_recipe.view.fragment.FoodListFragment"
         android:label="@string/title_breakfast"
         tools:layout="@layout/fragment_food_list" />
     <fragment
         android:id="@+id/nav_userInformationFragment"
-        android:name="com.example.week_recipe.UserInformationFragment"
+        android:name="com.example.week_recipe.view.fragment.UserInformationFragment"
         android:label="@string/title_myInformation"
         tools:layout="@layout/fragment_user_information" />
     <fragment
         android:id="@+id/nav_settingsFragment"
-        android:name="com.example.week_recipe.SettingsFragment"
+        android:name="com.example.week_recipe.view.fragment.SettingsFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_foodInformationFragment"
-        android:name="com.example.week_recipe.FoodInformationFragment"
+        android:name="com.example.week_recipe.view.fragment.FoodInformationFragment"
         android:label="fragment_food_information"
         tools:layout="@layout/fragment_food_information" />
     <fragment
         android:id="@+id/nav_setFoodInformationFragment"
-        android:name="com.example.week_recipe.SetFoodInformationFragment"
+        android:name="com.example.week_recipe.view.fragment.SetFoodInformationFragment"
         android:label="fragment_set_food_information"
         tools:layout="@layout/fragment_set_food_information" />
     <fragment
         android:id="@+id/searchFoodFragment"
-        android:name="com.example.week_recipe.SearchFoodFragment"
+        android:name="com.example.week_recipe.view.fragment.SearchFoodFragment"
         android:label="SearchFoodFragment" />
 </navigation>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodInformationFragment">
+    tools:context=".view.fragment.FoodInformationFragment">
 
     <EditText
         android:id="@+id/fragment_searchFood_foodNameEditText"
@@ -69,7 +69,7 @@
 
     <fragment
         android:id="@+id/fragment_searchFood_fragment"
-        android:name="com.example.week_recipe.FoodListFragment"
+        android:name="com.example.week_recipe.view.fragment.FoodListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

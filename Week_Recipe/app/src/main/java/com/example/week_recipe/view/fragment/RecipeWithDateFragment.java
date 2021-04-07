@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,7 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.week_recipe.ViewModel.RecipeWithDateViewModel;
+import com.example.week_recipe.R;
+import com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity;
+import com.example.week_recipe.view.activity.FoodInformationActivity;
+import com.example.week_recipe.viewModel.RecipeWithDateViewModel;
 import com.example.week_recipe.adapter.FoodListAdapter;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.food.Food;
@@ -33,6 +36,8 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     private RecipeWithDateViewModel viewModel;
     private TabLayout tabLayout;
     private DailyRecipeFragment fragment;
+    private boolean clickAddButton;
+    private boolean clickFoodImage;
     //private RecyclerView foodListRecyclerView;
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -63,6 +68,20 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         fragment.bind(viewModel.getShowRecipe().getValue(),RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
         bind();
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        clickAddButton = false;
+        clickFoodImage = false;
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        clickAddButton = false;
+        clickFoodImage = false;
+        super.onStart();
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -124,33 +143,41 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
     private void clickAddFoodButton()
     {
-        Context context = getContext();
-        Intent intent = new Intent(context,AddFoodToMyDailyRecipeListActivity.class);
-        intent.putExtra("date",UiDataCache.putData("searchDate",viewModel.getShowDate()));
-        intent.putExtra("location",fragment.getTabPosition());
-        startActivity(intent);
+        if (!clickAddButton)
+        {
+            clickAddButton = true;
+            Context context = getContext();
+            Intent intent = new Intent(context, AddFoodToMyDailyRecipeListActivity.class);
+            intent.putExtra("date",UiDataCache.putData("searchDate",viewModel.getShowDate()));
+            intent.putExtra("location",fragment.getTabPosition());
+            startActivity(intent);
+        }
     }
 
     @Override
     public void onFoodImageClick(int clickedItemIndex) {
-        Food showFood = null;
-        DailyRecipe dailyRecipe = viewModel.getShowRecipe().getValue();
-        switch (fragment.getTabPosition())
+        if (!clickFoodImage)
         {
-            case 0:
-                showFood = dailyRecipe.getBreakfast().getByIndex(clickedItemIndex);
-                break;
-            case 1:
-                showFood = dailyRecipe.getLunch().getByIndex(clickedItemIndex);
-                break;
-            case 2:
-                showFood = dailyRecipe.getDinner().getByIndex(clickedItemIndex);
-                break;
+           clickFoodImage = true;
+            Food showFood = null;
+            DailyRecipe dailyRecipe = viewModel.getShowRecipe().getValue();
+            switch (fragment.getTabPosition())
+            {
+                case 0:
+                    showFood = dailyRecipe.getBreakfast().getByIndex(clickedItemIndex);
+                    break;
+                case 1:
+                    showFood = dailyRecipe.getLunch().getByIndex(clickedItemIndex);
+                    break;
+                case 2:
+                    showFood = dailyRecipe.getDinner().getByIndex(clickedItemIndex);
+                    break;
+            }
+            Context context = getContext();
+            Intent intent = new Intent(context, FoodInformationActivity.class);
+            intent.putExtra("showFood", UiDataCache.putData("showFood",showFood));
+            startActivity(intent);
         }
-        Context context = getContext();
-        Intent intent = new Intent(context,FoodInformationActivity.class);
-        intent.putExtra("showFood", UiDataCache.putData("showFood",showFood));
-        startActivity(intent);
     }
 
     @Override

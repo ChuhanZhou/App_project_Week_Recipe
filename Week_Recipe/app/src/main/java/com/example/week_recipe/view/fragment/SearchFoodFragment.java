@@ -1,4 +1,4 @@
-package com.example.week_recipe;
+package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,8 +17,8 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 
+import com.example.week_recipe.R;
 import com.example.week_recipe.adapter.FoodListAdapter;
-import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.utility.MyString;
 
@@ -47,6 +46,11 @@ public class SearchFoodFragment extends Fragment {
         return view;
     }
 
+    public void onBack()
+    {
+        fragment.onBack();
+    }
+
     public void bind(FoodList basicFoodList, FoodListAdapter.OnFoodListItemClickListener listener,boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
         this.basicFoodList = basicFoodList;
@@ -61,8 +65,9 @@ public class SearchFoodFragment extends Fragment {
         clearTextCardView = view.findViewById(R.id.fragment_searchFood_clearTextCardView);
         backCardView = view.findViewById(R.id.fragment_searchFood_backCardView);
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_searchFood_fragment));
+        fragment.bind(showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
         setListener();
-        showSearchResult();
+        showSearchResult(true);
         updateClearTextCardViewVisibility();
     }
 
@@ -81,7 +86,7 @@ public class SearchFoodFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                showSearchResult();
+                showSearchResult(false);
                 updateClearTextCardViewVisibility();
             }
         });
@@ -126,7 +131,7 @@ public class SearchFoodFragment extends Fragment {
         }
     }
 
-    private void showSearchResult()
+    private void showSearchResult(boolean showAnimation)
     {
         String searchText = foodNameEditText.getText().toString();
         if (MyString.isNullOrEmpty(searchText))
@@ -137,7 +142,7 @@ public class SearchFoodFragment extends Fragment {
         {
             showList = basicFoodList.getListByName(searchText);
         }
-        fragment.bind(showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
+        fragment.updateFoodList(showList,showAnimation);
     }
 
     private void clearText()
@@ -153,7 +158,7 @@ public class SearchFoodFragment extends Fragment {
     public void updateBasicFoodList(FoodList basicFoodList)
     {
         this.basicFoodList = basicFoodList;
-        showSearchResult();
+        showSearchResult(true);
     }
 
     public boolean foodNameCanBeUsed()
