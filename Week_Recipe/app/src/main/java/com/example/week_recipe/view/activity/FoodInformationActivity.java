@@ -32,9 +32,16 @@ public class FoodInformationActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        clickEditButton = false;
-        super.onRestart();
+    protected void onPause() {
+        new Thread(()->{
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            clickEditButton = false;
+        }).start();
+        super.onPause();
     }
 
     @Override
@@ -43,7 +50,6 @@ public class FoodInformationActivity extends AppCompatActivity {
         {
             showFood = (Food) UiDataCache.getData(data.getExtras().getString("showFood"));
             fragment.bind(showFood);
-            clickEditButton = false;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

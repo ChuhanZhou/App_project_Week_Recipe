@@ -31,9 +31,11 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     private final boolean hasDelete;
     private final boolean hasLike;
     private boolean showAnimation;
+    private int numberOfAnimation;
 
     public FoodListAdapter(FoodList foodList, OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, FoodList favouriteFoodList) {
         showAnimation = true;
+        numberOfAnimation = 0;
         viewHolderList = new ArrayList<>();
         if (foodList == null) {
             this.foodList = new FoodList();
@@ -79,6 +81,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     public void updateFoodList(FoodList foodList,boolean showAnimation)
     {
         this.showAnimation = showAnimation;
+        viewHolderList = new ArrayList<>();
         if (foodList == null) {
             this.foodList = new FoodList();
         } else {
@@ -115,9 +118,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         updateItem(holder,foodList.getByIndex(position));
 
-        if (position==foodList.getSize()-1&&showAnimation)
+        if (showAnimation)
         {
-            new Thread(()->{showItemView(0.15);}).start();
+            new Thread(()->{showItemView(0.125);}).start();
         }
     }
 
@@ -132,39 +135,42 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     private void showItemView(double second)
     {
-        for (int x=0;x<viewHolderList.size();x++)
+        int index = numberOfAnimation;
+        numberOfAnimation++;
+        if (showAnimation)
         {
-            if (showAnimation)
-            {
-                TranslateAnimation waitAnimation = new TranslateAnimation(
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, (x+1)*-1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f);
-                waitAnimation.setDuration((long) ((x+1)*second*1000));
+            //make a delay
+            TranslateAnimation waitAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, (index+1)*-1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            waitAnimation.setDuration((long) ((index+1)*second*1000));
 
-                TranslateAnimation translateAnimation = new TranslateAnimation(
-                        Animation.RELATIVE_TO_SELF, (x+2)*-1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f);
-                translateAnimation.setDuration((long) ((x+2)*second*1000));
-                AnimationSet animationSet = new AnimationSet(true);
-                animationSet.addAnimation(waitAnimation);
-                animationSet.addAnimation(translateAnimation);
-
-                viewHolderList.get(x).view.setAnimation(translateAnimation);
-                //viewHolderList.get(x).view.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                for (int i=0;i<x;i++)
-                {
-                    viewHolderList.get(i).view.getAnimation().cancel();
-                }
-                break;
+            TranslateAnimation translateAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, (index+2)*-1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            translateAnimation.setDuration((long) ((index+2)*second*1000));
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(waitAnimation);
+            animationSet.addAnimation(translateAnimation);
+            viewHolderList.get(viewHolderList.size()-1).view.setAnimation(translateAnimation);
+            try {
+                Thread.sleep(translateAnimation.getDuration());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+        else
+        {
+            for (int i=0;i<index;i++)
+            {
+                viewHolderList.get(i).view.getAnimation().cancel();
+            }
+        }
+        numberOfAnimation--;
     }
 
     public void stopAnimation()

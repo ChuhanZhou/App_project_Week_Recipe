@@ -37,6 +37,7 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
     private LiveData<FoodList> basicFoodList;
     private LiveData<FoodList> favouriteFoodList;
     private boolean isSearching;
+    private boolean clickFoodImage;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -45,6 +46,7 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
         setContentView(R.layout.activity_add_food_to_my_daily_recipe_list);
 
         isSearching = true;
+        clickFoodImage = false;
         searchFragment = FragmentManager.findFragment(findViewById(R.id.addFoodToMyDailyRecipeList_searchFragment));
         setFoodInformationFragment = FragmentManager.findFragment(findViewById(R.id.addFoodToMyDailyRecipeList_setFoodInformationFragment));
         createFoodTextView = findViewById(R.id.addFoodToMyDailyRecipeList_createFoodTextView);
@@ -57,12 +59,6 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
         updateFragment();
         updateCreateFoodTextViewVisibility();
         setListener();
-    }
-
-    @Override
-    public void onBackPressed() {
-        searchFragment.onBack();
-        super.onBackPressed();
     }
 
     private void toastPrint(String information)
@@ -190,14 +186,19 @@ public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implem
 
     @Override
     public void onFoodImageClick(int clickedItemIndex) {
-        String result = viewModel.addFoodToMyDailyRecipeList(searchFragment.getShowList().getByIndex(clickedItemIndex));
-        if (result!=null)
+        if (!clickFoodImage)
         {
-            toastPrint(result);
-        }
-        else
-        {
-            finish();
+            clickFoodImage = true;
+            String result = viewModel.addFoodToMyDailyRecipeList(searchFragment.getShowList().getByIndex(clickedItemIndex));
+            if (result!=null)
+            {
+                toastPrint(result);
+                clickFoodImage = false;
+            }
+            else
+            {
+                finish();
+            }
         }
     }
 

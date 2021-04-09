@@ -109,7 +109,12 @@ public class RecipeWithDateViewModel extends ViewModel implements PropertyChange
     public void setShowDate(LocalDate showDate) {
         this.showDate = showDate;
         showDateText.setValue(this.showDate.getMonthValue()+"/"+this.showDate.getDayOfMonth());
-        showRecipe.setValue(systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate));
+        DailyRecipe dailyRecipe = systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate);
+        if (dailyRecipe==null)
+        {
+            dailyRecipe = new DailyRecipe(showDate);
+        }
+        showRecipe.setValue(dailyRecipe);
     }
 
     @Override

@@ -12,6 +12,10 @@ public class MyString {
             {
                 for (int i=0;i<searchList.length;i++)
                 {
+                    if (x+i>=basicList.length)
+                    {
+                        break;
+                    }
                     if (searchList[i]!=basicList[x+i])
                     {
                         break;

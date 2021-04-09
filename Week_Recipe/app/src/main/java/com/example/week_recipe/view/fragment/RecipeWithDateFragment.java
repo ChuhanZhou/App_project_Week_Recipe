@@ -38,6 +38,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     private DailyRecipeFragment fragment;
     private boolean clickAddButton;
     private boolean clickFoodImage;
+    private boolean showAnimation;
     //private RecyclerView foodListRecyclerView;
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -60,6 +61,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
+        showAnimation = false;
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_fragment));
         tabLayout = view.findViewById(R.id.fragment_recipeWithDate_tabLayout);
 
@@ -71,17 +73,17 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     }
 
     @Override
-    public void onStop() {
-        clickAddButton = false;
-        clickFoodImage = false;
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        clickAddButton = false;
-        clickFoodImage = false;
-        super.onStart();
+    public void onPause() {
+        new Thread(()->{
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            clickAddButton = false;
+            clickFoodImage = false;
+        }).start();
+        super.onPause();
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -91,12 +93,14 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
             @Override
             public void onChanged(String s) {
                 tabLayout.getTabAt(1).setText(s);
+                showAnimation = true;
             }
         });
         viewModel.getShowRecipe().observe(this, new Observer<DailyRecipe>() {
             @Override
             public void onChanged(DailyRecipe dailyRecipe) {
-                fragment.bind(dailyRecipe,RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
+                fragment.updateDailyRecipe(dailyRecipe,showAnimation);
+                showAnimation = false;
             }
         });
         viewModel.getFavouriteFoodList().observe(this, new Observer<FoodList>() {

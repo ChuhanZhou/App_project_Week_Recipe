@@ -46,11 +46,6 @@ public class SearchFoodFragment extends Fragment {
         return view;
     }
 
-    public void onBack()
-    {
-        fragment.onBack();
-    }
-
     public void bind(FoodList basicFoodList, FoodListAdapter.OnFoodListItemClickListener listener,boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
         this.basicFoodList = basicFoodList;

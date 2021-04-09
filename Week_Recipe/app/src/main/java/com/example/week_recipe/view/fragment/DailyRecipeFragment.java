@@ -24,7 +24,7 @@ public class DailyRecipeFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     private View view;
-    private View fragmentView;
+    FoodListFragment fragment;
     private TabLayout tabLayout;
     private DailyRecipe dailyRecipe;
     private FloatingActionButton addFoodButton;
@@ -43,7 +43,7 @@ public class DailyRecipeFragment extends Fragment {
     public void bind(DailyRecipe dailyRecipe, FoodListAdapter.OnFoodListItemClickListener listener, LiveData<FoodList> favouriteFoodList)
     {
         onFoodListItemClickListener = listener;
-        fragmentView = view.findViewById(R.id.fragment_dailyRecipe_fragment);
+        fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_dailyRecipe_fragment));
         tabLayout = view.findViewById(R.id.fragment_dailyRecipe_tabLayout);
         addFoodButton = view.findViewById(R.id.fragment_dailyRecipe_addFoodButton);
         this.dailyRecipe = dailyRecipe;
@@ -70,9 +70,28 @@ public class DailyRecipeFragment extends Fragment {
         });
     }
 
+    public void updateDailyRecipe(DailyRecipe dailyRecipe,boolean showAnimation)
+    {
+        this.dailyRecipe = dailyRecipe;
+        if (dailyRecipe!=null)
+        {
+            switch (tabPosition)
+            {
+                case 0:
+                    fragment.updateFoodList(this.dailyRecipe.getBreakfast(),showAnimation);
+                    break;
+                case 1:
+                    fragment.updateFoodList(this.dailyRecipe.getLunch(),showAnimation);
+                    break;
+                case 2:
+                    fragment.updateFoodList(this.dailyRecipe.getDinner(),showAnimation);
+                    break;
+            }
+        }
+    }
+
     private void updateFragment(LiveData<FoodList> favouriteFoodList)
     {
-        FoodListFragment fragment = FragmentManager.findFragment(fragmentView);
         if (dailyRecipe!=null)
         {
             switch (tabPosition)

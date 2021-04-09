@@ -197,9 +197,9 @@ public class SetFoodInformationFragment extends Fragment {
         }
         if (foodImage.getScaleType()==ImageView.ScaleType.FIT_CENTER)
         {
-            return new Food(foodNameEditText.getText().toString(),newFoodType,ingredientsList);
+            return new Food(foodNameTextView.getText().toString(),newFoodType,ingredientsList);
         }
-        return new Food(foodNameEditText.getText().toString(),newFoodType,ingredientsList,MyPicture.drawableToBitmap(foodImage.getDrawable()));
+        return new Food(foodNameTextView.getText().toString(),newFoodType,ingredientsList,MyPicture.drawableToBitmap(foodImage.getDrawable()));
     }
 
     @Nullable

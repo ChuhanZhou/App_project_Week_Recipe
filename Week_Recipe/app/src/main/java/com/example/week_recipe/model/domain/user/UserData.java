@@ -1,12 +1,16 @@
 package com.example.week_recipe.model.domain.user;
 
+import android.graphics.Bitmap;
+
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
+import com.example.week_recipe.utility.MyPicture;
 
 import java.util.ArrayList;
 
 public class UserData {
+    private String userImageId;
     private String email;
     private String userName;
     private RecipeList myDailyRecipeList;
@@ -15,6 +19,7 @@ public class UserData {
 
     public UserData(String email,String userName)
     {
+        userImageId = "userImage";
         this.email = email;
         this.userName = userName;
         myDailyRecipeList = new RecipeList();
@@ -70,6 +75,26 @@ public class UserData {
             }
         }
         return allFood;
+    }
+
+    public ArrayList<String> getAllImageId()
+    {
+        ArrayList<String> imageIdList = new ArrayList<>();
+        FoodList allFood = getAllFood();
+        for (int x=0;x<allFood.getSize();x++)
+        {
+            imageIdList.add(allFood.getByIndex(x).getImageId());
+        }
+        imageIdList.add(userImageId);
+        return imageIdList;
+    }
+
+    public Bitmap getUserImage() {
+        return MyPicture.getBitmapByImageId(userImageId);
+    }
+
+    public void setUserImage(Bitmap userImage) {
+        MyPicture.putBitmapByImageId(userImageId,userImage);
     }
 
     public void setUserName(String userName) {

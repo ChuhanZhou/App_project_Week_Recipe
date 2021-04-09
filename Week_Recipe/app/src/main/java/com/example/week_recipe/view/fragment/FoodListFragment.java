@@ -37,8 +37,10 @@ public class FoodListFragment extends Fragment{
         return view;
     }
 
-    public void onBack() {
+    @Override
+    public void onPause() {
         foodListAdapter.stopAnimation();
+        super.onPause();
     }
 
     public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
