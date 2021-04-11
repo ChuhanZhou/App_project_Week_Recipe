@@ -1,23 +1,29 @@
 package com.example.week_recipe.viewModel;
 
+import android.app.Application;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.google.gson.Gson;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-
-public class RecipeWithDateViewModel extends ViewModel implements PropertyChangeListener {
+import java.util.List;
+@RequiresApi(api = Build.VERSION_CODES.O)
+public class RecipeWithDateViewModel extends AndroidViewModel implements PropertyChangeListener {
 
     private final SystemModel systemModel;
     private LocalDate showDate;
@@ -26,8 +32,9 @@ public class RecipeWithDateViewModel extends ViewModel implements PropertyChange
     private final MutableLiveData<FoodList> favouriteFoodList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public RecipeWithDateViewModel()
+    public RecipeWithDateViewModel(Application application)
     {
+        super(application);
         //init
         systemModel = SystemModelManager.getSystemModelManager();
         showDateText = new MutableLiveData<>();

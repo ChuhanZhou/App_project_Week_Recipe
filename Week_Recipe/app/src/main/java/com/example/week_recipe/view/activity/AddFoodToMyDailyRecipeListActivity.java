@@ -27,7 +27,7 @@ import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.utility.UiDataCache;
 
 import java.time.LocalDate;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class AddFoodToMyDailyRecipeListActivity extends AppCompatActivity implements FoodListAdapter.OnFoodListItemClickListener {
 
     private SearchFoodFragment searchFragment;

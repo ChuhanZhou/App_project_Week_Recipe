@@ -18,6 +18,8 @@ public class RecipeList {
         recipeList = new ArrayList<>();
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean hasDailyRecipe(DailyRecipe dailyRecipe)
     {
         if (dailyRecipe.getDate()!=null)
@@ -27,6 +29,7 @@ public class RecipeList {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String add(DailyRecipe newDailyRecipe)
     {
         if (newDailyRecipe!=null)
@@ -40,6 +43,8 @@ public class RecipeList {
         return "Can't input null";
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DailyRecipe getByDate(LocalDate date)
     {
         if (date!=null)
@@ -63,6 +68,7 @@ public class RecipeList {
         }
         return null;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public RecipeList getOneWeek(LocalDate dateOfWeek)
@@ -92,6 +98,7 @@ public class RecipeList {
         return menu;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String update(DailyRecipe dailyRecipe)
     {
         if (dailyRecipe.getDate()!=null)
@@ -119,6 +126,7 @@ public class RecipeList {
         return "Can't find the recipe in index " + index;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void remove(DailyRecipe dailyRecipe)
     {
         if (dailyRecipe.getDate()!=null)
@@ -132,6 +140,7 @@ public class RecipeList {
         recipeList.remove(index);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public RecipeList copy()
     {
         RecipeList copy = new RecipeList();

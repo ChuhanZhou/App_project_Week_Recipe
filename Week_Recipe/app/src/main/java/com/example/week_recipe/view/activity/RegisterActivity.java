@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void init()
     {
-        loginModel = LoginModelManager.getLoginModelManager();
+        loginModel = LoginModelManager.getLoginModelManager(getApplicationContext());
     }
 
     private void bind()

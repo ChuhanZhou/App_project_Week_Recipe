@@ -1,14 +1,35 @@
 package com.example.week_recipe.model.domain.recipe;
 
+import android.os.Build;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.week_recipe.dao.converter.LocalDateConverter;
 import com.example.week_recipe.model.domain.food.FoodList;
+import com.google.android.material.timepicker.TimeFormat;
+import com.google.gson.Gson;
+import com.google.gson.annotations.JsonAdapter;
 
 import java.time.LocalDate;
 import java.util.Date;
 
+//@Entity(tableName = "dailyRecipe_table")
+
 public class DailyRecipe {
-    private LocalDate date;
+    //@PrimaryKey(autoGenerate = true)
+    //private int id;
+    //@TypeConverters(LocalDateConverter.class)
+    private String date;
+    //@Embedded
     private FoodList breakfast;
+    //@Embedded
     private FoodList lunch;
+    //@Embedded
     private FoodList dinner;
 
     public DailyRecipe(LocalDate date, FoodList breakfast, FoodList lunch, FoodList dinner) {
@@ -26,7 +47,7 @@ public class DailyRecipe {
 
     public DailyRecipe(LocalDate date)
     {
-        this.date = date;
+        this.date = LocalDateConverter.localDateToString(date);
         this.breakfast = new FoodList();
         this.lunch = new FoodList();
         this.dinner = new FoodList();
@@ -37,8 +58,9 @@ public class DailyRecipe {
         this(null);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public LocalDate getDate() {
-        return date;
+        return LocalDateConverter.stringToLocalDate(date);
     }
 
     public FoodList getBreakfast() {
@@ -53,8 +75,9 @@ public class DailyRecipe {
         return dinner;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.date = LocalDateConverter.localDateToString(date);
     }
 
     public void setBreakfast(FoodList breakfast) {
@@ -84,7 +107,8 @@ public class DailyRecipe {
         return menu;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DailyRecipe copy() {
-        return new DailyRecipe(date, breakfast.copy(), lunch.copy(), dinner.copy());
+        return new DailyRecipe(LocalDateConverter.stringToLocalDate(date), breakfast.copy(), lunch.copy(), dinner.copy());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity;
 import com.example.week_recipe.view.activity.FoodInformationActivity;
 import com.example.week_recipe.viewModel.RecipeWithDateViewModel;
@@ -30,7 +32,8 @@ import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.tabs.TabLayout;
 import java.time.LocalDate;
-
+import java.util.List;
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.OnFoodListItemClickListener {
 
     private RecipeWithDateViewModel viewModel;
@@ -47,17 +50,17 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FoodList foodList0 = new FoodList();
-        foodList0.add(new Food("鸡汤", FoodType.Meat,new IngredientsList()));
-        foodList0.add(new Food("西红柿蛋汤", FoodType.Vegetarian,new IngredientsList()));
-        FoodList foodList1 = new FoodList();
-        foodList1.add(new Food("红烧牛肉", FoodType.Meat,new IngredientsList()));
-        foodList1.add(new Food("炒青菜", FoodType.Vegetarian,new IngredientsList()));
-        FoodList foodList2 = new FoodList();
-        foodList2.add(new Food("水煮白菜", FoodType.Vegetarian,new IngredientsList()));
-        foodList2.add(new Food("麻婆豆腐", FoodType.Other,new IngredientsList()));
-        DailyRecipe dailyRecipe = new DailyRecipe(LocalDate.now(),foodList0,foodList1,foodList2);
-        SystemModelManager.getSystemModelManager().addDailyRecipe(dailyRecipe);
+        //FoodList foodList0 = new FoodList();
+        //foodList0.add(new Food("鸡汤", FoodType.Meat,new IngredientsList()));
+        //foodList0.add(new Food("西红柿蛋汤", FoodType.Vegetarian,new IngredientsList()));
+        //FoodList foodList1 = new FoodList();
+        //foodList1.add(new Food("红烧牛肉", FoodType.Meat,new IngredientsList()));
+        //foodList1.add(new Food("炒青菜", FoodType.Vegetarian,new IngredientsList()));
+        //FoodList foodList2 = new FoodList();
+        //foodList2.add(new Food("水煮白菜", FoodType.Vegetarian,new IngredientsList()));
+        //foodList2.add(new Food("麻婆豆腐", FoodType.Other,new IngredientsList()));
+        //DailyRecipe dailyRecipe = new DailyRecipe(LocalDate.now(),foodList0,foodList1,foodList2);
+        //SystemModelManager.getSystemModelManager().addDailyRecipe(dailyRecipe);
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
@@ -69,6 +72,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         viewModel = new ViewModelProvider(this).get(RecipeWithDateViewModel.class);
         fragment.bind(viewModel.getShowRecipe().getValue(),RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
         bind();
+
         return view;
     }
 

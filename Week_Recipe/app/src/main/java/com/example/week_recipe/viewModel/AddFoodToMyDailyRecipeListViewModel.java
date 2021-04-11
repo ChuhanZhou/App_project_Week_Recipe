@@ -1,5 +1,8 @@
 package com.example.week_recipe.viewModel;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,7 +16,7 @@ import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class AddFoodToMyDailyRecipeListViewModel extends ViewModel implements PropertyChangeListener {
     private final SystemModel systemModel;
     private final MutableLiveData<FoodList> basicFoodListForSearch;

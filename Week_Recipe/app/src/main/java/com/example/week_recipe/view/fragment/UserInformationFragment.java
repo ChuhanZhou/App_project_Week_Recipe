@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,7 +21,7 @@ import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.utility.MyPicture;
 import com.google.gson.Gson;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class UserInformationFragment extends Fragment {
 
     private ImageView userImage;

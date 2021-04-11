@@ -1,5 +1,6 @@
 package com.example.week_recipe.view.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -23,7 +25,7 @@ import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class HomePageActivity extends AppCompatActivity {
 
     private SystemModel systemModel;

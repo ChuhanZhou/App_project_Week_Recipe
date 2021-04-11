@@ -36,10 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         bind();
         setListener();
 
-        loginModel.register("Email@gmail.com","0");
-        accountEditText.setText("Email@gmail.com");
-        passwordEditText.setText("0");
-        clickLoginButton();
+        //loginModel.register("Email@gmail.com","0");
+        //accountEditText.setText("1");
+        //passwordEditText.setText("1");
+        //clickLoginButton();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void init()
     {
-        loginModel = LoginModelManager.getLoginModelManager();
+        loginModel = LoginModelManager.getLoginModelManager(getApplicationContext());
     }
 
     private void bind()

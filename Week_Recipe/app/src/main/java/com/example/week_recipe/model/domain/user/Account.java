@@ -1,6 +1,13 @@
 package com.example.week_recipe.model.domain.user;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "account_table")
 public class Account {
+    @PrimaryKey
+    @NonNull
     private String email;
     private String password;
 
@@ -8,6 +15,10 @@ public class Account {
     {
         this.email = email;
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {

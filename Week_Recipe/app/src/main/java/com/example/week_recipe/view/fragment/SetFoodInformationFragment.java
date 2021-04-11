@@ -3,9 +3,11 @@ package com.example.week_recipe.view.fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -27,7 +29,7 @@ import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyPicture;
 import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class SetFoodInformationFragment extends Fragment {
 
     private final static int IMAGE_FROM_PHOTO = 1001;

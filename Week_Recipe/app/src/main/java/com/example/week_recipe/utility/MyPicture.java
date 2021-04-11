@@ -9,6 +9,9 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.week_recipe.model.SystemModelManager;
 
@@ -122,24 +125,26 @@ public class MyPicture {
 
     public static void clearUselessBitmapInInternalStorage(ArrayList<String> imageIdList)
     {
-        String emailHashCode = ""+SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode();
-        ArrayList<String> usefulFileList = new ArrayList<>();
-        for (int x=0;x<imageIdList.size();x++)
-        {
-            usefulFileList.add(emailHashCode + imageIdList.get(x) + ".png");
-        }
-
-        String[] fileList = context.fileList();
-
-        for (String fileName : fileList) {
-            if (!usefulFileList.contains(fileName))
+        new Thread(()->{
+            String emailHashCode = ""+SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode();
+            ArrayList<String> usefulFileList = new ArrayList<>();
+            for (int x=0;x<imageIdList.size();x++)
             {
-                String[] part = fileName.split("\\.");
-                if (part[0].split("_")[0].equals(emailHashCode)&&part[part.length - 1].equals("png"))
+                usefulFileList.add(emailHashCode + imageIdList.get(x) + ".png");
+            }
+
+            String[] fileList = context.fileList();
+
+            for (String fileName : fileList) {
+                if (!usefulFileList.contains(fileName))
                 {
-                    context.deleteFile(fileName);
+                    String[] part = fileName.split("_");
+                    if (part[0].equals(emailHashCode)&&part[1].equals("foodImage"))
+                    {
+                        context.deleteFile(fileName);
+                    }
                 }
             }
-        }
+        }).start();
     }
 }

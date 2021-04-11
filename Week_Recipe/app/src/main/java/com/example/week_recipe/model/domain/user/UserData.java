@@ -1,22 +1,50 @@
 package com.example.week_recipe.model.domain.user;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.week_recipe.dao.converter.ArrayListOfRecipeListConverter;
+import com.example.week_recipe.dao.converter.FoodListConverter;
+import com.example.week_recipe.dao.converter.IngredientsListConverter;
+import com.example.week_recipe.dao.converter.RecipeListConverter;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.utility.MyPicture;
 
 import java.util.ArrayList;
-
+@Entity(tableName = "userData_table")
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class UserData {
     private String userImageId;
+    @PrimaryKey
+    @NonNull
     private String email;
     private String userName;
+    @TypeConverters(RecipeListConverter.class)
     private RecipeList myDailyRecipeList;
+    @TypeConverters(ArrayListOfRecipeListConverter.class)
     private ArrayList<RecipeList> favoriteWeekRecipeList;
+    @TypeConverters(FoodListConverter.class)
     private FoodList favoriteFoodList;
 
+    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,ArrayList<RecipeList> favoriteWeekRecipeList,FoodList favoriteFoodList)
+    {
+        this.userImageId = userImageId;
+        this.email = email;
+        this.userName = userName;
+        this.myDailyRecipeList = myDailyRecipeList;
+        this.favoriteWeekRecipeList = favoriteWeekRecipeList;
+        this.favoriteFoodList = favoriteFoodList;
+    }
+    @Ignore
     public UserData(String email,String userName)
     {
         userImageId = "userImage";
@@ -93,6 +121,11 @@ public class UserData {
         return MyPicture.getBitmapByImageId(userImageId);
     }
 
+    @NonNull
+    public String getUserImageId() {
+        return userImageId;
+    }
+
     public void setUserImage(Bitmap userImage) {
         MyPicture.putBitmapByImageId(userImageId,userImage);
     }
@@ -123,7 +156,7 @@ public class UserData {
         return null;
     }
 
-    public String updateFavoriteWeekRecipe(RecipeList oldRecipeList,RecipeList newRecipeList)
+    public String updateFavoriteWeekRecipe(RecipeList oldRecipeList, RecipeList newRecipeList)
     {
         if (oldRecipeList!=null&&newRecipeList!=null)
         {
@@ -162,13 +195,11 @@ public class UserData {
 
     public UserData copy()
     {
-        UserData copy = new UserData(email,userName);
-        copy.myDailyRecipeList = myDailyRecipeList.copy();
+        ArrayList<RecipeList> copyList = new ArrayList<>();
         for (int x=0;x<favoriteWeekRecipeList.size();x++)
         {
-            copy.favoriteWeekRecipeList.add(favoriteWeekRecipeList.get(x).copy());
+            copyList.add(favoriteWeekRecipeList.get(x).copy());
         }
-        copy.favoriteFoodList = favoriteFoodList.copy();
-        return copy;
+        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),copyList,favoriteFoodList.copy());
     }
 }

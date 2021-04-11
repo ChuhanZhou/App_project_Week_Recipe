@@ -1,16 +1,37 @@
 package com.example.week_recipe.model.domain.food;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.example.week_recipe.utility.MyString;
 
 import java.util.ArrayList;
-
+//@Entity(tableName = "foodList_table")
 public class FoodList {
-
+    //@PrimaryKey(autoGenerate = true)
+    private int id;
+    //@Ignore
     private ArrayList<Food> foodList;
-
+    //@Ignore
     public FoodList()
     {
         foodList = new ArrayList<>();
+    }
+
+    public FoodList(int id)
+    {
+        this.id = id;
+        foodList = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean hasFood(Food food)
@@ -122,7 +143,7 @@ public class FoodList {
 
     public FoodList copy()
     {
-        FoodList copy = new FoodList();
+        FoodList copy = new FoodList(id);
         for (int x=0;x<foodList.size();x++)
         {
             copy.add(foodList.get(x).copy());

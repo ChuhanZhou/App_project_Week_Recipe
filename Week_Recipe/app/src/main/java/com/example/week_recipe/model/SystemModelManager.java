@@ -1,19 +1,22 @@
 package com.example.week_recipe.model;
 
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.model.domain.user.UserData;
+import com.example.week_recipe.utility.MyPicture;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class SystemModelManager implements SystemModel{
     private static SystemModelManager systemModelManager;
     private PropertyChangeSupport property;
@@ -37,6 +40,7 @@ public class SystemModelManager implements SystemModel{
     @Override
     public void setUserData(UserData userData) {
         this.userData = userData;
+        //Food.setEmail(userData.getEmail());
     }
 
     @Override
@@ -54,7 +58,6 @@ public class SystemModelManager implements SystemModel{
         return result;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public String addDailyRecipeList(RecipeList recipeList, LocalDate dateOfWeek) {
         LocalDate date = dateOfWeek.minusDays(dateOfWeek.getDayOfWeek().getValue());
@@ -122,6 +125,7 @@ public class SystemModelManager implements SystemModel{
         }
         result = updateFood(userData,oldFood,newFood);
         property.firePropertyChange("updateFood",oldFood,newFood);
+        MyPicture.clearUselessBitmapInInternalStorage(userData.copy().getAllImageId());
         return result;
     }
 
