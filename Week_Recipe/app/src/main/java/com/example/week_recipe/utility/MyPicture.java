@@ -74,6 +74,7 @@ public class MyPicture {
         return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private static void saveBitmapToInternalStorage(Bitmap bitmap, String imageId) {
         String fileName = SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode() + imageId + ".png";
         File directory = context.getFilesDir();
@@ -87,6 +88,7 @@ public class MyPicture {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private static Bitmap readBitmapFromInternalStorage(String imageId) {
         String fileName = SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode() + imageId + ".png";
         try {
@@ -100,6 +102,7 @@ public class MyPicture {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static boolean hasImage(String imageId)
     {
         String fileName = SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode() + imageId + ".png";
@@ -108,6 +111,7 @@ public class MyPicture {
         return bitmapCache.containsKey(imageId)||file.exists();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static Bitmap getBitmapByImageId(String imageId)
     {
         if (!bitmapCache.containsKey(imageId))
@@ -117,12 +121,14 @@ public class MyPicture {
         return bitmapCache.get(imageId);
     }
 
-    public static void putBitmapByImageId(String imageId,Bitmap bitmap)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void putBitmapByImageId(String imageId, Bitmap bitmap)
     {
         bitmapCache.put(imageId,bitmap);
         new Thread(()->{saveBitmapToInternalStorage(bitmap, imageId);}).start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void clearUselessBitmapInInternalStorage(ArrayList<String> imageIdList)
     {
         new Thread(()->{

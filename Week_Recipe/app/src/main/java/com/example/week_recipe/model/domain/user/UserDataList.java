@@ -1,5 +1,9 @@
 package com.example.week_recipe.model.domain.user;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyString;
 
@@ -19,6 +23,7 @@ public class UserDataList {
         return getByEmail(email)!=null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String add(UserData newUserData)
     {
         if (newUserData!=null)
@@ -33,6 +38,7 @@ public class UserDataList {
         return "Can't input null";
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public UserData getByEmail(String email)
     {
         for(int i=0;i<userDataList.size();i++)
@@ -45,6 +51,7 @@ public class UserDataList {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public UserDataList getByUserName(String userName)
     {
         UserDataList searchList = new UserDataList();
@@ -58,6 +65,7 @@ public class UserDataList {
         return searchList;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void remove(UserData userData)
     {
         if (hasUserData(userData.getEmail()))

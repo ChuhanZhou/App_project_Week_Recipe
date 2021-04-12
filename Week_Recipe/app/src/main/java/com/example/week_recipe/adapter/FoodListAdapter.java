@@ -1,5 +1,6 @@
 package com.example.week_recipe.adapter;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,10 +34,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     private final boolean hasLike;
     private boolean showAnimation;
     private int numberOfAnimation;
+    private int lastAnimationPosition;
 
     public FoodListAdapter(FoodList foodList, OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, FoodList favouriteFoodList) {
         showAnimation = true;
         numberOfAnimation = 0;
+        lastAnimationPosition = -1;
         viewHolderList = new ArrayList<>();
         if (foodList == null) {
             this.foodList = new FoodList();
@@ -87,8 +91,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         } else {
             this.foodList = foodList;
         }
+        lastAnimationPosition = -1;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateItem(ViewHolder holder, Food food)
     {
         holder.foodName.setText(food.getName());
@@ -114,14 +120,12 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         return viewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         updateItem(holder,foodList.getByIndex(position));
 
-        if (showAnimation)
-        {
-            new Thread(()->{showItemView(0.125);}).start();
-        }
+        new Thread(()->{showItemView(holder,0.125,position);}).start();
     }
 
     @Override
@@ -133,44 +137,41 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         return viewHolderList.get(position);
     }
 
-    private void showItemView(double second)
+    private void showItemView(ViewHolder holder,double second,int newPosition)
     {
-        int index = numberOfAnimation;
-        numberOfAnimation++;
-        if (showAnimation)
+        if (newPosition>lastAnimationPosition)
         {
-            //make a delay
-            TranslateAnimation waitAnimation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, (index+1)*-1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-            waitAnimation.setDuration((long) ((index+1)*second*1000));
-
-            TranslateAnimation translateAnimation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, (index+2)*-1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-            translateAnimation.setDuration((long) ((index+2)*second*1000));
-            AnimationSet animationSet = new AnimationSet(true);
-            animationSet.addAnimation(waitAnimation);
-            animationSet.addAnimation(translateAnimation);
-            viewHolderList.get(viewHolderList.size()-1).view.setAnimation(translateAnimation);
-            try {
-                Thread.sleep(translateAnimation.getDuration());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            for (int i=0;i<index;i++)
+            lastAnimationPosition = newPosition;
+            int index = numberOfAnimation;
+            numberOfAnimation++;
+            if (showAnimation)
             {
-                viewHolderList.get(i).view.getAnimation().cancel();
+                //make a delay
+                TranslateAnimation waitAnimation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, (index+1)*-1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+                waitAnimation.setDuration((long) ((index+1)*second*1000));
+
+                TranslateAnimation translateAnimation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, (index+2)*-1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+                translateAnimation.setDuration((long) ((index+2)*second*1000));
+                AnimationSet animationSet = new AnimationSet(true);
+                animationSet.addAnimation(waitAnimation);
+                animationSet.addAnimation(translateAnimation);
+                holder.view.setAnimation(translateAnimation);
+                try {
+                    Thread.sleep(translateAnimation.getDuration());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            numberOfAnimation--;
         }
-        numberOfAnimation--;
     }
 
     public void stopAnimation()

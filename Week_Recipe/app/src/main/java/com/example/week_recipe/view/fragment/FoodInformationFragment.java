@@ -1,8 +1,10 @@
 package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -27,7 +29,7 @@ public class FoodInformationFragment extends Fragment {
         return view;
     }
 
-    @SuppressLint("ResourceType")
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void bind(Food food)
     {
         ImageView foodImage = view.findViewById(R.id.fragment_foodInformation_foodImage);

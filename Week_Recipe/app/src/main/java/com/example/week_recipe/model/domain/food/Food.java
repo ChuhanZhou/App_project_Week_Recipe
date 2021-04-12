@@ -82,6 +82,7 @@ public class Food {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(Food newFood)
     {
         MyPicture.putBitmapByImageId(imageId,MyPicture.getBitmapByImageId(newFood.imageId));
@@ -92,6 +93,7 @@ public class Food {
         ingredientsList = newFood.ingredientsList;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean hasImage()
     {
         return MyPicture.hasImage(imageId);
@@ -106,6 +108,7 @@ public class Food {
     //    return userEmail;
     //}
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap getImage() {
         return MyPicture.getBitmapByImageId(imageId);
     }

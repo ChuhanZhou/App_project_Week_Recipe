@@ -32,6 +32,7 @@ public class DailyRecipe {
     //@Embedded
     private FoodList dinner;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DailyRecipe(LocalDate date, FoodList breakfast, FoodList lunch, FoodList dinner) {
         this(date);
         if (breakfast != null) {
@@ -45,6 +46,7 @@ public class DailyRecipe {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DailyRecipe(LocalDate date)
     {
         this.date = LocalDateConverter.localDateToString(date);
@@ -53,6 +55,7 @@ public class DailyRecipe {
         this.dinner = new FoodList();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DailyRecipe()
     {
         this(null);

@@ -11,6 +11,7 @@ import com.example.week_recipe.model.domain.user.Account;
 import com.example.week_recipe.model.domain.user.AccountList;
 import com.example.week_recipe.model.domain.user.UserData;
 import com.example.week_recipe.model.domain.user.UserDataList;
+import com.example.week_recipe.utility.MyString;
 import com.google.gson.Gson;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class LoginModelManager implements LoginModel {
@@ -44,9 +45,8 @@ public class LoginModelManager implements LoginModel {
         {
             //SystemModelManager.getSystemModelManager().setUserData(userDataList.getByEmail(email));
             new Thread(()->{
-
                 SystemModelManager.getSystemModelManager().setUserData(repository.getUserDataByEmail(email));
-                System.out.println(new Gson().toJson(repository.getUserDataByEmail(email)));
+                MyString.saveStringToInternalStorage(email,"AutoLogin");
             }).start();
             return null;
         }
