@@ -26,12 +26,13 @@
     <TextView
         android:id="@+id/fragment_foodInformation_textView1"
         android:layout_width="110dp"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:text="@string/input_FoodName"
         android:textSize="20sp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
@@ -55,10 +56,11 @@
     <TextView
         android:id="@+id/fragment_foodInformation_textView2"
         android:layout_width="110dp"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
         android:gravity="center_vertical"
         android:text="@string/input_FoodType"
         android:textSize="20sp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fragment_foodInformation_textView1"
         app:layout_constraintHeight_default="percent"
@@ -79,33 +81,20 @@
         app:layout_constraintTop_toTopOf="@+id/fragment_foodInformation_textView2" />
 
 
-    <TextView
-        android:id="@+id/fragment_foodInformation_textView3"
-        android:layout_width="160dp"
+    <fragment
+        android:id="@+id/fragment_foodInformation_ingredientsListFragment"
+        android:name="com.example.week_recipe.view.fragment.IngredientsListFragment"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/input_FoodIngredients"
-        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.475"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fragment_foodInformation_textView2"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/fragment_foodInformation_textView2"
         app:layout_constraintTop_toBottomOf="@+id/fragment_foodInformation_textView2"
-        app:layout_constraintVertical_bias="0" />
-
-    <TextView
-        android:id="@+id/fragment_foodInformation_foodIngredientsTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/nullData"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/fragment_foodInformation_foodImage"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_foodInformation_textView3"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.45" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/fragment_ingredients_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

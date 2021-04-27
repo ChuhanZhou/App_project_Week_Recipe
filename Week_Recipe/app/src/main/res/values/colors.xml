@@ -13,6 +13,7 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="background_1">#ecfcf1</color>
+    <color name="background_2">#E91E63</color>
     <color name="imageBackground">#ecfcf1</color>
     <color name="textView_Background1">#888888</color>
     <color name="textView_Text1">#ffffff</color>

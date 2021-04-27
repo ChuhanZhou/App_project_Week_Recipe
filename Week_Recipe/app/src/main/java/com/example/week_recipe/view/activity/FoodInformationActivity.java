@@ -25,6 +25,7 @@ public class FoodInformationActivity extends AppCompatActivity {
     private Food showFood;
     private boolean clickEditButton;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

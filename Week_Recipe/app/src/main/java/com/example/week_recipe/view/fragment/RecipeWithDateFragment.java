@@ -49,19 +49,6 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //FoodList foodList0 = new FoodList();
-        //foodList0.add(new Food("鸡汤", FoodType.Meat,new IngredientsList()));
-        //foodList0.add(new Food("西红柿蛋汤", FoodType.Vegetarian,new IngredientsList()));
-        //FoodList foodList1 = new FoodList();
-        //foodList1.add(new Food("红烧牛肉", FoodType.Meat,new IngredientsList()));
-        //foodList1.add(new Food("炒青菜", FoodType.Vegetarian,new IngredientsList()));
-        //FoodList foodList2 = new FoodList();
-        //foodList2.add(new Food("水煮白菜", FoodType.Vegetarian,new IngredientsList()));
-        //foodList2.add(new Food("麻婆豆腐", FoodType.Other,new IngredientsList()));
-        //DailyRecipe dailyRecipe = new DailyRecipe(LocalDate.now(),foodList0,foodList1,foodList2);
-        //SystemModelManager.getSystemModelManager().addDailyRecipe(dailyRecipe);
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
         showAnimation = false;

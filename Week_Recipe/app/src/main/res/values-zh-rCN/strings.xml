@@ -13,6 +13,7 @@
     <string name="button_register">注册</string>
     <string name="button_save">保存</string>
     <string name="button_back">返回</string>
+    <string name="button_add">添加</string>
 
     <string name="text_registerTitle">新用户</string>
     <string name="text_noFood">无食物</string>
