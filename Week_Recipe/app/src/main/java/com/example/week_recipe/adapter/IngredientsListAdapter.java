@@ -15,18 +15,18 @@ import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Ingredients;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.view.fragment.HorizontalIngredientsListFragment;
+import com.example.week_recipe.view.fragment.IngredientsListFragment;
 
 import java.util.ArrayList;
 
 public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsListAdapter.ViewHolder>{
     private IngredientsList ingredientsList;
-    //private ArrayList<IngredientsListAdapter.ViewHolder> viewHolderList;
-    private ArrayList<HorizontalIngredientsListFragment> lineList;
-    private final HorizontalIngredientsListAdapter.OnItemClickListener clickListener;
-    private final boolean needSet;
-    //private boolean afterBind;
+    private ArrayList<IngredientsList> lineList;
+    private ArrayList<HorizontalIngredientsListFragment> fragmentList;
+    private HorizontalIngredientsListAdapter.OnItemClickListener clickListener;
+    private boolean needSet;
     private boolean countLock;
-    private int itemCount;
+    private boolean showLine;
 
     public IngredientsListAdapter(IngredientsList ingredientsList,boolean needSet,HorizontalIngredientsListAdapter.OnItemClickListener clickListener)
     {
@@ -37,25 +37,34 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     public void updateIngredientsList(IngredientsList ingredientsList)
     {
+        fragmentList = new ArrayList<>();
         if (ingredientsList==null)
         {
             this.ingredientsList = new IngredientsList();
-            itemCount = 1;
         }
         else
         {
             this.ingredientsList = ingredientsList;
-            itemCount = 2;
         }
-        //viewHolderList = new ArrayList<>();
         lineList = new ArrayList<>();
-        //afterBind = false;
+        showLine = false;
         countLock = false;
     }
 
-    private void updateItem(IngredientsListAdapter.ViewHolder holder, IngredientsList ingredientsList)
+    private void updateItem(IngredientsListAdapter.ViewHolder holder, IngredientsList ingredientsList,IngredientsList overflowList)
     {
-        holder.fragment.bind(ingredientsList,needSet,clickListener);
+        holder.fragment.bind(ingredientsList,overflowList,needSet,clickListener);
+        holder.fragment.setHeight(showLine);
+    }
+
+    private void showLine()
+    {
+        showLine = true;
+        for (int x=0;x<fragmentList.size();x++)
+        {
+            fragmentList.get(x).setHeight(showLine);
+            fragmentList.get(x).reShow();
+        }
     }
 
     @NonNull
@@ -64,50 +73,86 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.fragment_horizontal_ingredients_list, parent, false);
         IngredientsListAdapter.ViewHolder viewHolder = new IngredientsListAdapter.ViewHolder(view);
+        System.out.println("viewHolderCreate");
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (lineList.size()<=position&&!countLock)
+        if (fragmentList.size()<=position&&!countLock)
         {
-            if (lineList.size()>0&&lineList.get(lineList.size()-1).getOverflowList().getSize()==0)
+            if (fragmentList.size()>0&&fragmentList.get(fragmentList.size()-1).getOverflowList().getSize()==0)
             {
-                //itemCount = lineList.size()+1;
                 countLock = true;
-                System.out.println("===============locked");
+                System.out.println("===============locked==============");
+                showLine();
             }
-            else
-            {
-                itemCount++;
-            }
-            lineList.add(holder.fragment);
-            System.out.println("count:"+itemCount);
+            fragmentList.add(holder.fragment);
 
             if (position!=0)
             {
-                IngredientsList overflowList = lineList.get(position-1).getOverflowList();
-                updateItem(holder,overflowList);
+                IngredientsList overflowList = fragmentList.get(position-1).getOverflowList();
+                lineList.add(position-1,fragmentList.get(position-1).getShowList());
+                updateItem(holder,overflowList,null);
             }
             else
             {
-                updateItem(holder,ingredientsList);
+                updateItem(holder,ingredientsList,null);
+
             }
-            System.out.println("holder bind new:"+position);
         }
-        else if (lineList.size()>position)
+        else
         {
-            holder.fragment = lineList.get(position);
-            holder.fragment.reShow();
-            System.out.println("holder bind old:"+position);
+            if (lineList.size()>position&&position>=0)
+            {
+                IngredientsList overflowList = new IngredientsList();
+                for (int x=position+1;x<lineList.size();x++)
+                {
+                    for (int i=0;i<lineList.get(x).getSize();i++)
+                    {
+                        overflowList.add(lineList.get(x).getByIndex(i));
+                    }
+                }
+                updateItem(holder,lineList.get(position),overflowList);
+                fragmentList.set(position,holder.fragment);
+            }
+            else
+            {
+                updateItem(holder,null,new IngredientsList());
+            }
         }
+        System.out.println("line:"+position+"all:"+(fragmentList.size()+1));
+    }
+
+    public IngredientsList getShowListByLine(int index)
+    {
+        if (fragmentList.size()>index&&index>=0)
+        {
+            return fragmentList.get(index).getShowList();
+        }
+        return null;
+    }
+
+    public IngredientsList getOverFlowListByLine(int index)
+    {
+        if (fragmentList.size()>index&&index>=0)
+        {
+            return fragmentList.get(index).getOverflowList();
+        }
+        return null;
+    }
+
+    public boolean isCountLock() {
+        return countLock;
+    }
+
+    public int getSizeOfFragmentList() {
+        return fragmentList.size();
     }
 
     @Override
     public int getItemCount() {
-
-        //afterBind = false;
-        return lineList.size()+1;
+        return fragmentList.size()+1;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -120,7 +165,6 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
         @Override
         public void onClick(View v) {
-            System.out.println("==========");
         }
 
         public HorizontalIngredientsListFragment getFragment() {

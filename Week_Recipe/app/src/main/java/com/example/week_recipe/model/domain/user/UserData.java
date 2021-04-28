@@ -12,13 +12,13 @@ import androidx.room.TypeConverters;
 
 import com.example.week_recipe.dao.converter.ArrayListOfRecipeListConverter;
 import com.example.week_recipe.dao.converter.FoodListConverter;
-import com.example.week_recipe.dao.converter.IngredientsListConverter;
+import com.example.week_recipe.dao.converter.LocalDateTimeConverter;
 import com.example.week_recipe.dao.converter.RecipeListConverter;
 import com.example.week_recipe.model.domain.food.FoodList;
-import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.utility.MyPicture;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 @Entity(tableName = "userData_table")
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -27,6 +27,7 @@ public class UserData {
     @PrimaryKey
     @NonNull
     private String email;
+    private String updateTime;
     private String userName;
     @TypeConverters(RecipeListConverter.class)
     private RecipeList myDailyRecipeList;
@@ -43,6 +44,7 @@ public class UserData {
         this.myDailyRecipeList = myDailyRecipeList;
         this.favoriteWeekRecipeList = favoriteWeekRecipeList;
         this.favoriteFoodList = favoriteFoodList;
+        updateTime = LocalDateTimeConverter.localDateTimeToString(LocalDateTime.now());
     }
     @Ignore
     public UserData(String email,String userName)
@@ -53,6 +55,7 @@ public class UserData {
         myDailyRecipeList = new RecipeList();
         favoriteWeekRecipeList = new ArrayList<>();
         favoriteFoodList = new FoodList();
+        updateTime = LocalDateTimeConverter.localDateTimeToString(LocalDateTime.now());
     }
 
     private RecipeList removeAllDate(RecipeList recipeList)
@@ -124,6 +127,22 @@ public class UserData {
     @NonNull
     public String getUserImageId() {
         return userImageId;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public LocalDateTime getUpdateTimeInLocalDate() {
+        return LocalDateTimeConverter.stringToLocalDateTime(updateTime);
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public void updateTime() {
+        this.updateTime = LocalDateTimeConverter.localDateTimeToString(LocalDateTime.now());
     }
 
     public void setUserImage(Bitmap userImage) {

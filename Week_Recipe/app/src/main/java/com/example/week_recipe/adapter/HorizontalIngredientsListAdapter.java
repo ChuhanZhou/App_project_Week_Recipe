@@ -1,5 +1,6 @@
 package com.example.week_recipe.adapter;
 
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +28,15 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
     private final boolean needSet;
     private final HorizontalIngredientsListAdapter.OnItemClickListener clickListener;
     private boolean checkLast;
+    private RecyclerView recyclerView;
 
-    public HorizontalIngredientsListAdapter(IngredientsList ingredientsList,boolean needSet,HorizontalIngredientsListAdapter.OnItemClickListener clickListener)
+    public HorizontalIngredientsListAdapter(IngredientsList ingredientsList,RecyclerView recyclerView,boolean checkLast,boolean needSet,HorizontalIngredientsListAdapter.OnItemClickListener clickListener)
     {
-        updateIngredientsList(ingredientsList,true);
+        updateIngredientsList(ingredientsList,checkLast);
         this.needSet = needSet;
         this.clickListener= clickListener;
         viewHolderList = new ArrayList<>();
+        this.recyclerView = recyclerView;
     }
 
     public void updateIngredientsList(IngredientsList ingredientsList,boolean checkLast)
@@ -56,13 +59,17 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
         {
             holder.name.setText(ingredients.getName());
         }
-        //else if (checkLast)
-        //{
-        //    if (ingredientsList!=null&&ingredientsList.getSize()>0)
-        //    {
-        //        holder.name.setText(ingredientsList.getByIndex(ingredientsList.getSize()-1).getName());
-        //    }
-        //}
+        else if (checkLast)
+        {
+            if (ingredientsList!=null&&ingredientsList.getSize()>0)
+            {
+                holder.name.setText(ingredientsList.getByIndex(ingredientsList.getSize()-1).getName());
+            }
+            else
+            {
+                holder.cardView.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     @NonNull
@@ -78,11 +85,10 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
     public void onBindViewHolder(@NonNull HorizontalIngredientsListAdapter.ViewHolder holder, int position) {
         viewHolderList.add(holder);
         updateItem(holder,ingredientsList.getByIndex(position));
-        if (ingredientsList.getByIndex(position)!=null&&!checkLast)
+        if (ingredientsList.getByIndex(position)!=null)
         {
             System.out.println("bind:"+ingredientsList.getByIndex(position).getName());
         }
-
     }
 
     @Override
@@ -122,10 +128,16 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
             {
                 delete.setVisibility(View.INVISIBLE);
             }
+            if (recyclerView.getLayoutParams().height!=ViewGroup.LayoutParams.WRAP_CONTENT)
+            {
+                //cardView.setVisibility(View.INVISIBLE);
+                cardView.setCardBackgroundColor(0x00000000);
+                name.setVisibility(View.INVISIBLE);
+                delete.setVisibility(View.INVISIBLE);
+            }
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("------------------");
                     clickListener.onItemClick(ingredientsList.getByIndex(getAdapterPosition()));
                 }
             });

@@ -22,9 +22,12 @@ import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyString;
 import com.example.week_recipe.view.layoutManager.MyLinearLayoutManager;
 
+import java.util.ArrayList;
+
 public class IngredientsListFragment extends Fragment implements HorizontalIngredientsListAdapter.OnItemClickListener {
     private View view;
-    private static IngredientsList ingredientsList;
+    private IngredientsList ingredientsList;
+    private ArrayList<IngredientsList> showList;
     private IngredientsListAdapter adapter;
     private RecyclerView ingredientsListView;
     private TextView noDataTextView;
@@ -50,6 +53,7 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
 
     public void bind(IngredientsList ingredientsList, boolean needSet)
     {
+        showList = new ArrayList<>();
         this.ingredientsList = ingredientsList;
         this.needSet = needSet;
         adapter = new IngredientsListAdapter(this.ingredientsList,needSet,this);
@@ -62,10 +66,12 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
         setListener();
 
         ingredientsListView.hasFixedSize();
+        ingredientsListView.setNestedScrollingEnabled(false);
         MyLinearLayoutManager layoutManager = new MyLinearLayoutManager(view.getContext());
-        layoutManager.setScrollEnabled(false);
+        layoutManager.setScrollEnabled(true);
         ingredientsListView.setLayoutManager(layoutManager);
         ingredientsListView.setAdapter(adapter);
+        System.out.println("adapter:"+ingredientsList.getSize());
     }
 
     private void setListener()

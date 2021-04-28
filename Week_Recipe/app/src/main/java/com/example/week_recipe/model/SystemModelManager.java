@@ -53,6 +53,7 @@ public class SystemModelManager implements SystemModel{
         String result = userData.getMyDailyRecipeList().add(dailyRecipe);
         if (result==null)
         {
+            userData.updateTime();
             property.firePropertyChange("updateDailyRecipeList",null,dailyRecipe);
         }
         return result;
@@ -76,6 +77,7 @@ public class SystemModelManager implements SystemModel{
                     dailyRecipe = new DailyRecipe(date,new FoodList(),new FoodList(),new FoodList());
                 }
                 userData.getMyDailyRecipeList().add(dailyRecipe);
+                userData.updateTime();
                 property.firePropertyChange("updateDailyRecipeList",null,dailyRecipe);
             }
             return null;
@@ -97,6 +99,7 @@ public class SystemModelManager implements SystemModel{
                 {
                     userData.getMyDailyRecipeList().add(dailyRecipe);
                 }
+                userData.updateTime();
                 property.firePropertyChange("updateDailyRecipeList",null,dailyRecipe);
                 return null;
             }
@@ -108,6 +111,7 @@ public class SystemModelManager implements SystemModel{
     @Override
     public void removeDailyRecipe(DailyRecipe dailyRecipe) {
         userData.getMyDailyRecipeList().remove(dailyRecipe);
+        userData.updateTime();
         property.firePropertyChange("updateDailyRecipeList",null,dailyRecipe);
     }
 
@@ -124,6 +128,7 @@ public class SystemModelManager implements SystemModel{
             return result;
         }
         result = updateFood(userData,oldFood,newFood);
+        userData.updateTime();
         property.firePropertyChange("updateFood",oldFood,newFood);
         MyPicture.clearUselessBitmapInInternalStorage(userData.copy().getAllImageId());
         return result;
@@ -216,6 +221,7 @@ public class SystemModelManager implements SystemModel{
         String result = userData.getFavoriteFoodList().add(favoriteFood);
         if (result == null)
         {
+            userData.updateTime();
             property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood);
         }
         return result;
@@ -224,26 +230,31 @@ public class SystemModelManager implements SystemModel{
     @Override
     public void removeFavoriteFood(Food favoriteFood) {
         userData.getFavoriteFoodList().remove(favoriteFood);
+        userData.updateTime();
         property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood);
     }
 
     @Override
     public String addFavoriteWeekRecipe(RecipeList recipeList) {
+        userData.updateTime();
         return userData.addFavoriteWeekRecipe(recipeList);
     }
 
     @Override
     public String updateFavoriteWeekRecipe(RecipeList oldRecipeList, RecipeList newRecipeList) {
+        userData.updateTime();
         return userData.updateFavoriteWeekRecipe(oldRecipeList, newRecipeList);
     }
 
     @Override
     public void removeFavoriteWeekRecipe(RecipeList recipeList) {
+        userData.updateTime();
         userData.removeFavoriteWeekRecipeByWeekRecipe(recipeList);
     }
 
     @Override
     public void removeFavoriteWeekRecipe(int index) {
+        userData.updateTime();
         userData.removeFavoriteWeekRecipeByIndex(index);
     }
 

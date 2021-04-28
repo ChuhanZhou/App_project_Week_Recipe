@@ -104,7 +104,7 @@ public class FoodInformationFragment extends Fragment {
         ingredientsList.add(new Ingredients("test16"));
         ingredientsList.add(new Ingredients("test17"));
 
-        ingredientsListFragment.bind(ingredientsList,false);
+        ingredientsListFragment.bind(ingredientsList,true);
         //ingredientsListFragment.bind(food.getIngredientsList(),false);
     }
 }
