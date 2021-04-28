@@ -3,7 +3,6 @@ package com.example.week_recipe.view.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,11 +23,12 @@ import com.example.week_recipe.view.layoutManager.MyLinearLayoutManager;
 
 import java.util.ArrayList;
 
-public class IngredientsListFragment extends Fragment implements HorizontalIngredientsListAdapter.OnItemClickListener {
+public class IngredientsListFragment extends Fragment implements HorizontalIngredientsListAdapter.OnItemClickListener,IngredientsListAdapter.OnLoadFinishListener {
     private View view;
     private IngredientsList ingredientsList;
     private ArrayList<IngredientsList> showList;
-    private IngredientsListAdapter adapter;
+    private IngredientsListAdapter loadAdapter;
+    private RecyclerView listLoadView;
     private RecyclerView ingredientsListView;
     private TextView noDataTextView;
     private EditText nameEditText;
@@ -56,7 +56,8 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
         showList = new ArrayList<>();
         this.ingredientsList = ingredientsList;
         this.needSet = needSet;
-        adapter = new IngredientsListAdapter(this.ingredientsList,needSet,this);
+        loadAdapter = new IngredientsListAdapter(this.ingredientsList,this);
+        listLoadView = view.findViewById(R.id.fragment_ingredientsList_loadView);
         ingredientsListView = view.findViewById(R.id.fragment_ingredientsList_recyclerView);
         noDataTextView = view.findViewById(R.id.fragment_ingredientsList_noDataTextView);
         nameEditText = view.findViewById(R.id.fragment_ingredientsList_nameEditText);
@@ -65,13 +66,19 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
         updateStatus();
         setListener();
 
+        //show view
         ingredientsListView.hasFixedSize();
         ingredientsListView.setNestedScrollingEnabled(false);
         MyLinearLayoutManager layoutManager = new MyLinearLayoutManager(view.getContext());
         layoutManager.setScrollEnabled(true);
         ingredientsListView.setLayoutManager(layoutManager);
-        ingredientsListView.setAdapter(adapter);
-        System.out.println("adapter:"+ingredientsList.getSize());
+        //load view
+        listLoadView.hasFixedSize();
+        listLoadView.setNestedScrollingEnabled(false);
+        MyLinearLayoutManager loadLayoutManager = new MyLinearLayoutManager(view.getContext());
+        loadLayoutManager.setScrollEnabled(false);
+        listLoadView.setLayoutManager(loadLayoutManager);
+        listLoadView.setAdapter(loadAdapter);
     }
 
     private void setListener()
@@ -103,11 +110,13 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
         if (ingredientsList==null||ingredientsList.getSize()==0)
         {
             noDataTextView.setVisibility(View.VISIBLE);
+            listLoadView.setVisibility(View.GONE);
             ingredientsListView.setVisibility(View.GONE);
         }
         else
         {
             noDataTextView.setVisibility(View.GONE);
+            listLoadView.setVisibility(View.VISIBLE);
             ingredientsListView.setVisibility(View.VISIBLE);
         }
     }
@@ -128,8 +137,8 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
     private void updateIngredientsList()
     {
         setNoDataTextViewVisibility();
-        adapter.updateIngredientsList(ingredientsList);
-        ingredientsListView.setAdapter(adapter);
+        loadAdapter.updateIngredientsList(ingredientsList,null);
+        listLoadView.setAdapter(loadAdapter);
     }
 
     public IngredientsList getIngredientsList()
@@ -164,5 +173,11 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
             ingredientsList.remove(ingredients);
             updateIngredientsList();
         }
+    }
+
+    @Override
+    public void onLoadFinish(ArrayList<IngredientsList> lineList) {
+        IngredientsListAdapter adapter = new IngredientsListAdapter(lineList,needSet,this);
+        ingredientsListView.setAdapter(adapter);
     }
 }

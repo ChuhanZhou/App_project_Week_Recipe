@@ -14,17 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Week_Recipe">
         <activity android:name=".view.activity.AddFoodToMyDailyRecipeListActivity"/>
-        <activity android:name=".view.activity.EditFoodInformationActivity" />
+        <activity
+            android:name=".view.activity.EditFoodInformationActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.RegisterActivity" />
         <activity android:name=".view.activity.HomePageActivity" />
-        <activity android:name=".view.activity.FoodInformationActivity" />
+        <activity
+            android:name=".view.activity.FoodInformationActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

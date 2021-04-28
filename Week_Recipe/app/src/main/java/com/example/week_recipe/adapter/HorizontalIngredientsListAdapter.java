@@ -8,6 +8,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -85,10 +86,6 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
     public void onBindViewHolder(@NonNull HorizontalIngredientsListAdapter.ViewHolder holder, int position) {
         viewHolderList.add(holder);
         updateItem(holder,ingredientsList.getByIndex(position));
-        if (ingredientsList.getByIndex(position)!=null)
-        {
-            System.out.println("bind:"+ingredientsList.getByIndex(position).getName());
-        }
     }
 
     @Override
@@ -138,13 +135,34 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (needSet)
+                    {
+                        removeAnimation(cardView,0.5);
+                    }
                     clickListener.onItemClick(ingredientsList.getByIndex(getAdapterPosition()));
                 }
             });
         }
 
+        private void removeAnimation(View view,double second)
+        {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1,0,1,0,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+            scaleAnimation.setDuration((long) (second * 1000));
+
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+            alphaAnimation.setDuration((long) (second * 1000));
+
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(scaleAnimation);
+            animationSet.addAnimation(alphaAnimation);
+
+            view.clearAnimation();
+            view.setAnimation(animationSet);
+        }
+
         @Override
         public void onClick(View v) {
+
         }
 
         public View getView() {

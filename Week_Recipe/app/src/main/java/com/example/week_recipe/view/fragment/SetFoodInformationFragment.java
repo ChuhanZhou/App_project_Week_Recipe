@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,7 +39,7 @@ public class SetFoodInformationFragment extends Fragment {
     private EditText foodNameEditText;
     private TextView foodNameTextView;
     private Spinner foodTypeSpinner;
-    private TextView foodIngredientsTextView;
+    private IngredientsListFragment ingredientsListFragment;
     private IngredientsList ingredientsList;
     private FloatingActionButton chooseImageButton;
     private boolean lockName;
@@ -76,7 +77,7 @@ public class SetFoodInformationFragment extends Fragment {
         foodNameEditText = view.findViewById(R.id.fragment_setFoodInformation_foodNameEditText);
         foodNameTextView = view.findViewById(R.id.fragment_setFoodInformation_foodNameTextView);
         foodTypeSpinner = view.findViewById(R.id.fragment_setFoodInformation_foodTypeSpinner);
-        foodIngredientsTextView = view.findViewById(R.id.fragment_setFoodInformation_foodIngredientsTextView);
+        ingredientsListFragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_setFoodInformation_ingredientsListFragment));
         chooseImageButton = view.findViewById(R.id.fragment_setFoodInformation_chooseImageButton);
         setListener();
         updateNameView();
@@ -109,22 +110,7 @@ public class SetFoodInformationFragment extends Fragment {
                 break;
         }
 
-        if (!ingredientsList.isEmpty())
-        {
-            System.out.println(2);
-            String foodIngredients = "";
-            foodIngredients +=  ingredientsList.getByIndex(0).getName();
-
-            for (int x=1;x<ingredientsList.getSize();x++)
-            {
-                foodIngredients += ","+ingredientsList.getByIndex(x).getName();
-            }
-            foodIngredientsTextView.setText(foodIngredients);
-        }
-        else
-        {
-            foodIngredientsTextView.setText(R.string.text_noIngredient);
-        }
+        ingredientsListFragment.bind(ingredientsList,true);
     }
 
     public void bind(String foodName,boolean lockName)
