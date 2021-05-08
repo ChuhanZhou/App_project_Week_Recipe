@@ -1,7 +1,8 @@
 package com.example.week_recipe.model;
 
+import android.graphics.Bitmap;
+
 import com.example.week_recipe.model.domain.food.Food;
-import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.model.domain.user.UserData;
@@ -12,6 +13,9 @@ import java.time.LocalDate;
 public interface SystemModel extends NamedPropertyChangeSubject {
     void setUserData(UserData userData);
     UserData getUserData();
+
+    void updateUserName(String userName);
+    void updateUserImage(Bitmap userImage);
 
     String addDailyRecipe(DailyRecipe dailyRecipe);
     String addDailyRecipeList(RecipeList recipeList, LocalDate dateOfWeek);

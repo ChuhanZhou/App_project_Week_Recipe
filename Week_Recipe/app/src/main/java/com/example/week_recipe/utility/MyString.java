@@ -1,22 +1,27 @@
 package com.example.week_recipe.utility;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Build;
 
-import androidx.annotation.RequiresApi;
+import com.example.week_recipe.model.SystemModelManager;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 
 public class MyString {
     private static Context context;
 
     public static void setContext(Context context) {
         MyString.context = context;
+    }
+
+    public static boolean hasStringInInternalStorage(String fileId)
+    {
+        String fileName = fileId + ".txt";
+        File directory = context.getFilesDir();
+        File file = new File(directory, fileName);
+        return file.exists();
     }
 
     public static void saveStringToInternalStorage(String s, String fileId) {
@@ -43,6 +48,15 @@ public class MyString {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void deleteStringInInternalStorage(String fileId)
+    {
+        String fileName = fileId + ".txt";
+        if (hasStringInInternalStorage(fileId))
+        {
+            context.deleteFile(fileName);
+        }
     }
 
     public static boolean haveOrInside(String searchWord, String basicWord)

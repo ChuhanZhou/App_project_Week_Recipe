@@ -2,21 +2,12 @@ package com.example.week_recipe.model.domain.recipe;
 
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.room.Embedded;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 import com.example.week_recipe.dao.converter.LocalDateConverter;
 import com.example.week_recipe.model.domain.food.FoodList;
-import com.google.android.material.timepicker.TimeFormat;
-import com.google.gson.Gson;
-import com.google.gson.annotations.JsonAdapter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 //@Entity(tableName = "dailyRecipe_table")
 

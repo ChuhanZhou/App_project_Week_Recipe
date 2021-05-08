@@ -3,4 +3,9 @@
         <attr name="fullscreenBackgroundColor" format="color" />
         <attr name="fullscreenTextColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="MyTheme">
+        <attr name="baseTitleTextColor" format="reference|color" />
+        <attr name="titleDividerColor" format="reference|color" />
+        <attr name="titleDividerLine" format="dimension" /> 
+    </declare-styleable>
 </resources>

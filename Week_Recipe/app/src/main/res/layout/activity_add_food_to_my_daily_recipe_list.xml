@@ -10,13 +10,13 @@
         android:id="@+id/addFoodToMyDailyRecipeList_setFoodInformationFragment"
         android:name="com.example.week_recipe.view.fragment.SetFoodInformationFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/addFoodToMyDailyRecipeList_createFoodTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_set_food_information"/>
+        tools:layout="@layout/fragment_set_food_information" />
 
     <fragment
         android:id="@+id/addFoodToMyDailyRecipeList_searchFragment"

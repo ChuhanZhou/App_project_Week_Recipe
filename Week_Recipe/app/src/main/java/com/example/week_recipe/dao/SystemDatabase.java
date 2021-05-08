@@ -6,9 +6,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.week_recipe.dao.join.FoodListFoodJoin;
-import com.example.week_recipe.model.domain.food.Food;
-import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.user.Account;
 import com.example.week_recipe.model.domain.user.UserData;
 

@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.adapter.HorizontalIngredientsListAdapter;
+import com.example.week_recipe.view.adapter.HorizontalIngredientsListAdapter;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.view.layoutManager.MyLinearLayoutManager;
 

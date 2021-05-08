@@ -1,12 +1,7 @@
 package com.example.week_recipe.utility;
 
-import android.app.Activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 public class UiDataCache {
     private static final Map<String,Object> dataCache = new HashMap<>();

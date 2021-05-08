@@ -73,7 +73,7 @@ public class RecipeList {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public RecipeList getOneWeek(LocalDate dateOfWeek)
     {
-        LocalDate date = dateOfWeek.minusDays(dateOfWeek.getDayOfWeek().getValue());
+        LocalDate date = dateOfWeek.minusDays(dateOfWeek.getDayOfWeek().getValue()-1);
         RecipeList weekRecipe = new RecipeList();
         for (int x=0;x<7;x++)
         {

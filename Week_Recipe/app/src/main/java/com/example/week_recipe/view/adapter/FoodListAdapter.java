@@ -1,4 +1,4 @@
-package com.example.week_recipe.adapter;
+package com.example.week_recipe.view.adapter;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -105,6 +105,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         }
         else
         {
+            holder.foodImage.setImageResource(R.drawable.ic_action_food);
             holder.foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
         changeLikeState(holder,favouriteFoodList!=null&&favouriteFoodList.hasFood(food));

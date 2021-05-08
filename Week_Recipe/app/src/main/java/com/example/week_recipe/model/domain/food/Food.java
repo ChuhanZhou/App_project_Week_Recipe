@@ -3,19 +3,10 @@ package com.example.week_recipe.model.domain.food;
 import android.graphics.Bitmap;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
 
-import com.example.week_recipe.dao.converter.FoodTypeConverter;
-import com.example.week_recipe.dao.converter.IngredientsListConverter;
-import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.utility.MyPicture;
 
 import java.time.LocalDateTime;

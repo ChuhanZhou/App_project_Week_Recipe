@@ -6,8 +6,6 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
-import com.google.gson.Gson;
-
 import java.time.LocalDate;
 
 public class LocalDateConverter {

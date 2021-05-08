@@ -1,7 +1,6 @@
 package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -18,31 +17,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity;
 import com.example.week_recipe.view.activity.FoodInformationActivity;
 import com.example.week_recipe.viewModel.RecipeWithDateViewModel;
-import com.example.week_recipe.adapter.FoodListAdapter;
-import com.example.week_recipe.model.SystemModelManager;
+import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
-import com.example.week_recipe.model.domain.food.FoodType;
-import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.tabs.TabLayout;
+
 import java.time.LocalDate;
-import java.util.List;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.OnFoodListItemClickListener {
 
+    private View view;
     private RecipeWithDateViewModel viewModel;
     private TabLayout tabLayout;
     private DailyRecipeFragment fragment;
+    private PopupCalendarFragment popupCalendarFragment;
+
     private boolean clickAddButton;
     private boolean clickFoodImage;
     private boolean showAnimation;
-    //private RecyclerView foodListRecyclerView;
+    private boolean showCalendar;
+    private boolean clickDateTab;
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -50,16 +50,13 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
+        view = inflater.inflate(R.layout.fragment_recipe_with_date, container, false);
         showAnimation = false;
-        fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_fragment));
-        tabLayout = view.findViewById(R.id.fragment_recipeWithDate_tabLayout);
-
-        tabLayout.selectTab(tabLayout.getTabAt(1));
+        showCalendar = true;
         viewModel = new ViewModelProvider(this).get(RecipeWithDateViewModel.class);
-        fragment.bind(viewModel.getShowRecipe().getValue(),RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
         bind();
-
+        setListener();
+        changeVisibilityOfPopupCalenderLayout();
         return view;
     }
 
@@ -77,13 +74,53 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         super.onPause();
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
+    private void changeVisibilityOfPopupCalenderLayout()
+    {
+        if (showCalendar)
+        {
+            showCalendar = false;
+            popupCalendarFragment.getView().setVisibility(View.GONE);
+        }
+        else
+        {
+            showCalendar = true;
+            popupCalendarFragment.getView().setVisibility(View.VISIBLE);
+        }
+    }
+
     private void bind()
     {
+        fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_fragment));
+        tabLayout = view.findViewById(R.id.fragment_recipeWithDate_tabLayout);
+        popupCalendarFragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_popupCalenderFragment));
+        //calendarView = view.findViewById(R.id.fragment_recipeWithDate_calendarView);
+
+        tabLayout.selectTab(tabLayout.getTabAt(1));
+        clickDateTab = true;
+        fragment.bind(viewModel.getShowRecipe().getValue(),RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
+        popupCalendarFragment.bind(true,viewModel.getShowDate());
+    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    private void setListener()
+    {
+        popupCalendarFragment.getView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeVisibilityOfPopupCalenderLayout();
+            }
+        });
+        popupCalendarFragment.getDate().observe(this, new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate date) {
+                viewModel.setShowDate(date);
+            }
+        });
         viewModel.getShowDateText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 tabLayout.getTabAt(1).setText(s);
+                popupCalendarFragment.setDate(viewModel.getShowDate());
                 showAnimation = true;
             }
         });
@@ -108,11 +145,14 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
                 {
                     case 0:
                         viewModel.setShowDate(viewModel.getShowDate().minusDays(1));
+                        clickDateTab = false;
                         break;
                     case 1:
+
                         break;
                     case 2:
                         viewModel.setShowDate(viewModel.getShowDate().plusDays(1));
+                        clickDateTab = false;
                         break;
                 }
                 tabLayout.selectTab(tabLayout.getTabAt(1));
@@ -125,7 +165,14 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if (clickDateTab&&tabLayout.getSelectedTabPosition()==1)
+                {
+                    changeVisibilityOfPopupCalenderLayout();
+                }
+                else if (tabLayout.getSelectedTabPosition()==1)
+                {
+                    clickDateTab = true;
+                }
             }
         });
         fragment.getAddFoodButton().setOnClickListener(new View.OnClickListener() {

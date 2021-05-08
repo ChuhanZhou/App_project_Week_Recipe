@@ -4,7 +4,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyString;
 
 import java.util.ArrayList;

@@ -3,7 +3,6 @@ package com.example.week_recipe.view.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,11 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.adapter.FoodListAdapter;
-import com.example.week_recipe.model.domain.food.Food;
+import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.FoodList;
-import com.example.week_recipe.model.domain.food.FoodType;
-import com.example.week_recipe.model.domain.food.IngredientsList;
 
 public class FoodListFragment extends Fragment{
 

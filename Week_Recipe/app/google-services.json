@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "231558683650",
+    "project_id": "week-recipe",
+    "storage_bucket": "week-recipe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231558683650:android:37f4d68e55caf560669b1b",
+        "android_client_info": {
+          "package_name": "com.example.week_recipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231558683650-n04cdao4nts5801u67p5v538o0atf9o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.week_recipe",
+            "certificate_hash": "277b14ec26708df9d61a6d783b51219e0ab47172"
+          }
+        },
+        {
+          "client_id": "231558683650-c1veg821uo24qt6ljreo2gqtjldegdma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoy45wbdbX5cPX5CfhuaXNT83XhVZKzI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231558683650-c1veg821uo24qt6ljreo2gqtjldegdma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

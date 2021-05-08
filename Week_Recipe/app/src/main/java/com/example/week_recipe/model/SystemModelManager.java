@@ -1,11 +1,10 @@
 package com.example.week_recipe.model;
 
-import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
@@ -40,12 +39,25 @@ public class SystemModelManager implements SystemModel{
     @Override
     public void setUserData(UserData userData) {
         this.userData = userData;
+        MyPicture.loadAllBitmapToCache(userData.getAllImageId());
         //Food.setEmail(userData.getEmail());
     }
 
     @Override
     public UserData getUserData() {
         return userData.copy();
+    }
+
+    @Override
+    public void updateUserName(String userName) {
+        userData.setUserName(userName);
+        property.firePropertyChange("updateUserBasicInformation",null,userData.copy());
+    }
+
+    @Override
+    public void updateUserImage(Bitmap userImage) {
+        userData.setUserImage(userImage);
+        property.firePropertyChange("updateUserBasicInformation",null,userData.copy());
     }
 
     @Override

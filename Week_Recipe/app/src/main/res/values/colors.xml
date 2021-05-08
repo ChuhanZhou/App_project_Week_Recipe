@@ -12,13 +12,24 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+
     <color name="background_1">#ecfcf1</color>
     <color name="background_2">#E91E63</color>
     <color name="imageBackground">#ecfcf1</color>
     <color name="textView_Background1">#888888</color>
     <color name="textView_Text1">#ffffff</color>
+    <color name="textView_Text2">#666666</color>
+    <color name="textView_Text3">#000000</color>
     <color name="like_yellow">#FFEB3B</color>
     <color name="like_white">#FFFFFF</color>
     <color name="button_onClick">#aaaaaa</color>
     <color name="button_background1">#E91E63</color>
+    <color name="button_background_logout">#FF0000</color>
+    <color name="background_myCalendar_item_normal">#ffffff</color>
+    <color name="background_myCalendar_item_select">@color/button_background1</color>
+
+    <color name="myTheme_colorPrimary">#FF6200EE</color>
+    <color name="myTheme_colorAccent">#E91E63</color>
+    <color name="myTheme_navigationBarColor">#000000</color>
+    <color name="myTheme_colorPrimaryVariant">#FF3700B3</color>
 </resources>

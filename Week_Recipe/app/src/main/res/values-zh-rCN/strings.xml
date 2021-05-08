@@ -14,13 +14,23 @@
     <string name="button_save">保存</string>
     <string name="button_back">返回</string>
     <string name="button_add">添加</string>
+    <string name="button_logout">切换用户</string>
 
+    <string name="text_loading">加载中。。。</string>
     <string name="text_registerTitle">新用户</string>
     <string name="text_noFood">无食物</string>
     <string name="text_noIngredient">无食材</string>
     <string name="text_choosePlease">请选择</string>
     <string name="text_inputFoodName">请输入菜名</string>
     <string name="text_createNewFood">创建新菜</string>
+
+    <string name="calendar_monday_simple">一</string>
+    <string name="calendar_tuesday_simple">二</string>
+    <string name="calendar_wednesday_simple">三</string>
+    <string name="calendar_thursday_simple">四</string>
+    <string name="calendar_friday_simple">五</string>
+    <string name="calendar_saturday_simple">六</string>
+    <string name="calendar_sunday_simple">日</string>
 
     <string name="foodType_meat">荤菜</string>
     <string name="foodType_vegetarian">素菜</string>

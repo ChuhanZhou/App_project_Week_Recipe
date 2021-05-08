@@ -1,7 +1,6 @@
 package com.example.week_recipe.view.fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,8 +15,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -28,7 +25,6 @@ import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyPicture;
-import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetFoodInformationFragment extends Fragment {

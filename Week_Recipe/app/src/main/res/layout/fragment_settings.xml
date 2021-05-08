@@ -44,4 +44,23 @@
         app:layout_constraintStart_toEndOf="@+id/fragment_settings_userNameEditText"
         app:layout_constraintTop_toTopOf="@+id/fragment_settings_userNameEditText"
         app:layout_constraintVertical_bias="0" />
+
+    <Button
+        android:id="@+id/fragment_settings_logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/button_background_logout"
+        android:text="@string/button_logout"
+        android:padding="5dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

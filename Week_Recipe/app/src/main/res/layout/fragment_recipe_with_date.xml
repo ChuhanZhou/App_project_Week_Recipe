@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.RecipeWithDateFragment">
 
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fragment_recipeWithDate_tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,4 +40,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_recipeWithDate_tabLayout"
         tools:layout="@layout/fragment_daily_recipe" />
+
+    <fragment
+        android:id="@+id/fragment_recipeWithDate_popupCalenderFragment"
+        android:name="com.example.week_recipe.view.fragment.PopupCalendarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_recipeWithDate_tabLayout"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout="@layout/fragment_popup_calendar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

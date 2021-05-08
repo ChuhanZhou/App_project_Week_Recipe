@@ -36,7 +36,7 @@ public class UserData {
     @TypeConverters(FoodListConverter.class)
     private FoodList favoriteFoodList;
 
-    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,ArrayList<RecipeList> favoriteWeekRecipeList,FoodList favoriteFoodList)
+    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,ArrayList<RecipeList> favoriteWeekRecipeList,FoodList favoriteFoodList,String updateTime)
     {
         this.userImageId = userImageId;
         this.email = email;
@@ -44,18 +44,23 @@ public class UserData {
         this.myDailyRecipeList = myDailyRecipeList;
         this.favoriteWeekRecipeList = favoriteWeekRecipeList;
         this.favoriteFoodList = favoriteFoodList;
-        updateTime = LocalDateTimeConverter.localDateTimeToString(LocalDateTime.now());
+        this.updateTime = updateTime;
     }
     @Ignore
     public UserData(String email,String userName)
     {
-        userImageId = "userImage";
+        userImageId = "_userImage";
         this.email = email;
         this.userName = userName;
         myDailyRecipeList = new RecipeList();
         favoriteWeekRecipeList = new ArrayList<>();
         favoriteFoodList = new FoodList();
-        updateTime = LocalDateTimeConverter.localDateTimeToString(LocalDateTime.now());
+        updateTime = "0.0.0 0:0:0";
+    }
+
+    public boolean hasUserImage()
+    {
+        return MyPicture.hasImage(userImageId);
     }
 
     private RecipeList removeAllDate(RecipeList recipeList)
@@ -219,6 +224,6 @@ public class UserData {
         {
             copyList.add(favoriteWeekRecipeList.get(x).copy());
         }
-        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),copyList,favoriteFoodList.copy());
+        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),copyList,favoriteFoodList.copy(),updateTime);
     }
 }

@@ -129,6 +129,20 @@ public class MyPicture {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void loadAllBitmapToCache(ArrayList<String> imageIdList)
+    {
+        new Thread(()->{
+            for (int x=0;x<imageIdList.size();x++)
+            {
+                if (hasImage(imageIdList.get(x)))
+                {
+                    getBitmapByImageId(imageIdList.get(x));
+                }
+            }
+        }).start();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void clearUselessBitmapInInternalStorage(ArrayList<String> imageIdList)
     {
         new Thread(()->{

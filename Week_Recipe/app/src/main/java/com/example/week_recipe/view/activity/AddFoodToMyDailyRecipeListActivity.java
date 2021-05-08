@@ -22,7 +22,7 @@ import com.example.week_recipe.R;
 import com.example.week_recipe.view.fragment.SearchFoodFragment;
 import com.example.week_recipe.view.fragment.SetFoodInformationFragment;
 import com.example.week_recipe.viewModel.AddFoodToMyDailyRecipeListViewModel;
-import com.example.week_recipe.adapter.FoodListAdapter;
+import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.utility.UiDataCache;
 

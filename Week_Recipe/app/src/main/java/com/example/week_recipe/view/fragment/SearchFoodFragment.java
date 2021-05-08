@@ -18,7 +18,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.adapter.FoodListAdapter;
+import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.utility.MyString;
 

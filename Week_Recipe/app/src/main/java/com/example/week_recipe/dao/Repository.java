@@ -5,19 +5,14 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.week_recipe.dao.converter.FoodTypeConverter;
-import com.example.week_recipe.dao.converter.IngredientsListConverter;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
-import com.example.week_recipe.model.domain.food.Food;
-import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.user.Account;
 import com.example.week_recipe.model.domain.user.AccountList;
 import com.example.week_recipe.model.domain.user.UserData;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,7 +41,6 @@ public class Repository implements PropertyChangeListener {
         //foodListFoodJoinDao = systemDatabase.foodListFoodJoinDao();
 
         executorService = Executors.newFixedThreadPool(2);
-
         systemModel = SystemModelManager.getSystemModelManager();
         systemModel.addListener("updateDailyRecipeList",this);
         systemModel.addListener("updateFavoriteFoodList",this);

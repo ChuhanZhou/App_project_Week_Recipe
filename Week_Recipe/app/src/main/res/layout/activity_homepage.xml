@@ -20,7 +20,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/title_homepage">
+            app:title="@string/title_homepage"
+            android:translationZ="5dp"
+            tools:targetApi="lollipop">
         </com.google.android.material.appbar.MaterialToolbar>
 
         <fragment

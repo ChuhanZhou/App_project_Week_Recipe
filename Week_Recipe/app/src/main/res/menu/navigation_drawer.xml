@@ -9,6 +9,10 @@
             android:id="@+id/nav_todayRecipeFragment"
             android:icon="@drawable/ic_action_home"
             android:title="@string/title_homepage" />
+        <item
+            android:id="@+id/nav_userInformationFragment"
+            android:icon="@drawable/ic_action_user_info"
+            android:title="@string/title_myInformation" />
     </group>
     <group
         android:id="@+id/other">

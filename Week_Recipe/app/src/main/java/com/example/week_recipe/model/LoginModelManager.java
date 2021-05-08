@@ -10,7 +10,6 @@ import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.model.domain.user.Account;
 import com.example.week_recipe.model.domain.user.AccountList;
 import com.example.week_recipe.model.domain.user.UserData;
-import com.example.week_recipe.model.domain.user.UserDataList;
 import com.example.week_recipe.utility.MyString;
 import com.google.gson.Gson;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -43,7 +42,6 @@ public class LoginModelManager implements LoginModel {
     public String login(String email, String password) {
         if (accountList.checkPassword(email, password))
         {
-            //SystemModelManager.getSystemModelManager().setUserData(userDataList.getByEmail(email));
             new Thread(()->{
                 SystemModelManager.getSystemModelManager().setUserData(repository.getUserDataByEmail(email));
                 MyString.saveStringToInternalStorage(email,"AutoLogin");
@@ -61,8 +59,32 @@ public class LoginModelManager implements LoginModel {
         {
             repository.insertAccount(newAccount);
             repository.insertUserData(new UserData(email,"User" + newAccount.hashCode()));
+
             //result = userDataList.add(new UserData(email,"User" + newAccount.hashCode()));
         }
         return result;
+    }
+
+    @Override
+    public void addAccountInfo(String email,String password,String userName) {
+        Account account = new Account(email, password);
+        if (!accountList.hasAccount(email))
+        {
+            accountList.addAccount(account);
+            repository.insertAccount(account);
+            repository.insertUserData(new UserData(email,userName));
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if (accountList.checkPassword(email, password))
+        {
+            new Thread(()->{
+                SystemModelManager.getSystemModelManager().setUserData(repository.getUserDataByEmail(email));
+            }).start();
+            MyString.saveStringToInternalStorage(email,"AutoLogin");
+        }
     }
 }

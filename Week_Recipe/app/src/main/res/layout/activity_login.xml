@@ -10,26 +10,12 @@
     <ImageView
         android:id="@+id/login_background1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:background="@color/background_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/login_background2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.6"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/login_userPictureCardView"
@@ -38,98 +24,32 @@
         app:cardBackgroundColor="#888888"
         app:cardCornerRadius="100dp"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/login_background1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/login_background1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
         tools:ignore="VectorDrawableCompat">
+
         <ImageView
             android:id="@+id/login_userPicture"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/ic_launcher_foreground"
-            android:src="@drawable/user_picture_background"/>
+            android:src="@drawable/user_picture_background" />
     </androidx.cardview.widget.CardView>
 
-
     <TextView
-        android:id="@+id/login_accountText"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/input_account"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_background1" />
-
-    <TextView
-        android:id="@+id/login_passwordText"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:gravity="center_vertical"
-        android:text="@string/input_password"
-        android:textSize="20sp"
-        android:minWidth="100dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintStart_toStartOf="@+id/login_accountText"
-        app:layout_constraintTop_toBottomOf="@+id/login_accountText" />
-
-    <EditText
-        android:id="@+id/login_accountEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:maxLength="50"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5"
-        app:layout_constraintBottom_toBottomOf="@+id/login_accountText"
-        app:layout_constraintStart_toEndOf="@+id/login_accountText"
-        app:layout_constraintTop_toTopOf="@+id/login_accountText"
-        android:autofillHints="Account Number" />
-
-    <EditText
-        android:id="@+id/login_passwordEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:autofillHints="Password"
-        android:inputType="textPassword"
-        android:maxLength="20"
-        app:layout_constraintBottom_toBottomOf="@+id/login_passwordText"
-        app:layout_constraintStart_toEndOf="@+id/login_passwordText"
-        app:layout_constraintTop_toTopOf="@+id/login_passwordText"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5"
-        tools:ignore="TextFields" />
-
-    <Button
-        android:id="@+id/login_loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="30dp"
-        android:text="@string/button_login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/login_registerButton"
+        android:id="@+id/login_loadingViewtextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_register"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:layout_marginTop="20dp"
+        android:text="@string/text_loading"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/login_userPictureCardView"
+        app:layout_constraintStart_toStartOf="@+id/login_userPictureCardView"
+        app:layout_constraintTop_toBottomOf="@+id/login_userPictureCardView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

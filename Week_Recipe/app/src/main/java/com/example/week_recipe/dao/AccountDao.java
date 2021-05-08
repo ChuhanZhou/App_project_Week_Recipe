@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.week_recipe.model.domain.user.Account;
-import com.example.week_recipe.model.domain.user.UserData;
 
 import java.util.List;
 

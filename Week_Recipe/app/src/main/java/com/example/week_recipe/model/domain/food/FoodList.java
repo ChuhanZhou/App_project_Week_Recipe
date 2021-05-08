@@ -1,10 +1,5 @@
 package com.example.week_recipe.model.domain.food;
 
-import androidx.room.Embedded;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
 import com.example.week_recipe.utility.MyString;
 
 import java.util.ArrayList;

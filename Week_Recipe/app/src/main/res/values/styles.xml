@@ -1,9 +1,7 @@
-<resources>
-
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Widget.Theme.Login.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
-
     <style name="Widget.Theme.Login.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
@@ -30,5 +28,4 @@
         <item name="background">@color/button_background1</item>
         <item name="backgroundTint">@color/button_background1</item>
     </style>
-
 </resources>

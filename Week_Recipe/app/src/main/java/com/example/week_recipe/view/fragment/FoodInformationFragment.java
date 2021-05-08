@@ -1,6 +1,5 @@
 package com.example.week_recipe.view.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,8 +15,6 @@ import android.widget.TextView;
 
 import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
-import com.example.week_recipe.model.domain.food.Ingredients;
-import com.example.week_recipe.model.domain.food.IngredientsList;
 
 
 public class FoodInformationFragment extends Fragment {

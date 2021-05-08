@@ -14,13 +14,23 @@
     <string name="button_save">Save</string>
     <string name="button_back">Back</string>
     <string name="button_add">Add</string>
+    <string name="button_logout">Logout</string>
 
+    <string name="text_loading">Loading...</string>
     <string name="text_registerTitle">New User</string>
     <string name="text_noFood">No food now</string>
     <string name="text_noIngredient">No Ingredient</string>
     <string name="text_choosePlease">Choose please</string>
     <string name="text_inputFoodName">Input food name</string>
     <string name="text_createNewFood">Create New Food</string>
+
+    <string name="calendar_monday_simple">Mon</string>
+    <string name="calendar_tuesday_simple">Tue</string>
+    <string name="calendar_wednesday_simple">Wed</string>
+    <string name="calendar_thursday_simple">Thu</string>
+    <string name="calendar_friday_simple">Fri</string>
+    <string name="calendar_saturday_simple">Sat</string>
+    <string name="calendar_sunday_simple">Sun</string>
 
     <string name="foodType_meat">Meat</string>
     <string name="foodType_vegetarian">Vegetarian</string>

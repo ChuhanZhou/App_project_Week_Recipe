@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.adapter.FoodListAdapter;
+import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

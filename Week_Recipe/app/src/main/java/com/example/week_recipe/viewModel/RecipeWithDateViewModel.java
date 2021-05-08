@@ -7,21 +7,17 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 
-import com.example.week_recipe.dao.Repository;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
-import com.google.gson.Gson;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-import java.util.List;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RecipeWithDateViewModel extends AndroidViewModel implements PropertyChangeListener {
 
@@ -114,14 +110,17 @@ public class RecipeWithDateViewModel extends AndroidViewModel implements Propert
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setShowDate(LocalDate showDate) {
-        this.showDate = showDate;
-        showDateText.setValue(this.showDate.getMonthValue()+"/"+this.showDate.getDayOfMonth());
-        DailyRecipe dailyRecipe = systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate);
-        if (dailyRecipe==null)
+        if (this.showDate!=showDate)
         {
-            dailyRecipe = new DailyRecipe(showDate);
+            this.showDate = showDate;
+            showDateText.setValue(this.showDate.getMonthValue()+"/"+this.showDate.getDayOfMonth());
+            DailyRecipe dailyRecipe = systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate);
+            if (dailyRecipe==null)
+            {
+                dailyRecipe = new DailyRecipe(showDate);
+            }
+            showRecipe.setValue(dailyRecipe);
         }
-        showRecipe.setValue(dailyRecipe);
     }
 
     @Override

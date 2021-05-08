@@ -1,6 +1,5 @@
 package com.example.week_recipe.model.domain.food;
 
-import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.utility.MyString;
 
 import java.util.ArrayList;
