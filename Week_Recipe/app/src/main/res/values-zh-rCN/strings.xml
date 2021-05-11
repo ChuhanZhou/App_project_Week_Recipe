@@ -20,6 +20,7 @@
     <string name="text_registerTitle">新用户</string>
     <string name="text_noFood">无食物</string>
     <string name="text_noIngredient">无食材</string>
+    <string name="text_noRecipe">无食谱</string>
     <string name="text_choosePlease">请选择</string>
     <string name="text_inputFoodName">请输入菜名</string>
     <string name="text_createNewFood">创建新菜</string>

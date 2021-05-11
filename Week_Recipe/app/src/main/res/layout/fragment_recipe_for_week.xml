@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.RecipeForWeekFragment">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/fragment_recipeForWeek_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_to_left" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nullData" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_to_right" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <fragment
+        android:id="@+id/fragment_recipeForWeek_fragment"
+        android:name="com.example.week_recipe.view.fragment.RecipeListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_recipeForWeek_tabLayout"
+        tools:layout="@layout/fragment_recipe_list" />
+
+    <fragment
+        android:id="@+id/fragment_recipeForWeek_popupCalenderFragment"
+        android:name="com.example.week_recipe.view.fragment.PopupCalendarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_recipeForWeek_tabLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/fragment_popup_calendar"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

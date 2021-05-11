@@ -1,14 +1,12 @@
 package com.example.week_recipe.view.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,13 +15,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.model.domain.food.IngredientsList;
-import com.firebase.ui.auth.data.model.Resource;
 
-import java.security.cert.LDAPCertStoreParameters;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MyCalendarAdapter extends RecyclerView.Adapter<MyCalendarAdapter.ViewHolder> {
@@ -34,12 +30,12 @@ public class MyCalendarAdapter extends RecyclerView.Adapter<MyCalendarAdapter.Vi
     private ArrayList<Integer> titleList;
     private ArrayList<LocalDate> showList;
     private ArrayList<LocalDate> selectDateList;
-    private ArrayList<ViewHolder> viewHolderList;
+    private Map<Integer,ViewHolder> viewHolderMap;
     private OnItemClickListener listener;
 
     public MyCalendarAdapter(LocalDate firstDayOfMonth, ArrayList<LocalDate> selectDateList, OnItemClickListener listener)
     {
-        viewHolderList = new ArrayList<>();
+        viewHolderMap = new HashMap<>();
         this.firstDayOfMonth = firstDayOfMonth;
         this.selectDateList = selectDateList;
         this.listener = listener;
@@ -95,9 +91,12 @@ public class MyCalendarAdapter extends RecyclerView.Adapter<MyCalendarAdapter.Vi
 
     private void updateSelectDateList()
     {
-        for (int x=0;x<viewHolderList.size();x++)
+        for (int x=0;x<getItemCount();x++)
         {
-            setStateOfDateItem(viewHolderList.get(x));
+            if (viewHolderMap.containsKey(x))
+            {
+                setStyleOfDateItem(viewHolderMap.get(x),x);
+            }
         }
     }
 
@@ -106,55 +105,82 @@ public class MyCalendarAdapter extends RecyclerView.Adapter<MyCalendarAdapter.Vi
         this.firstDayOfMonth = firstDayOfMonth;
         month = this.firstDayOfMonth.getMonthValue();
         showList = getShowListByFirstDay(this.firstDayOfMonth);
-        for (int x=7;x<viewHolderList.size();x++)
+        for (int x=0;x<showList.size();x++)
         {
-            if (viewHolderList.get(x).date!=null)
+            if (viewHolderMap.containsKey(x+7))
             {
-                viewHolderList.get(x).date = showList.get(x-7);
+                if (viewHolderMap.get(x+7).date!=null)
+                {
+                    viewHolderMap.get(x+7).date = showList.get(x);
+                }
             }
         }
         updateSelectDateList();
     }
 
-    private void setStateOfDateItem(ViewHolder holder)
+    @SuppressLint("SetTextI18n")
+    private void setStyleOfDateItem(ViewHolder holder, int position)
     {
+        Resources resources = holder.textView.getResources();
         if (holder.date!=null)
         {
-            Resources resources = holder.layout.getResources();
             holder.textView.setText(""+holder.date.getDayOfMonth());
             if (selectDateList.contains(holder.date))
             {
                 if (selectDateList.contains(holder.date.minusDays(1))&&selectDateList.contains(holder.date.plusDays(1)))
                 {
-                    holder.layout.setBackgroundResource(R.drawable.my_calendar_background_select_both);
+                    holder.backgroundImageView.setImageResource(R.drawable.my_calendar_background_select_both);
                 }
                 else if (selectDateList.contains(holder.date.minusDays(1))&&!selectDateList.contains(holder.date.plusDays(1)))
                 {
-                    holder.layout.setBackgroundResource(R.drawable.my_calendar_background_select_have_left);
+                    holder.backgroundImageView.setImageResource(R.drawable.my_calendar_background_select_have_left);
                 }
                 else if (!selectDateList.contains(holder.date.minusDays(1))&&selectDateList.contains(holder.date.plusDays(1)))
                 {
-                    holder.layout.setBackgroundResource(R.drawable.my_calendar_background_select_have_right);
+                    holder.backgroundImageView.setImageResource(R.drawable.my_calendar_background_select_have_right);
                 }
                 else
                 {
-                    holder.layout.setBackgroundResource(R.drawable.my_calendar_background_select_only);
+                    holder.backgroundImageView.setImageResource(R.drawable.my_calendar_background_select_only);
                 }
                 holder.textView.setTextColor(resources.getColor(R.color.textView_Text1));
             }
             else
             {
-                holder.layout.setBackgroundResource(R.drawable.my_calendar_background_normal);
+                holder.backgroundImageView.setImageDrawable(null);
                 holder.textView.setTextColor(resources.getColor(R.color.textView_Text3));
             }
             if (holder.date.getMonthValue()!=month)
             {
+                holder.layout.setTranslationZ(0f);
+                switch (position)
+                {
+                    case 48:
+                        holder.layout.setBackgroundResource(R.drawable.my_calendar_background_other_last_of_last_line);
+                        break;
+                    case 42:
+                        holder.layout.setBackgroundResource(R.drawable.my_calendar_background_other_first_of_last_line);
+                        break;
+                    default:
+                        holder.layout.setBackgroundResource(R.drawable.my_calendar_background_other);
+                        break;
+                }
                 holder.layout.setAlpha(0.5f);
             }
             else
             {
+                holder.layout.setTranslationZ(10f);
+                holder.layout.setBackgroundResource(R.drawable.my_calendar_background_normal);
                 holder.layout.setAlpha(1f);
             }
+        }
+        else
+        {
+            holder.layout.setTranslationZ(15f);
+            holder.layout.setBackgroundResource(R.drawable.my_calendar_background_normal);
+            holder.layout.setAlpha(1f);
+            holder.textView.setTextColor(resources.getColor(R.color.textView_Text2));
+            holder.backgroundImageView.setImageDrawable(null);
         }
     }
 
@@ -170,33 +196,23 @@ public class MyCalendarAdapter extends RecyclerView.Adapter<MyCalendarAdapter.Vi
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (viewHolderList.size()>position&&position>=0)
-        {
-            viewHolderList.set(position,holder);
-        }
-        else
-        {
-            viewHolderList.add(holder);
-        }
-        Resources resources = holder.layout.getResources();
+        viewHolderMap.put(position,holder);
         if (position>=0&&position<7)
         {
             holder.date = null;
             holder.textView.setText(titleList.get(position));
-            holder.textView.setTextColor(resources.getColor(R.color.textView_Text2));
         }
         else
         {
-            position -= 7;
-            holder.date = showList.get(position);
+            holder.date = showList.get(position-7);
             holder.textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.OnItemClick(holder.date);
                 }
             });
-            setStateOfDateItem(holder);
         }
+        setStyleOfDateItem(holder,position);
     }
 
     @Override
@@ -205,14 +221,16 @@ public class MyCalendarAdapter extends RecyclerView.Adapter<MyCalendarAdapter.Vi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView textView;
-        private ConstraintLayout layout;
+        private final TextView textView;
+        private final ConstraintLayout layout;
         private LocalDate date;
+        private final ImageView backgroundImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.item_myCalendar_layout);
             textView = itemView.findViewById(R.id.item_myCalendar_textView);
+            backgroundImageView = itemView.findViewById(R.id.item_myCalendar_backgroundImageView);
         }
 
         @Override

@@ -10,9 +10,11 @@
         android:id="@+id/fragment_dailyRecipe_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:translationZ="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/fragment_dailyRecipe_tabItem_breakfast"

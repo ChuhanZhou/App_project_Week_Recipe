@@ -86,6 +86,7 @@ public class HomePageActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.homePage_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_todayRecipeFragment,
+                R.id.nav_weekRecipeFragment,
                 R.id.nav_userInformationFragment)
                 .setOpenableLayout(layout)
                 .build();

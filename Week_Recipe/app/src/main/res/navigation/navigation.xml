@@ -8,12 +8,11 @@
     <fragment
         android:id="@+id/nav_todayRecipeFragment"
         android:name="com.example.week_recipe.view.fragment.RecipeWithDateFragment"
-        android:label="@string/title_todayRecipe"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_recipe_with_date" />
     <fragment
         android:id="@+id/nav_dailyRecipeFragment"
         android:name="com.example.week_recipe.view.fragment.DailyRecipeFragment"
-        android:label="@string/title_todayRecipe"
         tools:layout="@layout/fragment_daily_recipe" />
     <fragment
         android:id="@+id/nav_foodListFragment"
@@ -21,9 +20,14 @@
         android:label="@string/title_breakfast"
         tools:layout="@layout/fragment_food_list" />
     <fragment
+        android:id="@+id/nav_weekRecipeFragment"
+        android:name="com.example.week_recipe.view.fragment.RecipeForWeekFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_recipe_for_week" />
+    <fragment
         android:id="@+id/nav_userInformationFragment"
         android:name="com.example.week_recipe.view.fragment.UserInformationFragment"
-        android:label="@string/title_myInformation"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_user_information" />
     <fragment
         android:id="@+id/nav_settingsFragment"
@@ -41,7 +45,8 @@
         android:label="fragment_set_food_information"
         tools:layout="@layout/fragment_set_food_information" />
     <fragment
-        android:id="@+id/searchFoodFragment"
+        android:id="@+id/nav_searchFoodFragment"
         android:name="com.example.week_recipe.view.fragment.SearchFoodFragment"
-        android:label="SearchFoodFragment" />
+        android:label="fragment_search_food"
+        tools:layout="@layout/fragment_search_food"/>
 </navigation>

@@ -15,6 +15,9 @@ import androidx.lifecycle.Observer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 
 import com.example.week_recipe.R;
 import com.example.week_recipe.view.adapter.MyCalendarAdapter;
@@ -95,10 +98,34 @@ public class PopupCalendarFragment extends Fragment implements MyCalendarAdapter
         {
             this.date.setValue(date);
         }
+        else if (myCalendarFragment!=null&&date.equals(this.date.getValue()))
+        {
+            myCalendarFragment.updateFirstDayOfMonth(date.minusDays(date.getDayOfMonth()-1));
+        }
     }
 
     public LiveData<LocalDate> getDate() {
         return date;
+    }
+
+    public void showCalendar(double second)
+    {
+        this.myCalendarFragment.updateFirstDayOfMonth(date.getValue().minusDays(date.getValue().getDayOfMonth()-1));
+        View myCalendarFragmentView = view.findViewById(R.id.fragment_recipeWithDate_myCalendarFragment);
+        if (myCalendarFragmentView!=null)
+        {
+            TranslateAnimation translateAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            translateAnimation.setDuration((long) (second * 1000));
+
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.addAnimation(translateAnimation);
+
+            myCalendarFragmentView.setAnimation(animationSet);
+        }
     }
 
     @Nullable

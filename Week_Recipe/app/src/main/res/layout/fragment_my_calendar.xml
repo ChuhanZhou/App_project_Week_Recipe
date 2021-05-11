@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".view.fragment.MyCalendarFragment"
-    android:background="@drawable/my_calendar_background_normal">
+    android:background="@drawable/my_calendar_background">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fragment_myCalendar_tabLayout"
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

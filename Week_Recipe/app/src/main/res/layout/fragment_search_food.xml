@@ -6,66 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.FoodInformationFragment">
 
-    <EditText
-        android:id="@+id/fragment_searchFood_foodNameEditText"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:hint="@string/text_inputFoodName"
-        android:inputType="text"
-        android:maxLength="100"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_searchFood_backCardView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_searchFood_inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationZ="5dp"
+        android:background="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/fragment_searchFood_backCardView"
-        app:layout_constraintTop_toTopOf="@+id/fragment_searchFood_backCardView" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/fragment_searchFood_clearTextCardView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/ripple_foreground"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_searchFood_foodNameEditText"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_searchFood_foodNameEditText"
-        app:layout_constraintTop_toTopOf="@+id/fragment_searchFood_foodNameEditText"
-        tools:targetApi="lollipop">
-        <ImageView
-            android:id="@+id/fragment_searchFood_clearTextImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_button_text_clear"/>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/fragment_searchFood_backCardView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/ripple_foreground"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="lollipop">
+        <EditText
+            android:id="@+id/fragment_searchFood_foodNameEditText"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:ems="10"
+            android:hint="@string/text_inputFoodName"
+            android:inputType="text"
+            android:maxLength="100"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_searchFood_backCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/fragment_searchFood_backCardView"
+            app:layout_constraintTop_toTopOf="@+id/fragment_searchFood_backCardView"/>
 
-        <ImageView
-            android:id="@+id/fragment_searchFood_backImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_button_back" />
-    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fragment_searchFood_clearTextCardView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_foreground"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_searchFood_foodNameEditText"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_searchFood_foodNameEditText"
+            app:layout_constraintTop_toTopOf="@+id/fragment_searchFood_foodNameEditText"
+            tools:targetApi="lollipop">
+            <ImageView
+                android:id="@+id/fragment_searchFood_clearTextImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_button_text_clear"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fragment_searchFood_backCardView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_foreground"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="lollipop">
+
+            <ImageView
+                android:id="@+id/fragment_searchFood_backImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_button_back" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <fragment
         android:id="@+id/fragment_searchFood_fragment"
@@ -76,6 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_searchFood_foodNameEditText"
-        tools:layout="@layout/fragment_food_list" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_searchFood_inputLayout"
+        tools:layout="@layout/fragment_food_list"
+        tools:targetApi="lollipop" />
 </androidx.constraintlayout.widget.ConstraintLayout>

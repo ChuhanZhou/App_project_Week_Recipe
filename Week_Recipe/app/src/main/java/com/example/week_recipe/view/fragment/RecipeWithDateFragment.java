@@ -1,20 +1,25 @@
 package com.example.week_recipe.view.fragment;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import com.example.week_recipe.R;
 import com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity;
@@ -78,13 +83,16 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     {
         if (showCalendar)
         {
+            tabLayout.setTranslationZ(0f);
             showCalendar = false;
             popupCalendarFragment.getView().setVisibility(View.GONE);
         }
         else
         {
+            tabLayout.setTranslationZ(5f);
             showCalendar = true;
             popupCalendarFragment.getView().setVisibility(View.VISIBLE);
+            popupCalendarFragment.showCalendar(0.25);
         }
     }
 
@@ -93,7 +101,6 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_fragment));
         tabLayout = view.findViewById(R.id.fragment_recipeWithDate_tabLayout);
         popupCalendarFragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_recipeWithDate_popupCalenderFragment));
-        //calendarView = view.findViewById(R.id.fragment_recipeWithDate_calendarView);
 
         tabLayout.selectTab(tabLayout.getTabAt(1));
         clickDateTab = true;
