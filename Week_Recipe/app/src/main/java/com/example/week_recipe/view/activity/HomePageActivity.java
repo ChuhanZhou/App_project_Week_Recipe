@@ -1,6 +1,7 @@
 package com.example.week_recipe.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,9 +16,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.*;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -25,10 +29,17 @@ import com.example.week_recipe.R;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.user.UserData;
+import com.example.week_recipe.view.fragment.DailyRecipeFragment;
+import com.example.week_recipe.view.fragment.RecipeForWeekFragment;
+import com.example.week_recipe.view.fragment.RecipeWithDateFragment;
 import com.example.week_recipe.viewModel.HomePageViewModel;
 import com.example.week_recipe.viewModel.UserInformationViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.time.LocalDate;
+import java.util.List;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class HomePageActivity extends AppCompatActivity {
 
@@ -39,9 +50,10 @@ public class HomePageActivity extends AppCompatActivity {
     private DrawerLayout layout;
     private BottomNavigationView bottomNavigationView;
     private NavigationView navigationDrawer;
-    private View fragment;
+    private NavHostFragment navHostFragment;
     private TextView userNameTextView;
     private ImageView userImageView;
+    private MenuItem reset;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +91,7 @@ public class HomePageActivity extends AppCompatActivity {
     private void bind()
     {
         layout = findViewById(R.id.homepage_constraintLayout);
-        fragment = findViewById(R.id.homePage_fragment);
+        navHostFragment = FragmentManager.findFragment(findViewById(R.id.homePage_fragment));
         //navigation
         toolbar = findViewById(R.id.homePage_toolbar);
         setSupportActionBar(toolbar);
@@ -107,6 +119,63 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onChanged(UserData userData) {
                 updateInfo(userData);
+            }
+        });
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+                switch (item.getItemId())
+                {
+                    case R.id.nav_item_reset:
+                        if (fragment.getClass().equals(RecipeWithDateFragment.class))
+                        {
+                            ((RecipeWithDateFragment) fragment).setShowDate(LocalDate.now());
+                        }
+                        else if (fragment.getClass().equals(RecipeForWeekFragment.class))
+                        {
+                            ((RecipeForWeekFragment) fragment).setShowDate(LocalDate.now());
+                        }
+                        break;
+                        
+                }
+                return false;
+            }
+        });
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if (reset==null)
+                {
+                    reset = toolbar.getMenu().findItem(R.id.nav_item_reset);
+                }
+                if (toolbar.getMenu().size()>0)
+                {
+                    switch (destination.getId())
+                    {
+                        case R.id.nav_todayRecipeFragment:
+                            if (reset!=null)
+                            {
+                                reset.setVisible(true);
+                                reset.setTitle(R.string.title_resetDate);
+                            }
+                            break;
+                        case R.id.nav_weekRecipeFragment:
+                            if (reset!=null)
+                            {
+                                reset.setVisible(true);
+                                reset.setTitle(R.string.title_resetWeek);
+                            }
+                            break;
+                        default:
+                            if (reset!=null)
+                            {
+                                reset.setVisible(false);
+                            }
+                    }
+                }
             }
         });
     }

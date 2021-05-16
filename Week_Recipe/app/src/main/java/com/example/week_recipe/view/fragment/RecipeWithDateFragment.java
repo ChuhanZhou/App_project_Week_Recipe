@@ -2,6 +2,7 @@ package com.example.week_recipe.view.fragment;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -14,14 +15,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
 
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.dao.converter.LocalDateConverter;
 import com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity;
 import com.example.week_recipe.view.activity.FoodInformationActivity;
 import com.example.week_recipe.viewModel.RecipeWithDateViewModel;
@@ -33,10 +39,12 @@ import com.example.week_recipe.utility.UiDataCache;
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.OnFoodListItemClickListener {
 
+    public static final String valueKey = "recipeWithDateFragment_showDate";
     private View view;
     private RecipeWithDateViewModel viewModel;
     private TabLayout tabLayout;
@@ -59,6 +67,10 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         showAnimation = false;
         showCalendar = true;
         viewModel = new ViewModelProvider(this).get(RecipeWithDateViewModel.class);
+        if (UiDataCache.getData(valueKey)!=null)
+        {
+            viewModel.setShowDate((LocalDate) UiDataCache.getData(valueKey));
+        }
         bind();
         setListener();
         changeVisibilityOfPopupCalenderLayout();
@@ -104,7 +116,23 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
 
         tabLayout.selectTab(tabLayout.getTabAt(1));
         clickDateTab = true;
-        fragment.bind(viewModel.getShowRecipe().getValue(),RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
+        int tabPosition = 0;
+        if (LocalDateConverter.localDateToString(viewModel.getShowDate()).equals(LocalDateConverter.localDateToString(LocalDate.now())))
+        {
+            if (LocalTime.now().isBefore(LocalTime.of(9,0)))
+            {
+                tabPosition = 0;
+            }
+            else if (LocalTime.now().isBefore(LocalTime.of(14,0)))
+            {
+                tabPosition = 1;
+            }
+            else
+            {
+                tabPosition = 2;
+            }
+        }
+        fragment.bind(viewModel.getShowRecipe().getValue(),tabPosition,RecipeWithDateFragment.this,viewModel.getFavouriteFoodList());
         popupCalendarFragment.bind(true,viewModel.getShowDate());
     }
 
@@ -126,6 +154,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         viewModel.getShowDateText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                UiDataCache.putData(valueKey,viewModel.getShowDate());
                 tabLayout.getTabAt(1).setText(s);
                 popupCalendarFragment.setDate(viewModel.getShowDate());
                 showAnimation = true;
@@ -201,6 +230,11 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
             intent.putExtra("location",fragment.getTabPosition());
             startActivity(intent);
         }
+    }
+
+    public void setShowDate(LocalDate date)
+    {
+        viewModel.setShowDate(date);
     }
 
     @Override

@@ -150,4 +150,21 @@ public class FoodList {
     {
         return foodList.size();
     }
+
+    @Override
+    public String toString() {
+        String toString = "";
+        for (int x=0;x<foodList.size();x++)
+        {
+            if (x==foodList.size()-1)
+            {
+                toString += foodList.get(x).getName();
+            }
+            else
+            {
+                toString += foodList.get(x).getName() + "\n";
+            }
+        }
+        return toString;
+    }
 }

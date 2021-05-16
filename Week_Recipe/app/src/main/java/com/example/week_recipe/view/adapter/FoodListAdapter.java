@@ -194,14 +194,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            foodName = itemView.findViewById(R.id.item_recipeList_foodName);
-            foodImage = itemView.findViewById(R.id.item_recipeList_foodImage);
-            more = itemView.findViewById(R.id.item_recipeList_more);
-            delete = itemView.findViewById(R.id.item_recipeList_delete);
-            like = itemView.findViewById(R.id.item_recipeList_like);
-            //cardView = itemView.findViewById(R.id.item_recipeList_cardView);
-            deleteCardView = itemView.findViewById(R.id.item_recipeList_deleteCardView);
-            likeCardView = itemView.findViewById(R.id.item_recipeList_likeCardView);
+            foodName = itemView.findViewById(R.id.item_foodList_foodName);
+            foodImage = itemView.findViewById(R.id.item_foodList_foodImage);
+            more = itemView.findViewById(R.id.item_foodList_more);
+            delete = itemView.findViewById(R.id.item_foodList_delete);
+            like = itemView.findViewById(R.id.item_foodList_like);
+            //cardView = itemView.findViewById(R.id.item_foodList_cardView);
+            deleteCardView = itemView.findViewById(R.id.item_foodList_deleteCardView);
+            likeCardView = itemView.findViewById(R.id.item_foodList_likeCardView);
 
             if (hasMore||!hasDelete)
             {

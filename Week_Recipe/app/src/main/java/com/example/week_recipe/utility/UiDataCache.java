@@ -1,5 +1,7 @@
 package com.example.week_recipe.utility;
 
+import androidx.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,10 @@ public class UiDataCache {
     {
         dataCache.put(key, data);
         return key;
+    }
+
+    public boolean containsKey(String key) {
+        return dataCache.containsKey(key);
     }
 
     //public static void pushActivity(Activity item)

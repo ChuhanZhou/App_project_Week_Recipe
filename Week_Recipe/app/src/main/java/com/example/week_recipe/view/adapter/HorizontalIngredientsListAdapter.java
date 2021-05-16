@@ -18,11 +18,12 @@ import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Ingredients;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<HorizontalIngredientsListAdapter.ViewHolder> {
     private IngredientsList ingredientsList;
-    private ArrayList<HorizontalIngredientsListAdapter.ViewHolder> viewHolderList;
+    private Map<Integer,HorizontalIngredientsListAdapter.ViewHolder> viewHolderMap;
     private final boolean needSet;
     private final HorizontalIngredientsListAdapter.OnItemClickListener clickListener;
     private boolean checkLast;
@@ -33,11 +34,20 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
         updateIngredientsList(ingredientsList,checkLast);
         this.needSet = needSet;
         this.clickListener= clickListener;
-        viewHolderList = new ArrayList<>();
+        viewHolderMap = new HashMap<>();
         this.recyclerView = recyclerView;
     }
 
-    public void updateIngredientsList(IngredientsList ingredientsList,boolean checkLast)
+    public void updateIngredientsList(IngredientsList ingredientsList)
+    {
+        updateIngredientsList(ingredientsList,false);
+        for (int x=0;x<ingredientsList.getSize();x++)
+        {
+            updateItem(x);
+        }
+    }
+
+    private void updateIngredientsList(IngredientsList ingredientsList,boolean checkLast)
     {
         if (ingredientsList==null)
         {
@@ -47,25 +57,29 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
         {
             this.ingredientsList = ingredientsList;
         }
-        viewHolderList = new ArrayList<>();
         this.checkLast = checkLast;
     }
 
-    private void updateItem(ViewHolder holder, Ingredients ingredients)
+    private void updateItem(int position)
     {
-        if (ingredients!=null)
+        ViewHolder holder = viewHolderMap.get(position);
+        if (holder!=null)
         {
-            holder.name.setText(ingredients.getName());
-        }
-        else if (checkLast)
-        {
-            if (ingredientsList!=null&&ingredientsList.getSize()>0)
+            Ingredients ingredients = ingredientsList.getByIndex(position);
+            if (ingredients!=null)
             {
-                holder.name.setText(ingredientsList.getByIndex(ingredientsList.getSize()-1).getName());
+                holder.name.setText(ingredients.getName());
             }
-            else
+            else if (checkLast)
             {
-                holder.cardView.setVisibility(View.INVISIBLE);
+                if (ingredientsList!=null&&ingredientsList.getSize()>0)
+                {
+                    holder.name.setText(ingredientsList.getByIndex(ingredientsList.getSize()-1).getName());
+                }
+                else
+                {
+                    holder.cardView.setVisibility(View.INVISIBLE);
+                }
             }
         }
     }
@@ -81,8 +95,8 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalIngredientsListAdapter.ViewHolder holder, int position) {
-        viewHolderList.add(holder);
-        updateItem(holder,ingredientsList.getByIndex(position));
+        viewHolderMap.put(position,holder);
+        updateItem(position);
     }
 
     @Override
@@ -99,7 +113,7 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
 
     public int getSizeOfViewHolderList()
     {
-        return viewHolderList.size();
+        return viewHolderMap.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -132,10 +146,10 @@ public class HorizontalIngredientsListAdapter extends RecyclerView.Adapter<Horiz
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (needSet)
-                    {
-                        removeAnimation(cardView,0.5);
-                    }
+                    //if (needSet)
+                    //{
+                    //    removeAnimation(cardView,0.25);
+                    //}
                     clickListener.onItemClick(ingredientsList.getByIndex(getAdapterPosition()));
                 }
             });

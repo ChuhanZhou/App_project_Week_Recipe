@@ -7,7 +7,7 @@
     android:layout_height="130dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/item_recipeList_cardView"
+        android:id="@+id/item_foodList_cardView"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginTop="5dp"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/item_recipeList_foodImage"
+                android:id="@+id/item_foodList_foodImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background_1"
@@ -36,13 +36,13 @@
                 android:foreground="@drawable/ripple_foreground"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_action_food"
-                app:layout_constraintBottom_toBottomOf="@+id/item_recipeList_foodName"
+                app:layout_constraintBottom_toBottomOf="@+id/item_foodList_foodName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/item_recipeList_likeCardView"
+                android:id="@+id/item_foodList_likeCardView"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_marginRight="10dp"
@@ -50,15 +50,15 @@
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="27.5dp"
                 app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/item_recipeList_foodImage"
-                app:layout_constraintEnd_toStartOf="@+id/item_recipeList_deleteCardView"
+                app:layout_constraintBottom_toBottomOf="@+id/item_foodList_foodImage"
+                app:layout_constraintEnd_toStartOf="@+id/item_foodList_deleteCardView"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:targetApi="lollipop">
 
                 <ImageView
-                    android:id="@+id/item_recipeList_like"
+                    android:id="@+id/item_foodList_like"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0.95"
@@ -71,7 +71,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/item_recipeList_deleteCardView"
+                android:id="@+id/item_foodList_deleteCardView"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_marginRight="5dp"
@@ -80,14 +80,14 @@
                 app:cardCornerRadius="27.5dp"
                 app:cardElevation="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/item_recipeList_more"
+                app:layout_constraintEnd_toStartOf="@+id/item_foodList_more"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:targetApi="lollipop">
 
                 <ImageView
-                    android:id="@+id/item_recipeList_delete"
+                    android:id="@+id/item_foodList_delete"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0.85"
@@ -100,7 +100,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/item_recipeList_foodName"
+                android:id="@+id/item_foodList_foodName"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="#000000"
@@ -117,7 +117,7 @@
                 tools:ignore="RtlSymmetry" />
 
             <ImageView
-                android:id="@+id/item_recipeList_more"
+                android:id="@+id/item_foodList_more"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:clickable="true"

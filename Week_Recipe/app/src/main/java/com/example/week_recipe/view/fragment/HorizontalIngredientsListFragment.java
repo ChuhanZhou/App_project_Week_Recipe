@@ -26,15 +26,6 @@ public class HorizontalIngredientsListFragment extends Fragment {
     private IngredientsList ingredientsList;
     private HorizontalIngredientsListAdapter adapter;
     private IngredientsList overflowList;
-    @SuppressLint("HandlerLeak")
-    private final Handler handler = new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            adapter.updateIngredientsList(ingredientsList,false);
-            horizontalIngredientsListView.setAdapter(adapter);
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,9 +78,9 @@ public class HorizontalIngredientsListFragment extends Fragment {
         }
     }
 
-    public void reShow()
+    public void updateIngredientsList(IngredientsList ingredientsList)
     {
-        handler.sendMessage(new Message());
+        adapter.updateIngredientsList(ingredientsList);
     }
 
     public void setHeight(boolean isShow)
@@ -125,7 +116,7 @@ public class HorizontalIngredientsListFragment extends Fragment {
             {
                 showList.add(ingredientsList.getByIndex(x));
             }
-            adapter.updateIngredientsList(showList,false);
+            adapter.updateIngredientsList(showList);
             horizontalIngredientsListView.setAdapter(adapter);
 
             for (int x=0;x<showList.getSize();x++)

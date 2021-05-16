@@ -2,6 +2,8 @@ package com.example.week_recipe.view.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +30,7 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
     private IngredientsList ingredientsList;
     private ArrayList<IngredientsList> showList;
     private IngredientsListAdapter loadAdapter;
+    private IngredientsListAdapter showAdapter;
     private RecyclerView listLoadView;
     private RecyclerView ingredientsListView;
     private TextView noDataTextView;
@@ -70,8 +73,9 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
         ingredientsListView.hasFixedSize();
         ingredientsListView.setNestedScrollingEnabled(false);
         MyLinearLayoutManager layoutManager = new MyLinearLayoutManager(view.getContext());
-        layoutManager.setScrollEnabled(true);
+        layoutManager.setScrollEnabled(false);
         ingredientsListView.setLayoutManager(layoutManager);
+
         //load view
         listLoadView.hasFixedSize();
         listLoadView.setNestedScrollingEnabled(false);
@@ -141,6 +145,12 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
         listLoadView.setAdapter(loadAdapter);
     }
 
+    @Nullable
+    @Override
+    public View getView() {
+        return view;
+    }
+
     public IngredientsList getIngredientsList()
     {
         return ingredientsList;
@@ -177,7 +187,14 @@ public class IngredientsListFragment extends Fragment implements HorizontalIngre
 
     @Override
     public void onLoadFinish(ArrayList<IngredientsList> lineList) {
-        IngredientsListAdapter adapter = new IngredientsListAdapter(lineList,needSet,this);
-        ingredientsListView.setAdapter(adapter);
+        if (showAdapter!=null)
+        {
+            showAdapter.updateIngredientsList(null,lineList);
+        }
+        else
+        {
+            showAdapter = new IngredientsListAdapter(lineList,needSet,this);
+            ingredientsListView.setAdapter(showAdapter);
+        }
     }
 }

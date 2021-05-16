@@ -12,11 +12,13 @@ import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.view.fragment.HorizontalIngredientsListFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsListAdapter.ViewHolder>{
     private IngredientsList ingredientsList;
     private ArrayList<IngredientsList> lineList;
-    private ArrayList<HorizontalIngredientsListFragment> fragmentList;
+    private Map<Integer,HorizontalIngredientsListFragment> fragmentMap;
     private HorizontalIngredientsListAdapter.OnItemClickListener clickListener;
     private OnLoadFinishListener loadFinishListener;
     private boolean needSet;
@@ -29,6 +31,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         this.needSet = needSet;
         this.clickListener= clickListener;
         this.loadFinishListener = null;
+        fragmentMap = new HashMap<>();
         updateIngredientsList(null,lineList);
     }
 
@@ -38,12 +41,12 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         this.needSet = false;
         this.clickListener= null;
         this.loadFinishListener = loadFinishListener;
+        fragmentMap = new HashMap<>();
         updateIngredientsList(ingredientsList,null);
     }
 
     public void updateIngredientsList(IngredientsList ingredientsList,ArrayList<IngredientsList> lineList)
     {
-        fragmentList = new ArrayList<>();
         if (ingredientsList==null)
         {
             this.ingredientsList = new IngredientsList();
@@ -51,6 +54,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         else
         {
             this.ingredientsList = ingredientsList;
+            fragmentMap.clear();
         }
         if (lineList==null)
         {
@@ -59,6 +63,10 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
         else
         {
             this.lineList = lineList;
+            for (int x=0;x<this.lineList.size();x++)
+            {
+                updateItemByLineList(x);
+            }
         }
         if (clickListener==null)
         {
@@ -69,6 +77,15 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
             showLine = true;
         }
         countLock = false;
+    }
+
+    private void updateItemByLineList(int position)
+    {
+        if (fragmentMap.containsKey(position))
+        {
+            HorizontalIngredientsListFragment fragment = fragmentMap.get(position);
+            fragment.updateIngredientsList(lineList.get(position));
+        }
     }
 
     private void updateItem(IngredientsListAdapter.ViewHolder holder, IngredientsList ingredientsList,IngredientsList overflowList)
@@ -90,19 +107,19 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (clickListener==null)
         {
-            if (fragmentList.size()<=position&&!countLock)
+            if (fragmentMap.size()<=position&&!countLock)
             {
-                if (fragmentList.size()>0&&fragmentList.get(fragmentList.size()-1).getOverflowList().getSize()==0||ingredientsList.getSize()==0)
+                if (fragmentMap.size()>0&& fragmentMap.get(fragmentMap.size()-1).getOverflowList().getSize()==0||ingredientsList.getSize()==0)
                 {
                     countLock = true;
                     System.out.println("===============load finish==============");
                 }
-                fragmentList.add(holder.fragment);
+                fragmentMap.put(position,holder.fragment);
 
                 if (position!=0)
                 {
-                    IngredientsList overflowList = fragmentList.get(position-1).getOverflowList();
-                    lineList.add(position-1,fragmentList.get(position-1).getShowList());
+                    IngredientsList overflowList = fragmentMap.get(position-1).getOverflowList();
+                    lineList.add(position-1, fragmentMap.get(position-1).getShowList());
                     updateItem(holder,overflowList,null);
                 }
                 else
@@ -126,7 +143,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
                         }
                     }
                     updateItem(holder, lineList.get(position), overflowList);
-                    fragmentList.set(position, holder.fragment);
+                    fragmentMap.put(position, holder.fragment);
                 } else {
                     updateItem(holder, null, new IngredientsList());
                 }
@@ -143,31 +160,24 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
                 }
             }
             updateItem(holder,lineList.get(position),overflowList);
-            if (fragmentList.size() > position && position >= 0)
-            {
-                fragmentList.set(position,holder.fragment);
-            }
-            else
-            {
-                fragmentList.add(holder.fragment);
-            }
+            fragmentMap.put(position,holder.fragment);
         }
     }
 
     public IngredientsList getShowListByLine(int index)
     {
-        if (fragmentList.size()>index&&index>=0)
+        if (fragmentMap.size()>index&&index>=0)
         {
-            return fragmentList.get(index).getShowList();
+            return fragmentMap.get(index).getShowList();
         }
         return null;
     }
 
     public IngredientsList getOverFlowListByLine(int index)
     {
-        if (fragmentList.size()>index&&index>=0)
+        if (fragmentMap.size()>index&&index>=0)
         {
-            return fragmentList.get(index).getOverflowList();
+            return fragmentMap.get(index).getOverflowList();
         }
         return null;
     }
@@ -177,14 +187,14 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
     }
 
     public int getSizeOfFragmentList() {
-        return fragmentList.size();
+        return fragmentMap.size();
     }
 
     @Override
     public int getItemCount() {
         if (clickListener==null)
         {
-            return fragmentList.size()+1;
+            return fragmentMap.size()+1;
         }
         else
         {

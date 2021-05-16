@@ -24,6 +24,13 @@
     <string name="text_choosePlease">Choose please</string>
     <string name="text_inputFoodName">Input food name</string>
     <string name="text_createNewFood">Create New Food</string>
+    <string name="text_monday">Monday</string>
+    <string name="text_tuesday">Tuesday</string>
+    <string name="text_wednesday">Wednesday</string>
+    <string name="text_thursday">Thursday</string>
+    <string name="text_friday">Friday</string>
+    <string name="text_saturday">Saturday</string>
+    <string name="text_sunday">Sunday</string>
 
     <string name="calendar_monday_simple">Mon</string>
     <string name="calendar_tuesday_simple">Tue</string>
@@ -41,6 +48,10 @@
 
     <string name="title_homepage">Homepage</string>
     <string name="title_setting">Settings</string>
+    <string name="title_reset">Reset</string>
+    <string name="title_resetDate">Back to today</string>
+    <string name="title_resetWeek">Back to this week</string>
+
     <string name="title_todayRecipe">Today Recipe</string>
     <string name="title_weekRecipe">Week Recipe</string>
     <string name="title_myInformation">My Information</string>

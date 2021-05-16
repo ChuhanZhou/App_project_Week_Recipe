@@ -7,6 +7,10 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayoutStates;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -17,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,6 +43,7 @@ public class SetFoodInformationFragment extends Fragment {
     private IngredientsListFragment ingredientsListFragment;
     private IngredientsList ingredientsList;
     private FloatingActionButton chooseImageButton;
+    private NestedScrollView nestedScrollView;
     private boolean lockName;
 
     @Override
@@ -75,6 +81,7 @@ public class SetFoodInformationFragment extends Fragment {
         foodTypeSpinner = view.findViewById(R.id.fragment_setFoodInformation_foodTypeSpinner);
         ingredientsListFragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_setFoodInformation_ingredientsListFragment));
         chooseImageButton = view.findViewById(R.id.fragment_setFoodInformation_chooseImageButton);
+        nestedScrollView = view.findViewById(R.id.fragment_setFoodInformation_scrollView);
         setListener();
         updateNameView();
 
@@ -137,6 +144,15 @@ public class SetFoodInformationFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 foodNameTextView.setText(foodNameEditText.getText());
+            }
+        });
+        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone((ConstraintLayout) ingredientsListFragment.getView());
+                constraintSet.setMargin(R.id.fragment_ingredientsList_loadView,ConstraintSet.TOP,scrollY+30);
+                constraintSet.applyTo((ConstraintLayout) ingredientsListFragment.getView());
             }
         });
     }

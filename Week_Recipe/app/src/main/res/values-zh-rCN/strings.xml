@@ -24,6 +24,13 @@
     <string name="text_choosePlease">请选择</string>
     <string name="text_inputFoodName">请输入菜名</string>
     <string name="text_createNewFood">创建新菜</string>
+    <string name="text_monday">星期一</string>
+    <string name="text_tuesday">星期二</string>
+    <string name="text_wednesday">星期三</string>
+    <string name="text_thursday">星期四</string>
+    <string name="text_friday">星期五</string>
+    <string name="text_saturday">星期六</string>
+    <string name="text_sunday">星期天</string>
 
     <string name="calendar_monday_simple">一</string>
     <string name="calendar_tuesday_simple">二</string>
@@ -41,6 +48,9 @@
 
     <string name="title_homepage">主页</string>
     <string name="title_setting">设置</string>
+    <string name="title_reset">重置</string>
+    <string name="title_resetDate">今天</string>
+    <string name="title_resetWeek">本周</string>
     <string name="title_todayRecipe">今日食谱</string>
     <string name="title_weekRecipe">本周食谱</string>
     <string name="title_myInformation">我的</string>

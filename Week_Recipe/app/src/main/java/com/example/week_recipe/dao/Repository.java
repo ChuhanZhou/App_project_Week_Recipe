@@ -42,6 +42,7 @@ public class Repository implements PropertyChangeListener {
 
         executorService = Executors.newFixedThreadPool(2);
         systemModel = SystemModelManager.getSystemModelManager();
+        systemModel.addListener("updateUserBasicInformation",this);
         systemModel.addListener("updateDailyRecipeList",this);
         systemModel.addListener("updateFavoriteFoodList",this);
         systemModel.addListener("updateFood",this);

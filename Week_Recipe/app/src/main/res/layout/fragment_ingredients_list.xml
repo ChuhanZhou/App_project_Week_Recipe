@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_ingredientsList_constraintLayout"
     tools:context=".view.fragment.IngredientsListFragment">
 
     <TextView
@@ -49,23 +50,32 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_ingredientsList_loadView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_ingredientsList_recyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_ingredientsList_recyclerView"
-        app:layout_constraintStart_toEndOf="@+id/fragment_ingredientsList_recyclerView"
-        app:layout_constraintTop_toTopOf="@+id/fragment_ingredientsList_recyclerView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_ingredientsList_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
         android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_ingredientsList_textView3"
+        app:layout_constraintVertical_bias="0.0"  />
+
+    <RelativeLayout
+        android:id="@+id/fragment_ingredientsList_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_ingredientsList_textView3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_ingredientsList_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/fragment_ingredientsList_noDataTextView"

@@ -30,6 +30,16 @@ public class RecipeList {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean hasDate(LocalDate date)
+    {
+        if (date!=null)
+        {
+            return getByDate(date)!=null;
+        }
+        return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String add(DailyRecipe newDailyRecipe)
     {
         if (newDailyRecipe!=null)
@@ -77,8 +87,15 @@ public class RecipeList {
         RecipeList weekRecipe = new RecipeList();
         for (int x=0;x<7;x++)
         {
-            weekRecipe.add(getByDate(date));
-            date.plusDays(1);
+            if (hasDate(date))
+            {
+                weekRecipe.add(getByDate(date));
+            }
+            else
+            {
+                weekRecipe.add(new DailyRecipe(date));
+            }
+            date = date.plusDays(1);
         }
         return weekRecipe;
     }

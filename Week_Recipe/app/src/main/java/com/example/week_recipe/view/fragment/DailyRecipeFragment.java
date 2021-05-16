@@ -30,6 +30,7 @@ public class DailyRecipeFragment extends Fragment {
     private FloatingActionButton addFoodButton;
     private int tabPosition = 0;
     private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
+    private  LiveData<FoodList> favouriteFoodList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -40,22 +41,32 @@ public class DailyRecipeFragment extends Fragment {
         return view;
     }
 
-    public void bind(DailyRecipe dailyRecipe, FoodListAdapter.OnFoodListItemClickListener listener, LiveData<FoodList> favouriteFoodList)
+    public void bind(DailyRecipe dailyRecipe, int tabPosition, FoodListAdapter.OnFoodListItemClickListener listener, LiveData<FoodList> favouriteFoodList)
     {
         onFoodListItemClickListener = listener;
+        if (tabPosition>=0&&tabPosition<3)
+        {
+            this.tabPosition = tabPosition;
+        }
+        this.favouriteFoodList = favouriteFoodList;
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_dailyRecipe_fragment));
         tabLayout = view.findViewById(R.id.fragment_dailyRecipe_tabLayout);
         addFoodButton = view.findViewById(R.id.fragment_dailyRecipe_addFoodButton);
         this.dailyRecipe = dailyRecipe;
 
-        tabLayout.selectTab(tabLayout.getTabAt(tabPosition));
-        updateFragment(favouriteFoodList);
+        tabLayout.selectTab(tabLayout.getTabAt(this.tabPosition));
+        updateFragment();
+        addListener();
+    }
+
+    private void addListener()
+    {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tabPosition = tabLayout.getSelectedTabPosition();
-                updateFragment(favouriteFoodList);
+                updateFragment();
             }
 
             @Override
@@ -90,7 +101,7 @@ public class DailyRecipeFragment extends Fragment {
         }
     }
 
-    private void updateFragment(LiveData<FoodList> favouriteFoodList)
+    private void updateFragment()
     {
         if (dailyRecipe!=null)
         {
