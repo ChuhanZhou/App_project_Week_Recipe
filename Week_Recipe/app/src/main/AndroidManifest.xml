@@ -13,20 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Week_Recipe">
-        <activity android:name="com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity"/>
+        <activity android:name=".view.activity.FavouriteFoodActivity" />
+        <activity android:name=".view.activity.SetWeekRecipeByFavouriteActivity" />
+        <activity android:name=".view.activity.AddFoodToMyDailyRecipeListActivity" />
         <activity
-            android:name="com.example.week_recipe.view.activity.EditFoodInformationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.example.week_recipe.view.activity.LoginActivity">
+            android:name=".view.activity.EditFoodInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.week_recipe.view.activity.HomePageActivity" />
+        <activity android:name=".view.activity.HomePageActivity" />
         <activity
-            android:name="com.example.week_recipe.view.activity.FoodInformationActivity"
-            android:screenOrientation="portrait"/>
+            android:name=".view.activity.FoodInformationActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

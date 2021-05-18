@@ -10,11 +10,12 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.example.week_recipe.dao.converter.ArrayListOfRecipeListConverter;
+import com.example.week_recipe.dao.converter.FavouriteWeekRecipeListConverter;
 import com.example.week_recipe.dao.converter.FoodListConverter;
 import com.example.week_recipe.dao.converter.LocalDateTimeConverter;
 import com.example.week_recipe.dao.converter.RecipeListConverter;
 import com.example.week_recipe.model.domain.food.FoodList;
+import com.example.week_recipe.model.domain.recipe.FavouriteWeekRecipeList;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.utility.MyPicture;
 
@@ -31,12 +32,12 @@ public class UserData {
     private String userName;
     @TypeConverters(RecipeListConverter.class)
     private RecipeList myDailyRecipeList;
-    @TypeConverters(ArrayListOfRecipeListConverter.class)
-    private ArrayList<RecipeList> favoriteWeekRecipeList;
+    @TypeConverters(FavouriteWeekRecipeListConverter.class)
+    private FavouriteWeekRecipeList favoriteWeekRecipeList;
     @TypeConverters(FoodListConverter.class)
     private FoodList favoriteFoodList;
 
-    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,ArrayList<RecipeList> favoriteWeekRecipeList,FoodList favoriteFoodList,String updateTime)
+    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,FavouriteWeekRecipeList favoriteWeekRecipeList,FoodList favoriteFoodList,String updateTime)
     {
         this.userImageId = userImageId;
         this.email = email;
@@ -53,7 +54,7 @@ public class UserData {
         this.email = email;
         this.userName = userName;
         myDailyRecipeList = new RecipeList();
-        favoriteWeekRecipeList = new ArrayList<>();
+        favoriteWeekRecipeList = new FavouriteWeekRecipeList();
         favoriteFoodList = new FoodList();
         updateTime = "0.0.0 0:0:0";
     }
@@ -88,7 +89,7 @@ public class UserData {
         return favoriteFoodList;
     }
 
-    public ArrayList<RecipeList> getFavoriteWeekRecipeList() {
+    public FavouriteWeekRecipeList getFavoriteWeekRecipeList() {
         return favoriteWeekRecipeList;
     }
 
@@ -103,11 +104,11 @@ public class UserData {
         {
             allFood.add(myDailyRecipeList.getFoodMenu().getByIndex(x));
         }
-        for (int x=0;x<favoriteWeekRecipeList.size();x++)
+        for (int x=0;x<favoriteWeekRecipeList.getSize();x++)
         {
-            for (int i=0;i<favoriteWeekRecipeList.get(x).getFoodMenu().getSize();i++)
+            for (int i = 0; i<favoriteWeekRecipeList.getByIndex(x).getRecipeList().getFoodMenu().getSize(); i++)
             {
-                allFood.add(favoriteWeekRecipeList.get(x).getFoodMenu().getByIndex(x));
+                allFood.add(favoriteWeekRecipeList.getByIndex(x).getRecipeList().getFoodMenu().getByIndex(x));
             }
         }
         return allFood;
@@ -158,72 +159,8 @@ public class UserData {
         this.userName = userName;
     }
 
-    public String addFavoriteWeekRecipe(RecipeList newRecipeList)
-    {
-        if (newRecipeList!=null)
-        {
-            if (newRecipeList.getSize()<=7)
-            {
-                favoriteWeekRecipeList.add(removeAllDate(newRecipeList));
-            }
-            return "The daily recipe should less than 8.";
-        }
-        return "Input null!";
-    }
-
-    public RecipeList getFavoriteWeekRecipeByIndex(int index)
-    {
-        if (index>=0&&index<favoriteWeekRecipeList.size())
-        {
-            return favoriteWeekRecipeList.get(index);
-        }
-        return null;
-    }
-
-    public String updateFavoriteWeekRecipe(RecipeList oldRecipeList, RecipeList newRecipeList)
-    {
-        if (oldRecipeList!=null&&newRecipeList!=null)
-        {
-            for (int x=0;x<favoriteWeekRecipeList.size();x++)
-            {
-                if (favoriteWeekRecipeList.get(x).hashCode()==oldRecipeList.hashCode())
-                {
-                    if (newRecipeList.getSize()<=7)
-                    {
-                        favoriteWeekRecipeList.set(x,removeAllDate(newRecipeList));
-                        return null;
-                    }
-                    return "The daily recipe should less than 8.";
-                }
-            }
-            return "Can't find old Recipe List.";
-        }
-        return "Input null!";
-    }
-
-    public void removeFavoriteWeekRecipeByWeekRecipe(RecipeList recipeList)
-    {
-        for (int x=0;x<favoriteWeekRecipeList.size();x++)
-        {
-            if (favoriteWeekRecipeList.get(x).hashCode()==recipeList.hashCode())
-            {
-                favoriteWeekRecipeList.remove(x);
-            }
-        }
-    }
-
-    public void removeFavoriteWeekRecipeByIndex(int index)
-    {
-        favoriteWeekRecipeList.remove(index);
-    }
-
     public UserData copy()
     {
-        ArrayList<RecipeList> copyList = new ArrayList<>();
-        for (int x=0;x<favoriteWeekRecipeList.size();x++)
-        {
-            copyList.add(favoriteWeekRecipeList.get(x).copy());
-        }
-        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),copyList,favoriteFoodList.copy(),updateTime);
+        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),favoriteWeekRecipeList.copy(),favoriteFoodList.copy(),updateTime);
     }
 }

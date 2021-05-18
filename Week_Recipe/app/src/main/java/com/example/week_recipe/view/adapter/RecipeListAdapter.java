@@ -59,8 +59,15 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
         {
             DailyRecipe dailyRecipe = recipeList.getByIndex(position);
             holder.dailyRecipe = dailyRecipe;
-            String dateName = holder.view.getContext().getString(titleDateIdList.get(dailyRecipe.getDate().getDayOfWeek().getValue()-1));
-            holder.dateTextView.setText(dailyRecipe.getDate().getMonthValue()+"/"+dailyRecipe.getDate().getDayOfMonth()+" "+dateName);
+            if (dailyRecipe.getDate()!=null)
+            {
+                String dateName = holder.view.getContext().getString(titleDateIdList.get(dailyRecipe.getDate().getDayOfWeek().getValue()-1));
+                holder.dateTextView.setText(dailyRecipe.getDate().getMonthValue()+"/"+dailyRecipe.getDate().getDayOfMonth()+" "+dateName);
+            }
+            else
+            {
+                holder.dateTextView.setText(titleDateIdList.get(position%7));
+            }
             if (dailyRecipe.getBreakfast().getSize()!=0)
             {
                 holder.breakfastNameList.setText(dailyRecipe.getBreakfast().toString());
@@ -150,7 +157,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick(dailyRecipe);
+                    if (onItemClickListener!=null)
+                    {
+                        onItemClickListener.onItemClick(dailyRecipe);
+                    }
                 }
             });
         }

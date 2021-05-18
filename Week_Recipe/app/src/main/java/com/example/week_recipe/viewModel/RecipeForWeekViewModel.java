@@ -23,7 +23,6 @@ public class RecipeForWeekViewModel extends AndroidViewModel implements Property
     private LocalDate firstDayOfWeek;
     private final MutableLiveData<String> showWeekText;
     private final MutableLiveData<RecipeList> showRecipeList;
-    //private final MutableLiveData<RecipeList> favouriteFoodList;
 
     public RecipeForWeekViewModel(Application application)
     {
@@ -32,13 +31,10 @@ public class RecipeForWeekViewModel extends AndroidViewModel implements Property
         systemModel = SystemModelManager.getSystemModelManager();
         showWeekText = new MutableLiveData<>();
         showRecipeList = new MutableLiveData<>();
-        //favouriteFoodList = new MutableLiveData<>();
         //set value
         setShowDate(LocalDate.now());
-        //favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
         //add listener
         systemModel.addListener("updateDailyRecipeList",this);
-        //systemModel.addListener("updateFavoriteFoodList",this);
         systemModel.addListener("updateFood",this);
     }
 
@@ -54,10 +50,6 @@ public class RecipeForWeekViewModel extends AndroidViewModel implements Property
         return showRecipeList;
     }
 
-    //public LiveData<FoodList> getFavouriteFoodList() {
-    //    return favouriteFoodList;
-    //}
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setShowDate(LocalDate dayOfWeek) {
         LocalDate firstDayOfWeek = dayOfWeek.minusDays(dayOfWeek.getDayOfWeek().getValue()-1);
@@ -68,6 +60,11 @@ public class RecipeForWeekViewModel extends AndroidViewModel implements Property
             RecipeList recipeList = systemModel.getUserData().getMyDailyRecipeList().getOneWeek(this.firstDayOfWeek);
             showRecipeList.setValue(recipeList);
         }
+    }
+
+    public String addFavouriteWeekRecipe(String name)
+    {
+        return systemModel.addFavoriteWeekRecipe(name,showRecipeList.getValue());
     }
 
     @Override

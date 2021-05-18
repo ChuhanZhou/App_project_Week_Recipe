@@ -39,8 +39,7 @@ public class SearchFoodFragment extends Fragment {
     private LiveData<FoodList> favouriteFoodList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_search_food, container, false);
         return view;
@@ -94,7 +93,7 @@ public class SearchFoodFragment extends Fragment {
         backCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                back();
+                getActivity().onBackPressed();;
             }
         });
     }
@@ -140,20 +139,15 @@ public class SearchFoodFragment extends Fragment {
         fragment.updateFoodList(showList,showAnimation);
     }
 
-    private void clearText()
+    public void clearText()
     {
         foodNameEditText.setText(null);
-    }
-
-    private void back()
-    {
-        getActivity().finish();
     }
 
     public void updateBasicFoodList(FoodList basicFoodList)
     {
         this.basicFoodList = basicFoodList;
-        showSearchResult(true);
+        showSearchResult(false);
     }
 
     public boolean foodNameCanBeUsed()

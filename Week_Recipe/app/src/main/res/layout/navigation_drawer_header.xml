@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/navigationDrawerHeader_imageView"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="7dp"
         android:background="@drawable/navigation_drawer_header_background"
         android:translationZ="5dp"
@@ -31,9 +31,8 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/navigationDrawerHeader_imageView"
         app:layout_constraintTop_toTopOf="@+id/navigationDrawerHeader_imageView"
-        app:layout_constraintVertical_bias="0.5"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        app:layout_constraintVertical_bias="0"
+        android:layout_margin="10dp"
         android:translationZ="5dp"
         tools:targetApi="lollipop">
         <ImageView
@@ -64,4 +63,76 @@
         android:translationZ="5dp"
         tools:targetApi="lollipop" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/navigationDrawerHeader_favouriteFoodCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:translationZ="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_foreground"
+        app:cardBackgroundColor="#00000000"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintBottom_toBottomOf="@+id/navigationDrawerHeader_imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navigationDrawerHeader_userImageCardView"
+        tools:targetApi="lollipop">
+        <ImageView
+            android:id="@+id/navigationDrawerHeader_favouriteFoodImage"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_button_star_like"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/navigationDrawerHeader_favouriteFoodTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="10sp"
+            android:text="@string/title_favouriteFood"
+            android:gravity="center" />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/navigationDrawerHeader_favouriteRecipeCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:translationZ="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_foreground"
+        app:cardBackgroundColor="#00000000"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="@+id/navigationDrawerHeader_imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navigationDrawerHeader_userImageCardView"
+        tools:targetApi="lollipop">
+        <ImageView
+            android:id="@+id/navigationDrawerHeader_favouriteRecipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_button_favourite"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/navigationDrawerHeader_favouriteRecipeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="10sp"
+            android:text="@string/title_favouriteRecipe"
+            android:gravity="center" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

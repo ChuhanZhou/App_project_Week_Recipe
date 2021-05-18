@@ -10,14 +10,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RecipeList {
-
-    private ArrayList<DailyRecipe> recipeList;
+    ArrayList<DailyRecipe> recipeList;
 
     public RecipeList()
     {
         recipeList = new ArrayList<>();
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean hasDailyRecipe(DailyRecipe dailyRecipe)
@@ -26,7 +24,7 @@ public class RecipeList {
         {
             return getByDate(dailyRecipe.getDate())!=null;
         }
-        return true;
+        return false;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -47,6 +45,7 @@ public class RecipeList {
             if (!hasDailyRecipe(newDailyRecipe))
             {
                 recipeList.add(newDailyRecipe);
+                return null;
             }
             return "This date has a recipe";
         }

@@ -1,14 +1,13 @@
 package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityManagerCompat;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
@@ -16,20 +15,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.week_recipe.R;
-import com.example.week_recipe.dao.converter.LocalDateConverter;
-import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
+import com.example.week_recipe.utility.MyString;
 import com.example.week_recipe.utility.UiDataCache;
 import com.example.week_recipe.view.activity.FoodInformationActivity;
+import com.example.week_recipe.view.activity.SetWeekRecipeByFavouriteActivity;
 import com.example.week_recipe.view.adapter.RecipeListAdapter;
 import com.example.week_recipe.viewModel.RecipeForWeekViewModel;
-import com.example.week_recipe.viewModel.RecipeWithDateViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
@@ -56,6 +57,15 @@ public class RecipeForWeekFragment extends Fragment implements RecipeListAdapter
         setListener();
         changeVisibilityOfPopupCalenderLayout();
         return view;
+    }
+
+    private void toastPrint(String information)
+    {
+        if (information!=null)
+        {
+            Context context = getContext();
+            Toast.makeText(context,information,Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void changeVisibilityOfPopupCalenderLayout()
@@ -156,6 +166,49 @@ public class RecipeForWeekFragment extends Fragment implements RecipeListAdapter
     public void setShowDate(LocalDate date)
     {
         viewModel.setShowDate(date);
+    }
+
+    public void addFavouriteWeekRecipe()
+    {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View view = inflater.inflate(R.layout.fragment_popup_set_string, null);
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        WindowManager.LayoutParams wlp =dialog.getWindow().getAttributes();
+        wlp.gravity = Gravity.CENTER;
+        dialog.show();
+        dialog.getWindow().setLayout(1040,520);
+
+        PopupSetStringFragment popupSetStringFragment = new PopupSetStringFragment(view,R.string.input_Name);
+        popupSetStringFragment.getConfirmButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result;
+                if (MyString.isNullOrEmptyOrFullOfSpace(String.valueOf(popupSetStringFragment.getStringEditText().getText())))
+                {
+
+                    result = "The name can't be empty.";
+                }
+                else
+                {
+                    result = viewModel.addFavouriteWeekRecipe(String.valueOf(popupSetStringFragment.getStringEditText().getText()));
+                    if (result==null)
+                    {
+                        dialog.cancel();
+                    }
+                }
+                toastPrint(result);
+            }
+        });
+    }
+
+    public void setWeekRecipeByFavourite()
+    {
+        Context context = getContext();
+        Intent intent = new Intent(context, SetWeekRecipeByFavouriteActivity.class);
+        UiDataCache.putData(SetWeekRecipeByFavouriteActivity.valueKey,viewModel.getFirstDayOfWeek());
+        startActivity(intent);
     }
 
     @Override

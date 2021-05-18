@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.example.week_recipe.model.domain.recipe.FavouriteWeekRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.model.domain.user.UserData;
 import com.example.week_recipe.utility.MyPicture;
@@ -73,7 +74,7 @@ public class SystemModelManager implements SystemModel{
 
     @Override
     public String addDailyRecipeList(RecipeList recipeList, LocalDate dateOfWeek) {
-        LocalDate date = dateOfWeek.minusDays(dateOfWeek.getDayOfWeek().getValue());
+        LocalDate date = dateOfWeek.minusDays(dateOfWeek.getDayOfWeek().getValue()-1);
         if (recipeList.getSize()<=7)
         {
             for (int x=0;x<7;x++)
@@ -88,9 +89,18 @@ public class SystemModelManager implements SystemModel{
                 {
                     dailyRecipe = new DailyRecipe(date,new FoodList(),new FoodList(),new FoodList());
                 }
-                userData.getMyDailyRecipeList().add(dailyRecipe);
+
+                if (userData.getMyDailyRecipeList().hasDailyRecipe(dailyRecipe))
+                {
+                    userData.getMyDailyRecipeList().update(dailyRecipe);
+                }
+                else
+                {
+                    userData.getMyDailyRecipeList().add(dailyRecipe);
+                }
                 userData.updateTime();
                 property.firePropertyChange("updateDailyRecipeList",null,dailyRecipe);
+                date = date.plusDays(1);
             }
             return null;
         }
@@ -191,9 +201,9 @@ public class SystemModelManager implements SystemModel{
             }
         }
         //update food in favorite week recipe list
-        for (int i=0;i<userData.getFavoriteWeekRecipeList().size();i++)
+        for (int i=0;i<userData.getFavoriteWeekRecipeList().getSize();i++)
         {
-            RecipeList recipeList = userData.getFavoriteWeekRecipeByIndex(i);
+            RecipeList recipeList = userData.getFavoriteWeekRecipeList().getByIndex(i).getRecipeList();
             for (int x=0;x<recipeList.getSize();x++)
             {
                 //breakfast
@@ -234,7 +244,7 @@ public class SystemModelManager implements SystemModel{
         if (result == null)
         {
             userData.updateTime();
-            property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood);
+            property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood.copy());
         }
         return result;
     }
@@ -243,31 +253,37 @@ public class SystemModelManager implements SystemModel{
     public void removeFavoriteFood(Food favoriteFood) {
         userData.getFavoriteFoodList().remove(favoriteFood);
         userData.updateTime();
-        property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood);
+        property.firePropertyChange("updateFavoriteFoodList",null,favoriteFood.copy());
     }
 
     @Override
-    public String addFavoriteWeekRecipe(RecipeList recipeList) {
-        userData.updateTime();
-        return userData.addFavoriteWeekRecipe(recipeList);
+    public String addFavoriteWeekRecipe(String name,RecipeList recipeList) {
+
+        String result = userData.getFavoriteWeekRecipeList().add(name,recipeList);
+        if (result==null)
+        {
+            userData.updateTime();
+            property.firePropertyChange("updateFavoriteWeekRecipe",null,userData.copy().getFavoriteWeekRecipeList().getByName(name));
+        }
+        return result;
     }
 
     @Override
-    public String updateFavoriteWeekRecipe(RecipeList oldRecipeList, RecipeList newRecipeList) {
+    public String updateFavoriteWeekRecipe(FavouriteWeekRecipe oldRecipeList, FavouriteWeekRecipe newRecipeList) {
         userData.updateTime();
-        return userData.updateFavoriteWeekRecipe(oldRecipeList, newRecipeList);
+        return userData.getFavoriteWeekRecipeList().update(oldRecipeList, newRecipeList);
     }
 
     @Override
-    public void removeFavoriteWeekRecipe(RecipeList recipeList) {
+    public void removeFavoriteWeekRecipe(String name) {
         userData.updateTime();
-        userData.removeFavoriteWeekRecipeByWeekRecipe(recipeList);
+        userData.getFavoriteWeekRecipeList().removeByName(name);
     }
 
     @Override
     public void removeFavoriteWeekRecipe(int index) {
         userData.updateTime();
-        userData.removeFavoriteWeekRecipeByIndex(index);
+        userData.getFavoriteWeekRecipeList().removeByIndex(index);
     }
 
     @Override

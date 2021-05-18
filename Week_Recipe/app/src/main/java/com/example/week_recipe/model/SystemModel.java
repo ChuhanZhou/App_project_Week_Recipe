@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.recipe.DailyRecipe;
+import com.example.week_recipe.model.domain.recipe.FavouriteWeekRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.model.domain.user.UserData;
 import com.example.week_recipe.utility.NamedPropertyChangeSubject;
@@ -27,8 +28,8 @@ public interface SystemModel extends NamedPropertyChangeSubject {
     String addFavoriteFood(Food favoriteFood);
     void removeFavoriteFood(Food favoriteFood);
 
-    String addFavoriteWeekRecipe(RecipeList recipeList);
-    String updateFavoriteWeekRecipe(RecipeList oldRecipeList,RecipeList newRecipeList);
-    void removeFavoriteWeekRecipe(RecipeList recipeList);
+    String addFavoriteWeekRecipe(String name,RecipeList recipeList);
+    String updateFavoriteWeekRecipe(FavouriteWeekRecipe oldRecipeList, FavouriteWeekRecipe newRecipeList);
+    void removeFavoriteWeekRecipe(String name);
     void removeFavoriteWeekRecipe(int index);
 }

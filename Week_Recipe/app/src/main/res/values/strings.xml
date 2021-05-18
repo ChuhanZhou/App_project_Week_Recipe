@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Week_Recipe</string>
+    <string name="app_name">Week Recipe</string>
 
     <string name="input_account">Email:</string>
     <string name="input_password">Password:</string>
@@ -8,6 +8,8 @@
     <string name="input_FoodName">Food Name:</string>
     <string name="input_FoodType">Food Type:</string>
     <string name="input_FoodIngredients">Food Ingredients:</string>
+    <string name="input_Name">Name:</string>
+    <string name="input_FoodQuantity">Food Quantity:</string>
 
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
@@ -15,14 +17,17 @@
     <string name="button_back">Back</string>
     <string name="button_add">Add</string>
     <string name="button_logout">Logout</string>
+    <string name="button_confirm">Confirm</string>
 
     <string name="text_loading">Loading...</string>
     <string name="text_registerTitle">New User</string>
     <string name="text_noFood">No food now</string>
     <string name="text_noRecipe">No recipe now</string>
     <string name="text_noIngredient">No Ingredient</string>
+    <string name="text_noFavouriteWeekRecipe">No favourite recipe now</string>
     <string name="text_choosePlease">Choose please</string>
     <string name="text_inputFoodName">Input food name</string>
+    <string name="text_inputFavouriteName">Input favourite name</string>
     <string name="text_createNewFood">Create New Food</string>
     <string name="text_monday">Monday</string>
     <string name="text_tuesday">Tuesday</string>
@@ -49,9 +54,12 @@
     <string name="title_homepage">Homepage</string>
     <string name="title_setting">Settings</string>
     <string name="title_reset">Reset</string>
+    <string name="title_addToFavourite">Save to favourite</string>
+    <string name="title_setByFavourite">Set by favourite</string>
     <string name="title_resetDate">Back to today</string>
     <string name="title_resetWeek">Back to this week</string>
-
+    <string name="title_favouriteFood">Favourite Food</string>
+    <string name="title_favouriteRecipe">Favourite Recipe</string>
     <string name="title_todayRecipe">Today Recipe</string>
     <string name="title_weekRecipe">Week Recipe</string>
     <string name="title_myInformation">My Information</string>

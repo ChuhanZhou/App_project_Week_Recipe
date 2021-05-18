@@ -1,6 +1,7 @@
 package com.example.week_recipe.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -44,6 +45,7 @@ public class UserInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_information, container, false);
+        viewModel = new ViewModelProvider(this).get(UserInformationViewModel.class);
         bind(view);
         setListener();
         return view;
@@ -67,7 +69,6 @@ public class UserInformationFragment extends Fragment {
 
 
     private void bind(View view) {
-        viewModel = new ViewModelProvider(this).get(UserInformationViewModel.class);
         userData = viewModel.getUserData();
         emailTextView = view.findViewById(R.id.fragment_userInformation_emailTextView);
         userNameTextView = view.findViewById(R.id.fragment_userInformation_userNameTextView);

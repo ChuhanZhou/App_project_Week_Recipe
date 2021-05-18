@@ -7,44 +7,14 @@
     tools:context=".view.activity.AddFoodToMyDailyRecipeListActivity">
 
     <fragment
-        android:id="@+id/addFoodToMyDailyRecipeList_setFoodInformationFragment"
-        android:name="com.example.week_recipe.view.fragment.SetFoodInformationFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/addFoodToMyDailyRecipeList_createFoodTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_set_food_information" />
-
-    <fragment
-        android:id="@+id/addFoodToMyDailyRecipeList_searchFragment"
-        android:name="com.example.week_recipe.view.fragment.SearchFoodFragment"
+        android:id="@+id/addFoodToMyDailyRecipeList_addFoodToFoodListFragment"
+        android:name="com.example.week_recipe.view.fragment.AddFoodToFoodListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_search_food"/>
-
-    <TextView
-        android:id="@+id/addFoodToMyDailyRecipeList_createFoodTextView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@drawable/top_radius_background"
-        android:textColor="@color/textView_Text1"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/ripple_top_radius_background"
-        android:gravity="center"
-        android:text="@string/text_createNewFood"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.75" />
+        tools:layout="@layout/fragment_add_food_to_food_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,6 +46,7 @@ public class Repository implements PropertyChangeListener {
         systemModel.addListener("updateDailyRecipeList",this);
         systemModel.addListener("updateFavoriteFoodList",this);
         systemModel.addListener("updateFood",this);
+        systemModel.addListener("updateFavoriteWeekRecipe",this);
     }
 
     public static synchronized Repository getInstance(Context context)

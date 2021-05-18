@@ -8,6 +8,8 @@
     <string name="input_FoodName">菜名:</string>
     <string name="input_FoodType">菜类:</string>
     <string name="input_FoodIngredients">所需食材:</string>
+    <string name="input_Name">名称:</string>
+    <string name="input_FoodQuantity">菜品数量:</string>
 
     <string name="button_login">登录</string>
     <string name="button_register">注册</string>
@@ -15,14 +17,17 @@
     <string name="button_back">返回</string>
     <string name="button_add">添加</string>
     <string name="button_logout">切换用户</string>
+    <string name="button_confirm">确认</string>
 
     <string name="text_loading">加载中。。。</string>
     <string name="text_registerTitle">新用户</string>
     <string name="text_noFood">无食物</string>
     <string name="text_noIngredient">无食材</string>
     <string name="text_noRecipe">无食谱</string>
+    <string name="text_noFavouriteWeekRecipe">无收藏食谱</string>
     <string name="text_choosePlease">请选择</string>
     <string name="text_inputFoodName">请输入菜名</string>
+    <string name="text_inputFavouriteName">请输入收藏名称</string>
     <string name="text_createNewFood">创建新菜</string>
     <string name="text_monday">星期一</string>
     <string name="text_tuesday">星期二</string>
@@ -49,8 +54,12 @@
     <string name="title_homepage">主页</string>
     <string name="title_setting">设置</string>
     <string name="title_reset">重置</string>
+    <string name="title_addToFavourite">收藏</string>
+    <string name="title_setByFavourite">应用收藏</string>
     <string name="title_resetDate">今天</string>
     <string name="title_resetWeek">本周</string>
+    <string name="title_favouriteFood">菜品收藏</string>
+    <string name="title_favouriteRecipe">菜单收藏</string>
     <string name="title_todayRecipe">今日食谱</string>
     <string name="title_weekRecipe">本周食谱</string>
     <string name="title_myInformation">我的</string>
