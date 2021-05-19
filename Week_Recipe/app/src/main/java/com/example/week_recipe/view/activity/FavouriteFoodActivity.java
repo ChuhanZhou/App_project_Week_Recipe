@@ -36,6 +36,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
     private LiveData<FoodList> favouriteFoodList;
     private LiveData<FoodList> allFoodList;
     private boolean isAdding;
+    private boolean showAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
 
     private void init()
     {
+        showAnimation = true;
         isAdding = false;
         viewModel = new ViewModelProvider(this).get(FavouriteFoodViewModel.class);
         favouriteFoodList = viewModel.getFavouriteFoodList();
@@ -95,7 +97,8 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
         favouriteFoodList.observe(this, new Observer<FoodList>() {
             @Override
             public void onChanged(FoodList foodList) {
-                showFavouriteFragment.updateBasicFoodList(foodList);
+                showFavouriteFragment.updateBasicFoodList(foodList,showAnimation);
+                showAnimation = false;
             }
         });
         addFoodButton.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +126,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
             showFavouriteFragment.getView().setVisibility(View.GONE);
             addFoodButton.setVisibility(View.GONE);
             addFavouriteFoodFragment.getView().setVisibility(View.VISIBLE);
-            addFavouriteFoodFragment.updateFragment(true);
-            addFavouriteFoodFragment.clearSearchText();
+            addFavouriteFoodFragment.bind(allFoodList,favouriteFoodList,this);
         }
     }
 
@@ -149,6 +151,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
             Context context = getApplicationContext();
             Intent intent = new Intent(context, FoodInformationActivity.class);
             intent.putExtra("showFood", UiDataCache.putData("showFood",showFavouriteFragment.getShowList().getByIndex(clickedItemIndex)));
+            UiDataCache.putData(FoodInformationActivity.foodMenuKey,null);
             startActivity(intent);
         }
         else

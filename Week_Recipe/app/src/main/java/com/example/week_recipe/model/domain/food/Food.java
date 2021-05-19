@@ -76,7 +76,10 @@ public class Food {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void update(Food newFood)
     {
-        MyPicture.putBitmapByImageId(imageId,MyPicture.getBitmapByImageId(newFood.imageId));
+        if (MyPicture.hasImage(newFood.imageId))
+        {
+            MyPicture.putBitmapByImageId(imageId,MyPicture.getBitmapByImageId(newFood.imageId));
+        }
         //id = email+"_"+newFood.name;
         //userEmail = newFood.userEmail;
         name = newFood.name;

@@ -212,7 +212,7 @@ public class RecipeForWeekFragment extends Fragment implements RecipeListAdapter
     }
 
     @Override
-    public void onItemClick(DailyRecipe dailyRecipe) {
+    public void onItemClick(int position,DailyRecipe dailyRecipe) {
         NavController navController = Navigation.findNavController(view);
         UiDataCache.putData(RecipeWithDateFragment.valueKey,dailyRecipe.getDate());
         navController.navigate(R.id.nav_todayRecipeFragment);

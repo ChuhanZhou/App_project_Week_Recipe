@@ -270,20 +270,29 @@ public class SystemModelManager implements SystemModel{
 
     @Override
     public String updateFavoriteWeekRecipe(FavouriteWeekRecipe oldRecipeList, FavouriteWeekRecipe newRecipeList) {
-        userData.updateTime();
-        return userData.getFavoriteWeekRecipeList().update(oldRecipeList, newRecipeList);
+        String result = userData.getFavoriteWeekRecipeList().update(oldRecipeList, newRecipeList);
+        if (result==null)
+        {
+            userData.updateTime();
+            property.firePropertyChange("updateFavoriteWeekRecipe",null,userData.copy().getFavoriteWeekRecipeList().getByName(newRecipeList.getName()));
+        }
+        return result;
     }
 
     @Override
     public void removeFavoriteWeekRecipe(String name) {
-        userData.updateTime();
+        FavouriteWeekRecipe remove = userData.getFavoriteWeekRecipeList().getByName(name);
         userData.getFavoriteWeekRecipeList().removeByName(name);
+        userData.updateTime();
+        property.firePropertyChange("updateFavoriteWeekRecipe",null,remove);
     }
 
     @Override
     public void removeFavoriteWeekRecipe(int index) {
-        userData.updateTime();
+        FavouriteWeekRecipe remove = userData.getFavoriteWeekRecipeList().getByIndex(index);
         userData.getFavoriteWeekRecipeList().removeByIndex(index);
+        userData.updateTime();
+        property.firePropertyChange("updateFavoriteWeekRecipe",null,remove);
     }
 
     @Override

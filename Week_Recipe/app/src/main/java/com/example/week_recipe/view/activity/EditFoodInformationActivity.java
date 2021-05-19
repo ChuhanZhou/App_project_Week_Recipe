@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.view.fragment.SetFoodInformationFragment;
 import com.example.week_recipe.viewModel.EditFoodInformationViewModel;
 import com.example.week_recipe.model.domain.food.Food;
@@ -22,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditFoodInformationActivity extends AppCompatActivity {
 
+    public static final String foodMenuKey = "foodMenu";
     private EditFoodInformationViewModel viewModel;
     private Button backButton;
     private FloatingActionButton saveButton;
@@ -44,8 +46,11 @@ public class EditFoodInformationActivity extends AppCompatActivity {
 
     private void toastPrint(String information)
     {
-        Context context = getApplicationContext();
-        Toast.makeText(context,information,Toast.LENGTH_SHORT).show();
+        if (information!=null)
+        {
+            Context context = getApplicationContext();
+            Toast.makeText(context,information,Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void bind()
@@ -84,20 +89,35 @@ public class EditFoodInformationActivity extends AppCompatActivity {
         {
             clickSaveButton = true;
             Food newFood = fragment.getNewFood();
-            //Food newFood = oldFood;
 
-            String result = viewModel.updateFoodInformation(oldFood,newFood);
-            if (result!=null)
+            String result;
+            FoodList foodMenu = (FoodList) UiDataCache.getData(foodMenuKey);
+            if (foodMenu==null)
             {
-                toastPrint(result);
-                clickSaveButton = false;
+                //for update food home page
+                result = viewModel.updateFoodInformation(oldFood,newFood);
             }
             else
+            {
+                //for update food in favourite week recipe
+                result = foodMenu.update(oldFood,newFood);
+                if (result==null)
+                {
+                    viewModel.updateFoodInformation(oldFood,newFood);
+                }
+            }
+
+            toastPrint(result);
+            if (result==null)
             {
                 Intent intent = new Intent();
                 intent.putExtra("showFood",UiDataCache.putData("showFood",newFood));
                 setResult(1,intent);
                 finish();
+            }
+            else
+            {
+                clickSaveButton = false;
             }
         }
     }

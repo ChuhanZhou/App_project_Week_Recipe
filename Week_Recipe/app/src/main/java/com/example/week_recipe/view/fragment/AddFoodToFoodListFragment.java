@@ -85,7 +85,7 @@ public class AddFoodToFoodListFragment extends Fragment{
         basicFoodList.observe(this, new Observer<FoodList>() {
             @Override
             public void onChanged(FoodList foodList) {
-                searchFragment.updateBasicFoodList(foodList);
+                searchFragment.updateBasicFoodList(foodList,true);
             }
         });
         createFoodTextView.setOnClickListener(new View.OnClickListener() {

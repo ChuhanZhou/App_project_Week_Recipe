@@ -39,7 +39,7 @@ public class SearchWeekRecipeFragment extends Fragment {
         return view = inflater.inflate(R.layout.fragment_search_week_recipe, container, false);
     }
 
-    public void bind(FavouriteWeekRecipeList basicWeekRecipeList, WeekRecipeListAdapter.OnItemClickListener listener)
+    public void bind(FavouriteWeekRecipeList basicWeekRecipeList, WeekRecipeListAdapter.OnItemClickListener listener,boolean hasMore,boolean hasDelete)
     {
         this.basicWeekRecipeList = basicWeekRecipeList;
         showList = this.basicWeekRecipeList;
@@ -47,7 +47,7 @@ public class SearchWeekRecipeFragment extends Fragment {
         clearTextCardView = view.findViewById(R.id.fragment_searchWeekRecipe_clearTextCardView);
         backCardView = view.findViewById(R.id.fragment_searchWeekRecipe_backCardView);
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_searchWeekRecipe_fragment));
-        fragment.bind(showList,listener,false,false);
+        fragment.bind(showList,listener,hasMore,hasDelete);
         setListener();
         showSearchResult(true);
         updateClearTextCardViewVisibility();
@@ -137,10 +137,10 @@ public class SearchWeekRecipeFragment extends Fragment {
         getActivity().finish();
     }
 
-    public void updateBasicFoodList(FavouriteWeekRecipeList basicWeekRecipeList)
+    public void updateBasicFoodList(FavouriteWeekRecipeList basicWeekRecipeList,boolean showAnimation)
     {
         this.basicWeekRecipeList = basicWeekRecipeList;
-        showSearchResult(true);
+        showSearchResult(showAnimation);
     }
 
     public FavouriteWeekRecipeList getShowList() {

@@ -159,7 +159,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
                 public void onClick(View v) {
                     if (onItemClickListener!=null)
                     {
-                        onItemClickListener.onItemClick(dailyRecipe);
+                        onItemClickListener.onItemClick(getAdapterPosition(),dailyRecipe);
                     }
                 }
             });
@@ -172,6 +172,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(DailyRecipe dailyRecipe);
+        void onItemClick(int position,DailyRecipe dailyRecipe);
     }
 }

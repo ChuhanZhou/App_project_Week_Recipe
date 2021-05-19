@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:src="@drawable/ic_button_favourite"
-            android:scaleType="fitCenter"
+            android:scaleType="center"
             android:layout_marginTop="5dp"/>
         <TextView
             android:id="@+id/navigationDrawerHeader_favouriteRecipeTextView"

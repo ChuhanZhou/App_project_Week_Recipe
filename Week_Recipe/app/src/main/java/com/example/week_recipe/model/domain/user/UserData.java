@@ -108,7 +108,7 @@ public class UserData {
         {
             for (int i = 0; i<favoriteWeekRecipeList.getByIndex(x).getRecipeList().getFoodMenu().getSize(); i++)
             {
-                allFood.add(favoriteWeekRecipeList.getByIndex(x).getRecipeList().getFoodMenu().getByIndex(x));
+                allFood.add(favoriteWeekRecipeList.getByIndex(x).getRecipeList().getFoodMenu().getByIndex(i));
             }
         }
         return allFood;

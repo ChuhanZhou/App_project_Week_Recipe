@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.FavouriteWeekRecipeActivity">
+
+    <fragment
+        android:id="@+id/favouriteWeekRecipe_showFavouriteFragment"
+        android:name="com.example.week_recipe.view.fragment.SearchWeekRecipeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_search_week_recipe"/>
+
+    <fragment
+        android:id="@+id/favouriteWeekRecipe_checkWeekRecipeInfoFragment"
+        android:name="com.example.week_recipe.view.fragment.RecipeListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favouriteWeekRecipe_nameLayout"
+        tools:layout="@layout/fragment_recipe_list" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/favouriteWeekRecipe_nameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:translationZ="10dp"
+        android:background="#FFFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop">
+
+        <Button
+            android:id="@+id/favouriteWeekRecipe_backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/button_back"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/favouriteWeekRecipe_titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/input_Name"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/favouriteWeekRecipe_backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/favouriteWeekRecipe_backButton"
+            app:layout_constraintTop_toTopOf="@+id/favouriteWeekRecipe_backButton"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <EditText
+            android:id="@+id/favouriteWeekRecipe_nameEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:maxLength="100"
+            android:inputType="text"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/favouriteWeekRecipe_titleTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/favouriteWeekRecipe_titleTextView"
+            app:layout_constraintTop_toTopOf="@+id/favouriteWeekRecipe_titleTextView"
+            app:layout_constraintVertical_bias="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Button_Save"
+        android:id="@+id/favouriteWeekRecipe_saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

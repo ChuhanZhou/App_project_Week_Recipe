@@ -1,5 +1,9 @@
 package com.example.week_recipe.model.domain.food;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.week_recipe.utility.MyString;
 
 import java.util.ArrayList;
@@ -95,7 +99,8 @@ public class FoodList {
         return searchList;
     }
 
-    public String update(Food oldFood,Food newFood)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String update(Food oldFood, Food newFood)
     {
         if (oldFood!=null&&newFood!=null)
         {
@@ -107,7 +112,7 @@ public class FoodList {
                     {
                         if (foodList.get(x).getName().equals(oldFood.getName()))
                         {
-                            foodList.set(x,newFood);
+                            foodList.get(x).update(newFood);
                             return null;
                         }
                     }
@@ -133,7 +138,10 @@ public class FoodList {
 
     public void remove(int index)
     {
-        foodList.remove(index);
+        if (index>=0&&index<foodList.size())
+        {
+            foodList.remove(index);
+        }
     }
 
     public FoodList copy()

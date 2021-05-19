@@ -59,6 +59,8 @@ public class SearchFoodFragment extends Fragment {
         clearTextCardView = view.findViewById(R.id.fragment_searchFood_clearTextCardView);
         backCardView = view.findViewById(R.id.fragment_searchFood_backCardView);
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_searchFood_fragment));
+
+        foodNameEditText.setText("");
         fragment.bind(showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
         setListener();
         showSearchResult(true);
@@ -144,10 +146,10 @@ public class SearchFoodFragment extends Fragment {
         foodNameEditText.setText(null);
     }
 
-    public void updateBasicFoodList(FoodList basicFoodList)
+    public void updateBasicFoodList(FoodList basicFoodList,boolean showAnimation)
     {
         this.basicFoodList = basicFoodList;
-        showSearchResult(false);
+        showSearchResult(showAnimation);
     }
 
     public boolean foodNameCanBeUsed()

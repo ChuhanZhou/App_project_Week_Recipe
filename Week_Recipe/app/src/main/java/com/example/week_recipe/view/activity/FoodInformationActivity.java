@@ -19,11 +19,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FoodInformationActivity extends AppCompatActivity {
 
+    public static final String foodMenuKey = "foodMenu";
     private Button backButton;
     private FloatingActionButton editButton;
     private FoodInformationFragment fragment;
     private Food showFood;
     private boolean clickEditButton;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -32,6 +34,12 @@ public class FoodInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food_information);
         bind();
         setListener();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(1,getIntent());
+        super.onBackPressed();
     }
 
     @Override

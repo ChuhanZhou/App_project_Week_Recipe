@@ -249,6 +249,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
             Context context = getContext();
             Intent intent = new Intent(context, FoodInformationActivity.class);
             intent.putExtra("showFood", UiDataCache.putData("showFood",showFood));
+            UiDataCache.putData(FoodInformationActivity.foodMenuKey,null);
             startActivity(intent);
         }
     }

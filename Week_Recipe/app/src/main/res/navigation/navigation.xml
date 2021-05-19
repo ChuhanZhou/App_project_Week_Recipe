@@ -11,15 +11,6 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_recipe_with_date" />
     <fragment
-        android:id="@+id/nav_dailyRecipeFragment"
-        android:name="com.example.week_recipe.view.fragment.DailyRecipeFragment"
-        tools:layout="@layout/fragment_daily_recipe" />
-    <fragment
-        android:id="@+id/nav_foodListFragment"
-        android:name="com.example.week_recipe.view.fragment.FoodListFragment"
-        android:label="@string/title_breakfast"
-        tools:layout="@layout/fragment_food_list" />
-    <fragment
         android:id="@+id/nav_weekRecipeFragment"
         android:name="com.example.week_recipe.view.fragment.RecipeForWeekFragment"
         android:label="@string/app_name"
@@ -34,19 +25,4 @@
         android:name="com.example.week_recipe.view.fragment.SettingsFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/nav_foodInformationFragment"
-        android:name="com.example.week_recipe.view.fragment.FoodInformationFragment"
-        android:label="fragment_food_information"
-        tools:layout="@layout/fragment_food_information" />
-    <fragment
-        android:id="@+id/nav_setFoodInformationFragment"
-        android:name="com.example.week_recipe.view.fragment.SetFoodInformationFragment"
-        android:label="fragment_set_food_information"
-        tools:layout="@layout/fragment_set_food_information" />
-    <fragment
-        android:id="@+id/nav_searchFoodFragment"
-        android:name="com.example.week_recipe.view.fragment.SearchFoodFragment"
-        android:label="fragment_search_food"
-        tools:layout="@layout/fragment_search_food"/>
 </navigation>

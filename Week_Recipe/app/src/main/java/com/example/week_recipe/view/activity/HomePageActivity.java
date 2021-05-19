@@ -140,7 +140,9 @@ public class HomePageActivity extends AppCompatActivity {
         favouriteRecipeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Context context = getApplicationContext();
+                Intent intent = new Intent(context, FavouriteWeekRecipeActivity.class);
+                startActivity(intent);
             }
         });
 

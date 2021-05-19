@@ -41,7 +41,6 @@ public class SetWeekRecipeByFavouriteActivity extends AppCompatActivity implemen
     private ConstraintLayout nameLayout;
     private SearchWeekRecipeFragment searchFragment;
     private RecipeListFragment checkWeekRecipeInfoFragment;
-    private TextView titleTextView;
     private TextView nameTextView;
     private Button backButton;
     private Button confirmButton;
@@ -86,12 +85,11 @@ public class SetWeekRecipeByFavouriteActivity extends AppCompatActivity implemen
         searchFragment = FragmentManager.findFragment(findViewById(R.id.setWeekRecipeByFavourite_searchFragment));
         checkWeekRecipeInfoFragment = FragmentManager.findFragment(findViewById(R.id.setWeekRecipeByFavourite_checkWeekRecipeInfoFragment));
         nameLayout = findViewById(R.id.setWeekRecipeByFavourite_nameLayout);
-        titleTextView = findViewById(R.id.setWeekRecipeByFavourite_titleTextView);
         nameTextView = findViewById(R.id.setWeekRecipeByFavourite_nameTextView);
         backButton = findViewById(R.id.setWeekRecipeByFavourite_backButton);
         confirmButton = findViewById(R.id.setWeekRecipeByFavourite_confirmButton);
         basicWeekRecipeList = viewModel.getBasicWeekRecipeListForSearch();
-        searchFragment.bind(basicWeekRecipeList.getValue(),this);
+        searchFragment.bind(basicWeekRecipeList.getValue(),this,false,false);
         checkWeekRecipeInfoFragment.bind(new RecipeList(),null);
     }
 
@@ -129,7 +127,7 @@ public class SetWeekRecipeByFavouriteActivity extends AppCompatActivity implemen
         basicWeekRecipeList.observe(this, new Observer<FavouriteWeekRecipeList>() {
             @Override
             public void onChanged(FavouriteWeekRecipeList weekRecipeList) {
-                searchFragment.updateBasicFoodList(weekRecipeList);
+                searchFragment.updateBasicFoodList(weekRecipeList,true);
             }
         });
     }
