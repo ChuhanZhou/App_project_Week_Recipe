@@ -11,7 +11,10 @@ import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.FavouriteWeekRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.model.domain.user.UserData;
+import com.example.week_recipe.model.domain.user.UserDataList;
+import com.example.week_recipe.model.domain.user.UserSetting;
 import com.example.week_recipe.utility.MyPicture;
+import com.google.gson.Gson;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -40,13 +43,20 @@ public class SystemModelManager implements SystemModel{
     @Override
     public void setUserData(UserData userData) {
         this.userData = userData;
+        //UserDataList list = new UserDataList();
+        //list.add(userData);
+        //System.out.println((new Gson()).toJson(list));
         MyPicture.loadAllBitmapToCache(userData.getAllImageId());
-        //Food.setEmail(userData.getEmail());
+        property.firePropertyChange("setUserData",null,userData.copy());
     }
 
     @Override
     public UserData getUserData() {
-        return userData.copy();
+        if (userData!=null)
+        {
+            return userData.copy();
+        }
+        return new UserData("null","null");
     }
 
     @Override
@@ -293,6 +303,14 @@ public class SystemModelManager implements SystemModel{
         userData.getFavoriteWeekRecipeList().removeByIndex(index);
         userData.updateTime();
         property.firePropertyChange("updateFavoriteWeekRecipe",null,remove);
+    }
+
+    @Override
+    public String updateUserSetting(UserSetting setting) {
+        userData.setSetting(setting);
+        userData.updateTime();
+        property.firePropertyChange("updateUserSetting",null,setting);
+        return null;
     }
 
     @Override

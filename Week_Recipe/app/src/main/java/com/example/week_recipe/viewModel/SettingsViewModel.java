@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
+import com.example.week_recipe.model.domain.user.UserSetting;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SettingsViewModel extends ViewModel {
@@ -22,8 +23,18 @@ public class SettingsViewModel extends ViewModel {
         return systemModel.getUserData().getUserName();
     }
 
+    public UserSetting getUserSetting()
+    {
+        return systemModel.getUserData().getSetting();
+    }
+
     public void updateUserName(String userName)
     {
         systemModel.updateUserName(userName);
+    }
+
+    public void updateUserSetting(UserSetting userSetting)
+    {
+        systemModel.updateUserSetting(userSetting);
     }
 }

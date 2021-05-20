@@ -94,13 +94,16 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int fragmentId = navController.getCurrentDestination().getId();
-        if (fragmentId==R.id.nav_todayRecipeFragment||fragmentId==R.id.nav_weekRecipeFragment||fragmentId==R.id.nav_userInformationFragment)
+        switch (fragmentId)
         {
-            super.onBackPressed();
-        }
-        else
-        {
-            navController.navigate(R.id.nav_todayRecipeFragment);
+            case R.id.nav_todayRecipeFragment:
+            case R.id.nav_weekRecipeFragment:
+            case R.id.nav_userInformationFragment:
+                super.onBackPressed();
+                break;
+            case R.id.nav_settingsFragment:
+                navController.navigate(R.id.nav_userInformationFragment);
+                break;
         }
     }
 

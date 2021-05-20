@@ -73,7 +73,7 @@ public class FavouriteFoodViewModel extends ViewModel implements PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         updateAllFoodList();
-        if (evt.getPropertyName().equals("updateFavoriteFoodList")||evt.getPropertyName().equals("updateFood"))
+        if (evt.getPropertyName().equals("updateFavoriteFoodList")||evt.getPropertyName().equals("updateFood")||evt.getPropertyName().equals("setUserData"))
         {
             updateFavouriteFoodList();
         }

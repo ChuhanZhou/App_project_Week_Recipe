@@ -45,7 +45,7 @@ public class UserInformationViewModel extends AndroidViewModel implements Proper
         switch (evt.getPropertyName())
         {
             case "updateUserBasicInformation":
-                userData.setValue(systemModel.getUserData());
+                userData.postValue(systemModel.getUserData());
                 break;
         }
     }

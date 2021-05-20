@@ -49,6 +49,7 @@ public class SetFoodInformationFragment extends Fragment {
     private FloatingActionButton chooseImageButton;
     private NestedScrollView nestedScrollView;
     private boolean lockName;
+    private boolean updateImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +71,7 @@ public class SetFoodInformationFragment extends Fragment {
                     //make sure the image can be shown when the image is too big
                     foodImage.setImageBitmap(MyPicture.drawableToBitmap(foodImage.getDrawable()));
                     foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    updateImage = true;
                 }
                 break;
         }
@@ -78,6 +80,7 @@ public class SetFoodInformationFragment extends Fragment {
 
     public void bind(Food food,boolean lockName)
     {
+        updateImage = false;
         this.lockName = lockName;
         foodImage = view.findViewById(R.id.fragment_setFoodInformation_foodImage);
         foodNameEditText = view.findViewById(R.id.fragment_setFoodInformation_foodNameEditText);
@@ -182,7 +185,12 @@ public class SetFoodInformationFragment extends Fragment {
         {
             return new Food(foodNameTextView.getText().toString(),newFoodType,ingredientsList);
         }
-        return new Food(foodNameTextView.getText().toString(),newFoodType,ingredientsList,MyPicture.drawableToBitmap(foodImage.getDrawable()));
+        Food newFood = new Food(foodNameTextView.getText().toString(),newFoodType,ingredientsList,MyPicture.drawableToBitmap(foodImage.getDrawable()));
+        if (updateImage)
+        {
+            MyPicture.putBitmapToOnlineDatabase(newFood.getImageId());
+        }
+        return newFood;
     }
 
     @Nullable

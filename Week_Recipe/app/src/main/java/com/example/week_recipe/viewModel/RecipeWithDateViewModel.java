@@ -40,6 +40,8 @@ public class RecipeWithDateViewModel extends AndroidViewModel implements Propert
         setShowDate(LocalDate.now());
         favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
         //add listener
+
+        systemModel.addListener("setUserData",this);
         systemModel.addListener("updateDailyRecipeList",this);
         systemModel.addListener("updateFavoriteFoodList",this);
         systemModel.addListener("updateFood",this);
@@ -136,9 +138,10 @@ public class RecipeWithDateViewModel extends AndroidViewModel implements Propert
             case "updateFavoriteFoodList":
                 favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
                 break;
+            case "setUserData":
             case "updateFood":
-                showRecipe.setValue(systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate));
-                favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
+                showRecipe.postValue(systemModel.getUserData().getMyDailyRecipeList().getByDate(showDate));
+                favouriteFoodList.postValue(systemModel.getUserData().getFavoriteFoodList());
                 break;
         }
     }

@@ -23,6 +23,7 @@
     <string name="text_loading">Loading...</string>
     <string name="text_registerTitle">New User</string>
     <string name="text_noFood">No food now</string>
+    <string name="text_noFavouriteFood">No favourite food now</string>
     <string name="text_noRecipe">No recipe now</string>
     <string name="text_noIngredient">No Ingredient</string>
     <string name="text_noFavouriteWeekRecipe">No favourite recipe now</string>
@@ -37,6 +38,8 @@
     <string name="text_friday">Friday</string>
     <string name="text_saturday">Saturday</string>
     <string name="text_sunday">Sunday</string>
+    <string name="text_useOnlineDatabase">Use Online Database</string>
+    <string name="text_newEmptyRecipe">New Empty Recipe</string>
 
     <string name="calendar_monday_simple">Mon</string>
     <string name="calendar_tuesday_simple">Tue</string>

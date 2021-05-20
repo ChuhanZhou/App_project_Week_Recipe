@@ -21,6 +21,7 @@ import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.utility.UiDataCache;
 import com.example.week_recipe.view.fragment.AddFoodToFoodListFragment;
+import com.example.week_recipe.view.fragment.FoodListFragment;
 import com.example.week_recipe.view.fragment.SearchFoodFragment;
 import com.example.week_recipe.viewModel.AddFoodToMyDailyRecipeListViewModel;
 import com.example.week_recipe.viewModel.FavouriteFoodViewModel;
@@ -88,6 +89,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
         addFavouriteFoodFragment = FragmentManager.findFragment(findViewById(R.id.favouriteFoodActivity_addFavouriteFoodFragment));
         addFoodButton = findViewById(R.id.favouriteFoodActivity_addFoodButton);
 
+        UiDataCache.putData(FoodListFragment.noDataTitleIdKey,R.string.text_noFavouriteFood);
         showFavouriteFragment.bind(favouriteFoodList.getValue(),this,true,true,false,favouriteFoodList);
         //addFavouriteFoodFragment.bind(allFoodList,favouriteFoodList,this);
     }

@@ -43,7 +43,7 @@ public class ShowDailyRecipeViewModel extends ViewModel implements PropertyChang
 
     private void updateFavouriteFoodList()
     {
-        favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
+        favouriteFoodList.postValue(systemModel.getUserData().getFavoriteFoodList());
     }
 
     public void updateBasicFoodListForSearch()
@@ -58,7 +58,7 @@ public class ShowDailyRecipeViewModel extends ViewModel implements PropertyChang
         {
             basic.add(foodMenuOfSelect.getByIndex(x));
         }
-        basicFoodListForSearch.setValue(basic);
+        basicFoodListForSearch.postValue(basic);
     }
 
     public void setSelectDailyRecipe(DailyRecipe selectDailyRecipe) {

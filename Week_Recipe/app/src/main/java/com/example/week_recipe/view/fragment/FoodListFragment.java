@@ -15,11 +15,12 @@ import android.widget.TextView;
 
 import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
+import com.example.week_recipe.utility.UiDataCache;
 import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.FoodList;
 
 public class FoodListFragment extends Fragment{
-
+    public static String noDataTitleIdKey = "foodListFragment_noDataTitleId";
     private View view;
     private TextView noDataTextView;
     private FoodList foodList;
@@ -53,6 +54,11 @@ public class FoodListFragment extends Fragment{
         noDataTextView = view.findViewById(R.id.fragment_foodList_noDataTextView);
 
         setNoDataTextViewVisibility();
+        if (UiDataCache.getData(noDataTitleIdKey)!=null)
+        {
+            noDataTextView.setText((Integer) UiDataCache.getData(noDataTitleIdKey));
+            UiDataCache.putData(noDataTitleIdKey,null);
+        }
 
         foodListView.hasFixedSize();
         foodListView.setLayoutManager(new LinearLayoutManager(view.getContext()));

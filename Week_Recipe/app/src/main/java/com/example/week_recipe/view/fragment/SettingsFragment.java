@@ -18,9 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.model.domain.user.UserSetting;
 import com.example.week_recipe.utility.MyString;
 import com.example.week_recipe.view.activity.HomePageActivity;
 import com.example.week_recipe.view.activity.LoginActivity;
@@ -36,6 +39,8 @@ public class SettingsFragment extends Fragment {
     private View view;
     private EditText userNameEditText;
     private Button logoutButton;
+    private CheckBox checkBox;
+    private UserSetting setting;
     private SettingsViewModel viewModel;
 
     @Override
@@ -51,9 +56,13 @@ public class SettingsFragment extends Fragment {
     private void bind()
     {
         logoutButton = view.findViewById(R.id.fragment_settings_logoutButton);
+        checkBox = view.findViewById(R.id.fragment_settings_useOnlineDatabaseCheckBox);
         userNameEditText = view.findViewById(R.id.fragment_settings_userNameEditText);
         viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
+        setting = viewModel.getUserSetting();
+
+        checkBox.setChecked(setting.isUseOnlineDatabase());
         userNameEditText.setText(viewModel.getUserName());
     }
 
@@ -79,6 +88,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 viewModel.updateUserName(s.toString());
+            }
+        });
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setting.setUseOnlineDatabase(isChecked);
+                viewModel.updateUserSetting(setting);
             }
         });
     }

@@ -97,7 +97,7 @@ public class AddFoodToMyDailyRecipeListViewModel extends ViewModel implements Pr
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         updateBasicFoodListForSearch();
-        if (evt.getPropertyName().equals("updateFavoriteFoodList")||evt.getPropertyName().equals("updateFood"))
+        if (evt.getPropertyName().equals("updateFavoriteFoodList")||evt.getPropertyName().equals("updateFood")||evt.getPropertyName().equals("setUserData"))
         {
             updateFavouriteFoodList();
         }

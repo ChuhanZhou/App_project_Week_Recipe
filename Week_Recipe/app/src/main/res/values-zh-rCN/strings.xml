@@ -10,7 +10,7 @@
     <string name="input_FoodIngredients">所需食材:</string>
     <string name="input_Name">名称:</string>
     <string name="input_FoodQuantity">菜品数量:</string>
-    <string name="input_RateOfFoodType">荤素搭配率:</string>
+    <string name="input_RateOfFoodType">食品搭配率:</string>
 
     <string name="button_login">登录</string>
     <string name="button_register">注册</string>
@@ -22,7 +22,8 @@
 
     <string name="text_loading">加载中。。。</string>
     <string name="text_registerTitle">新用户</string>
-    <string name="text_noFood">无食物</string>
+    <string name="text_noFood">无菜品</string>
+    <string name="text_noFavouriteFood">无收藏菜品</string>
     <string name="text_noIngredient">无食材</string>
     <string name="text_noRecipe">无食谱</string>
     <string name="text_noFavouriteWeekRecipe">无收藏食谱</string>
@@ -37,6 +38,8 @@
     <string name="text_friday">星期五</string>
     <string name="text_saturday">星期六</string>
     <string name="text_sunday">星期天</string>
+    <string name="text_useOnlineDatabase">使用云端数据库</string>
+    <string name="text_newEmptyRecipe">新建空白食谱</string>
 
     <string name="calendar_monday_simple">一</string>
     <string name="calendar_tuesday_simple">二</string>

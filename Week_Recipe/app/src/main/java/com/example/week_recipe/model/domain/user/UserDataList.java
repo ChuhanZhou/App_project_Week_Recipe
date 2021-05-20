@@ -17,6 +17,7 @@ public class UserDataList {
         userDataList = new ArrayList<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean hasUserData(String email)
     {
         return getByEmail(email)!=null;

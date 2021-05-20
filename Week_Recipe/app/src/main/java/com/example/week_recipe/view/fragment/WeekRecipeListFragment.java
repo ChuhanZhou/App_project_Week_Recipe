@@ -52,6 +52,7 @@ public class WeekRecipeListFragment extends Fragment {
     public void updateWeekRecipeList(FavouriteWeekRecipeList weekRecipeList,boolean showAnimation)
     {
         this.weekRecipeList = weekRecipeList;
+        setNoDataTextViewVisibility();
         adapter.updateWeekRecipeList(this.weekRecipeList,showAnimation);
         recipeListView.setAdapter(adapter);
     }

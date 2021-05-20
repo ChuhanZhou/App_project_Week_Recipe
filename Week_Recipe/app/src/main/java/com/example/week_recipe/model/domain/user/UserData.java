@@ -14,6 +14,7 @@ import com.example.week_recipe.dao.converter.FavouriteWeekRecipeListConverter;
 import com.example.week_recipe.dao.converter.FoodListConverter;
 import com.example.week_recipe.dao.converter.LocalDateTimeConverter;
 import com.example.week_recipe.dao.converter.RecipeListConverter;
+import com.example.week_recipe.dao.converter.UserSettingConverter;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.FavouriteWeekRecipeList;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
@@ -36,8 +37,10 @@ public class UserData {
     private FavouriteWeekRecipeList favoriteWeekRecipeList;
     @TypeConverters(FoodListConverter.class)
     private FoodList favoriteFoodList;
+    @TypeConverters(UserSettingConverter.class)
+    private UserSetting setting;
 
-    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,FavouriteWeekRecipeList favoriteWeekRecipeList,FoodList favoriteFoodList,String updateTime)
+    public UserData(String userImageId,String email,String userName,RecipeList myDailyRecipeList,FavouriteWeekRecipeList favoriteWeekRecipeList,FoodList favoriteFoodList,String updateTime,UserSetting setting)
     {
         this.userImageId = userImageId;
         this.email = email;
@@ -46,17 +49,20 @@ public class UserData {
         this.favoriteWeekRecipeList = favoriteWeekRecipeList;
         this.favoriteFoodList = favoriteFoodList;
         this.updateTime = updateTime;
+        this.setting = setting;
     }
     @Ignore
     public UserData(String email,String userName)
     {
-        userImageId = "_userImage";
+        userImageId = "_"+email.hashCode()+"_userImage";
         this.email = email;
         this.userName = userName;
         myDailyRecipeList = new RecipeList();
         favoriteWeekRecipeList = new FavouriteWeekRecipeList();
         favoriteFoodList = new FoodList();
-        updateTime = "0.0.0 0:0:0";
+        updateTime = "0-1-1 0:0:0";
+        setting = new UserSetting();
+        System.out.println(updateTime);
     }
 
     public boolean hasUserImage()
@@ -139,8 +145,16 @@ public class UserData {
         return updateTime;
     }
 
-    public LocalDateTime getUpdateTimeInLocalDate() {
+    public LocalDateTime getUpdateTimeInLocalDateTime() {
         return LocalDateTimeConverter.stringToLocalDateTime(updateTime);
+    }
+
+    public UserSetting getSetting() {
+        return setting;
+    }
+
+    public void setSetting(UserSetting setting) {
+        this.setting = setting;
     }
 
     public void setUpdateTime(String updateTime) {
@@ -161,6 +175,6 @@ public class UserData {
 
     public UserData copy()
     {
-        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),favoriteWeekRecipeList.copy(),favoriteFoodList.copy(),updateTime);
+        return new UserData(userImageId,email,userName,myDailyRecipeList.copy(),favoriteWeekRecipeList.copy(),favoriteFoodList.copy(),updateTime,setting);
     }
 }

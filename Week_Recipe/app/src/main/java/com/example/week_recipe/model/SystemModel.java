@@ -7,6 +7,7 @@ import com.example.week_recipe.model.domain.recipe.DailyRecipe;
 import com.example.week_recipe.model.domain.recipe.FavouriteWeekRecipe;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
 import com.example.week_recipe.model.domain.user.UserData;
+import com.example.week_recipe.model.domain.user.UserSetting;
 import com.example.week_recipe.utility.NamedPropertyChangeSubject;
 
 import java.time.LocalDate;
@@ -32,4 +33,6 @@ public interface SystemModel extends NamedPropertyChangeSubject {
     String updateFavoriteWeekRecipe(FavouriteWeekRecipe oldRecipeList, FavouriteWeekRecipe newRecipeList);
     void removeFavoriteWeekRecipe(String name);
     void removeFavoriteWeekRecipe(int index);
+
+    String updateUserSetting(UserSetting setting);
 }

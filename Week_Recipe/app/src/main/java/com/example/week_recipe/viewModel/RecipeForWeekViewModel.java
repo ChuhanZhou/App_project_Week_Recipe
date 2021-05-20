@@ -34,6 +34,8 @@ public class RecipeForWeekViewModel extends AndroidViewModel implements Property
         //set value
         setShowDate(LocalDate.now());
         //add listener
+
+        systemModel.addListener("setUserData",this);
         systemModel.addListener("updateDailyRecipeList",this);
         systemModel.addListener("updateFood",this);
     }
@@ -78,8 +80,9 @@ public class RecipeForWeekViewModel extends AndroidViewModel implements Property
                     showRecipeList.setValue(systemModel.getUserData().getMyDailyRecipeList().getOneWeek(firstDayOfWeek));
                 }
                 break;
+            case "setUserData":
             case "updateFood":
-                showRecipeList.setValue(systemModel.getUserData().getMyDailyRecipeList().getOneWeek(firstDayOfWeek));
+                showRecipeList.postValue(systemModel.getUserData().getMyDailyRecipeList().getOneWeek(firstDayOfWeek));
                 //favouriteFoodList.setValue(systemModel.getUserData().getFavoriteFoodList());
                 break;
         }

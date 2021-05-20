@@ -46,6 +46,7 @@ public class FavouriteWeekRecipeActivity extends AppCompatActivity implements We
     private RecipeListFragment checkWeekRecipeInfoFragment;
     private EditText nameEditText;
     private Button backButton;
+    private FloatingActionButton createEmptyRecipeButton;
     private FloatingActionButton saveButton;
     private FavouriteWeekRecipeViewModel viewModel;
     private LiveData<FavouriteWeekRecipeList> basicWeekRecipeList;
@@ -112,6 +113,7 @@ public class FavouriteWeekRecipeActivity extends AppCompatActivity implements We
         nameEditText = findViewById(R.id.favouriteWeekRecipe_nameEditText);
         backButton = findViewById(R.id.favouriteWeekRecipe_backButton);
         saveButton = findViewById(R.id.favouriteWeekRecipe_saveButton);
+        createEmptyRecipeButton = findViewById(R.id.favouriteWeekRecipe_createEmptyRecipeButton);
         basicWeekRecipeList = viewModel.getBasicWeekRecipeListForSearch();
         showFavouriteFragment.bind(basicWeekRecipeList.getValue(),this,true,true);
         checkWeekRecipeInfoFragment.bind(new RecipeList(),this);
@@ -126,6 +128,15 @@ public class FavouriteWeekRecipeActivity extends AppCompatActivity implements We
                 {
                     isChecking = false;
                     updateFragment();
+                }
+            }
+        });
+        createEmptyRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isChecking)
+                {
+                    viewModel.createEmptyRecipe(getText(R.string.text_newEmptyRecipe).toString());
                 }
             }
         });
@@ -186,6 +197,7 @@ public class FavouriteWeekRecipeActivity extends AppCompatActivity implements We
         if (!isChecking)
         {
             showFavouriteFragment.getView().setVisibility(View.VISIBLE);
+            createEmptyRecipeButton.setVisibility(View.VISIBLE);
             checkWeekRecipeInfoFragment.getView().setVisibility(View.GONE);
             saveButton.setVisibility(View.GONE);
             nameLayout.setVisibility(View.GONE);
@@ -193,6 +205,7 @@ public class FavouriteWeekRecipeActivity extends AppCompatActivity implements We
         else
         {
             showFavouriteFragment.getView().setVisibility(View.GONE);
+            createEmptyRecipeButton.setVisibility(View.GONE);
             checkWeekRecipeInfoFragment.getView().setVisibility(View.VISIBLE);
             saveButton.setVisibility(View.VISIBLE);
             nameLayout.setVisibility(View.VISIBLE);

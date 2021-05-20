@@ -5,14 +5,17 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.week_recipe.dao.realtimeDBS.RealtimeDBController;
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.user.Account;
 import com.example.week_recipe.model.domain.user.AccountList;
 import com.example.week_recipe.model.domain.user.UserData;
+import com.example.week_recipe.model.domain.user.UserSetting;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,11 +27,10 @@ public class Repository implements PropertyChangeListener {
 
     private AccountDao accountDao;
     private UserDataDao userDataDao;
-    //private FoodDao foodDao;
-    //private FoodListDao foodListDao;
-    //private FoodListFoodJoinDao foodListFoodJoinDao;
 
     private ExecutorService executorService;
+
+    private RealtimeDBController realtimeDatabaseController;
 
     private Repository(Context context)
     {
@@ -39,14 +41,17 @@ public class Repository implements PropertyChangeListener {
         //foodDao = systemDatabase.foodDao();
         //foodListDao = systemDatabase.foodListDao();
         //foodListFoodJoinDao = systemDatabase.foodListFoodJoinDao();
-
         executorService = Executors.newFixedThreadPool(2);
+
+        realtimeDatabaseController = RealtimeDBController.getController();
+
         systemModel = SystemModelManager.getSystemModelManager();
         systemModel.addListener("updateUserBasicInformation",this);
         systemModel.addListener("updateDailyRecipeList",this);
         systemModel.addListener("updateFavoriteFoodList",this);
         systemModel.addListener("updateFood",this);
         systemModel.addListener("updateFavoriteWeekRecipe",this);
+        systemModel.addListener("updateUserSetting",this);
     }
 
     public static synchronized Repository getInstance(Context context)
@@ -91,12 +96,31 @@ public class Repository implements PropertyChangeListener {
 
     public UserData getUserDataByEmail(String email)
     {
-        return userDataDao.getUserDataByEmail(email);
+        UserData localData = userDataDao.getUserDataByEmail(email);
+        if (localData.getSetting().isUseOnlineDatabase())
+        {
+            LocalDateTime onlineUpdateTime = realtimeDatabaseController.getUpdateTime(email);
+            if (onlineUpdateTime!=null&&onlineUpdateTime.isAfter(localData.getUpdateTimeInLocalDateTime()))
+            {
+                return realtimeDatabaseController.getUserData(email);
+            }
+            else
+            {
+                realtimeDatabaseController.updateUserData(localData);
+                return localData;
+            }
+        }
+        else
+        {
+            realtimeDatabaseController.setUseOnlineDatabase(false);
+            return localData;
+        }
     }
 
     public void updateUserData(UserData userData)
     {
         executorService.execute(() -> userDataDao.update(userData));
+        realtimeDatabaseController.updateUserData(userData);
     }
 
     public void deleteUserData(UserData userData)
@@ -104,68 +128,12 @@ public class Repository implements PropertyChangeListener {
         executorService.execute(() -> userDataDao.delete(userData));
     }
 
-    //public void insertFood(Food food) {
-    //    executorService.execute(() -> foodDao.insert(food));
-    //}
-//
-    //public void updateFood(Food oldFood,Food newFood) {
-    //    executorService.execute(() -> foodDao.update(oldFood.getId(),newFood.getId(),newFood.getUserEmail(),newFood.getName(), FoodTypeConverter.FoodTypeToString(newFood.getType()), IngredientsListConverter.ingredientsListToString(newFood.getIngredientsList()),newFood.getImageId()));
-    //}
-//
-    //public List<Food> getFoodByEmail(String email) {
-    //    return foodDao.getFoodByEmail(email);
-    //}
-//
-    //public void clearUselessFood(FoodList usefulFood,String userEmail)
-    //{
-    //    executorService.execute(() ->{
-    //        List<Food> foodList = foodDao.getFoodByEmail(userEmail);
-    //        for (int x=0;x<foodList.size();x++)
-    //        {
-    //            if (!usefulFood.hasFood(foodList.get(x)))
-    //            {
-    //                foodDao.delete(foodList.get(x));
-    //            }
-    //        }
-    //    });
-    //}
-//
-    //public void insertFoodList(FoodList foodList) {
-    //    executorService.execute(() -> {
-    //        foodListDao.insert(foodList);
-//
-    //    });
-//
-    //}
-//
-    //public List<FoodList> getAllFoodList()
-    //{
-    //    List<FoodList> listOfFoodList = foodListDao.getAllFoodList();
-    //    for (int x=0;x<listOfFoodList.size();x++)
-    //    {
-    //        putFoodToFoodList(listOfFoodList.get(x));
-    //    }
-    //    return listOfFoodList;
-    //}
-//
-    //private void putFoodToFoodList(FoodList foodList)
-    //{
-    //    List<Food> list = foodListFoodJoinDao.getFoodByFoodListId(foodList.getId());
-    //    for (int x=0;x<foodList.getSize();x++)
-    //    {
-    //        foodList.add(list.get(x));
-    //    }
-    //}
-//
-    //public FoodList getFoodListByFoodListId(int foodListId)
-    //{
-    //    FoodList foodList = new FoodList(foodListId);
-    //    putFoodToFoodList(foodList);
-    //    return foodList;
-    //}
-//
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("updateUserSetting"))
+        {
+            realtimeDatabaseController.setUseOnlineDatabase(((UserSetting)evt.getNewValue()).isUseOnlineDatabase());
+        }
         updateUserData(systemModel.getUserData());
     }
 }

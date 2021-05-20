@@ -13,7 +13,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.week_recipe.dao.realtimeDBS.RealtimeDBController;
 import com.example.week_recipe.model.SystemModelManager;
+import com.google.android.gms.tasks.Task;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,13 +25,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class MyPicture {
     private static final Map<String,Bitmap> bitmapCache = new HashMap<>();
     private static Context context;
+    private static RealtimeDBController realtimeDBController;
+    private static ExecutorService executorService;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void setContext(Context context) {
         MyPicture.context = context;
+        realtimeDBController = RealtimeDBController.getController();
+        executorService = Executors.newFixedThreadPool(2);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -79,13 +89,15 @@ public class MyPicture {
         String fileName = SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode() + imageId + ".png";
         File directory = context.getFilesDir();
         File file = new File(directory, fileName);
+        byte[] bytes = bitmapToByte(bitmap);
         try {
             FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapToByte(bitmap));
+            fos.write(bytes);
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        putBitmapToOnlineDatabase(imageId);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -109,6 +121,24 @@ public class MyPicture {
         File directory = context.getFilesDir();
         File file = new File(directory, fileName);
         return bitmapCache.containsKey(imageId)||file.exists();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static Bitmap getBitmapFromOnlineDatabase(String imageId)
+    {
+        return byteToBitmap(realtimeDBController.getImageById(imageId));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void putBitmapToOnlineDatabase(String imageId)
+    {
+        executorService.execute(() ->realtimeDBController.updateImageById(imageId));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void putBitmapToOnlineDatabase(String imageId,byte[] bytes)
+    {
+        executorService.execute(() ->realtimeDBController.updateImageById(imageId,bytes));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -137,6 +167,15 @@ public class MyPicture {
                 if (hasImage(imageIdList.get(x)))
                 {
                     getBitmapByImageId(imageIdList.get(x));
+                    if (!realtimeDBController.hasImage(imageIdList.get(x)))
+                    {
+                        putBitmapToOnlineDatabase(imageIdList.get(x));
+                    }
+                }
+                else if (realtimeDBController.hasImage(imageIdList.get(x)))
+                {
+                    bitmapCache.put(imageIdList.get(x),getBitmapFromOnlineDatabase(imageIdList.get(x)));
+                    saveBitmapToInternalStorage(bitmapCache.get(imageIdList.get(x)),imageIdList.get(x));
                 }
             }
         }).start();

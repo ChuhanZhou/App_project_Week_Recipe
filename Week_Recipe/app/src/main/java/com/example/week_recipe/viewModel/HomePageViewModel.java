@@ -27,6 +27,7 @@ public class HomePageViewModel extends AndroidViewModel implements PropertyChang
         systemModel = SystemModelManager.getSystemModelManager();
         userData = new MutableLiveData<>();
         userData.setValue(systemModel.getUserData());
+        systemModel.addListener("setUserData",this);
         systemModel.addListener("updateUserBasicInformation",this);
     }
 
@@ -38,8 +39,9 @@ public class HomePageViewModel extends AndroidViewModel implements PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName())
         {
+            case "setUserData":
             case "updateUserBasicInformation":
-                userData.setValue(systemModel.getUserData());
+                userData.postValue(systemModel.getUserData());
                 break;
         }
     }
