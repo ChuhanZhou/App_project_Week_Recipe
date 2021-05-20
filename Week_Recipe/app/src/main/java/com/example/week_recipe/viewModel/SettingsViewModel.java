@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.week_recipe.model.SystemModel;
 import com.example.week_recipe.model.SystemModelManager;
+import com.example.week_recipe.model.domain.user.UserData;
 import com.example.week_recipe.model.domain.user.UserSetting;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -36,5 +37,10 @@ public class SettingsViewModel extends ViewModel {
     public void updateUserSetting(UserSetting userSetting)
     {
         systemModel.updateUserSetting(userSetting);
+    }
+
+    public void initSystemModel()
+    {
+        systemModel.setUserData(new UserData("null","null"));
     }
 }

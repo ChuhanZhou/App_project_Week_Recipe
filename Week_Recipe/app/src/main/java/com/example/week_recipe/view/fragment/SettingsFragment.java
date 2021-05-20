@@ -100,6 +100,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void signOut() {
+        viewModel.initSystemModel();
         Context context = view.getContext();
         AuthUI.getInstance().signOut(context);
         MyString.deleteStringInInternalStorage("AutoLogin");
