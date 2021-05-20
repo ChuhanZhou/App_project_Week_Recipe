@@ -60,6 +60,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         if (UiDataCache.getData(valueKey)!=null)
         {
             viewModel.setShowDate((LocalDate) UiDataCache.getData(valueKey));
+            UiDataCache.putData(valueKey,null);
         }
         bind();
         setListener();
@@ -144,7 +145,7 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         viewModel.getShowDateText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                UiDataCache.putData(valueKey,viewModel.getShowDate());
+                //UiDataCache.putData(valueKey,viewModel.getShowDate());
                 tabLayout.getTabAt(1).setText(s);
                 popupCalendarFragment.setDate(viewModel.getShowDate());
                 showAnimation = true;

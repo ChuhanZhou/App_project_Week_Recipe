@@ -89,7 +89,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
         addFoodButton = findViewById(R.id.favouriteFoodActivity_addFoodButton);
 
         showFavouriteFragment.bind(favouriteFoodList.getValue(),this,true,true,false,favouriteFoodList);
-        addFavouriteFoodFragment.bind(allFoodList,favouriteFoodList,this);
+        //addFavouriteFoodFragment.bind(allFoodList,favouriteFoodList,this);
     }
 
     private void setListener()
@@ -126,7 +126,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
             showFavouriteFragment.getView().setVisibility(View.GONE);
             addFoodButton.setVisibility(View.GONE);
             addFavouriteFoodFragment.getView().setVisibility(View.VISIBLE);
-            addFavouriteFoodFragment.bind(allFoodList,favouriteFoodList,this);
+            addFavouriteFoodFragment.bind(true,allFoodList,favouriteFoodList,this);
         }
     }
 

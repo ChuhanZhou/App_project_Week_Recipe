@@ -53,6 +53,11 @@ public class AddFoodToFoodListFragment extends Fragment{
 
     public void bind(LiveData<FoodList> basicFoodList,LiveData<FoodList> favouriteFoodList,StateListener listener)
     {
+        bind(false,basicFoodList, favouriteFoodList, listener);
+    }
+
+    public void bind(boolean needReverse,LiveData<FoodList> basicFoodList,LiveData<FoodList> favouriteFoodList,StateListener listener)
+    {
         isSearching = true;
         clickFoodImage = false;
         searchFragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_addFoodToFoodList_searchFragment));
@@ -61,7 +66,7 @@ public class AddFoodToFoodListFragment extends Fragment{
         this.basicFoodList = basicFoodList;
         this.listener = listener;
 
-        searchFragment.bind(basicFoodList.getValue(),listener,false,false,true,favouriteFoodList);
+        searchFragment.bind(needReverse,basicFoodList.getValue(),listener,false,false,true,favouriteFoodList);
         updateFragment();
         updateCreateFoodTextViewVisibility();
         setListener();

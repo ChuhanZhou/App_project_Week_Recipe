@@ -1,5 +1,7 @@
 package com.example.week_recipe.view.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,9 +18,13 @@ import android.widget.TextView;
 import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.FoodList;
 import com.example.week_recipe.model.domain.recipe.RecipeList;
+import com.example.week_recipe.utility.UiDataCache;
+import com.example.week_recipe.view.activity.FoodInformationActivity;
+import com.example.week_recipe.view.activity.StatisticsOfRecipeListActivity;
 import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.view.adapter.RecipeListAdapter;
 import com.example.week_recipe.view.layoutManager.MyLinearLayoutManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 
@@ -29,6 +35,7 @@ public class RecipeListFragment extends Fragment {
     private RecipeList recipeList;
     private RecipeListAdapter adapter;
     private RecyclerView recipeListView;
+    private FloatingActionButton statisticsButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +51,7 @@ public class RecipeListFragment extends Fragment {
         recipeListView = view.findViewById(R.id.fragment_recipeList_recyclerView);
         adapter = new RecipeListAdapter(this.recipeList,onItemClickListener);
         noDataTextView = view.findViewById(R.id.fragment_recipeList_noDataTextView);
+        statisticsButton = view.findViewById(R.id.fragment_recipeList_statisticsButton);
 
         setNoDataTextViewVisibility();
 
@@ -56,6 +64,20 @@ public class RecipeListFragment extends Fragment {
         {
             recipeListView.scrollToPosition(LocalDate.now().getDayOfWeek().getValue()-1);
         }
+        setListener();
+    }
+
+    private void setListener()
+    {
+        statisticsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = getContext();
+                Intent intent = new Intent(context, StatisticsOfRecipeListActivity.class);
+                UiDataCache.putData(StatisticsOfRecipeListActivity.showValueKey,recipeList);
+                startActivity(intent);
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

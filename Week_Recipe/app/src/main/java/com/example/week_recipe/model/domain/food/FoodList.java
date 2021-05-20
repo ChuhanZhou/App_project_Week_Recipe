@@ -7,6 +7,9 @@ import androidx.annotation.RequiresApi;
 import com.example.week_recipe.utility.MyString;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 //@Entity(tableName = "foodList_table")
 public class FoodList {
     //@PrimaryKey(autoGenerate = true)
@@ -35,7 +38,11 @@ public class FoodList {
 
     public boolean hasFood(Food food)
     {
-        return getByName(food.getName())!=null;
+        if (food!=null)
+        {
+            return getByName(food.getName())!=null;
+        }
+        return false;
     }
 
     public String add(Food newFood)
@@ -70,6 +77,19 @@ public class FoodList {
         for (int x=0;x<foodList.size();x++)
         {
             if (MyString.haveOrInside(name,foodList.get(x).getName()))
+            {
+                searchList.add(foodList.get(x));
+            }
+        }
+        return searchList;
+    }
+
+    public FoodList getListByType(FoodType type)
+    {
+        FoodList searchList = new FoodList();
+        for (int x=0;x<foodList.size();x++)
+        {
+            if (foodList.get(x).getType()==type)
             {
                 searchList.add(foodList.get(x));
             }
@@ -142,6 +162,14 @@ public class FoodList {
         {
             foodList.remove(index);
         }
+    }
+
+    public FoodList getReverse()
+    {
+        FoodList reverse = new FoodList();
+        reverse.foodList = new ArrayList<>(foodList);
+        Collections.reverse(reverse.foodList);
+        return reverse;
     }
 
     public FoodList copy()

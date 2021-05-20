@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class HomePageActivity extends AppCompatActivity {
     private MenuItem reset;
     private MenuItem addToFavourite;
     private MenuItem setByFavourite;
+    private MenuItem settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +89,19 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int fragmentId = navController.getCurrentDestination().getId();
+        if (fragmentId==R.id.nav_todayRecipeFragment||fragmentId==R.id.nav_weekRecipeFragment||fragmentId==R.id.nav_userInformationFragment)
+        {
+            super.onBackPressed();
+        }
+        else
+        {
+            navController.navigate(R.id.nav_todayRecipeFragment);
+        }
     }
 
     private void init() {
@@ -181,10 +196,11 @@ public class HomePageActivity extends AppCompatActivity {
             @SuppressLint("NonConstantResourceId")
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (reset == null||addToFavourite == null||setByFavourite==null) {
+                if (reset == null||addToFavourite == null||setByFavourite==null||settings==null) {
                     reset = toolbar.getMenu().findItem(R.id.nav_item_reset);
                     addToFavourite = toolbar.getMenu().findItem(R.id.nav_item_addToFavourite);
                     setByFavourite = toolbar.getMenu().findItem(R.id.nav_item_setByFavourite);
+                    settings = toolbar.getMenu().findItem(R.id.nav_settingsFragment);
                 }
                 if (toolbar.getMenu().size() > 0) {
                     switch (destination.getId()) {
@@ -192,19 +208,28 @@ public class HomePageActivity extends AppCompatActivity {
                             setByFavourite.setVisible(false);
                             addToFavourite.setVisible(false);
                             reset.setVisible(true);
+                            settings.setVisible(true);
                             reset.setTitle(R.string.title_resetDate);
-
                             break;
                         case R.id.nav_weekRecipeFragment:
                             setByFavourite.setVisible(true);
                             addToFavourite.setVisible(true);
                             reset.setVisible(true);
+                            settings.setVisible(true);
                             reset.setTitle(R.string.title_resetWeek);
+                            break;
+                        case R.id.nav_settingsFragment:
+                            setByFavourite.setVisible(false);
+                            addToFavourite.setVisible(false);
+                            reset.setVisible(false);
+                            settings.setVisible(false);
                             break;
                         default:
                             setByFavourite.setVisible(false);
                             addToFavourite.setVisible(false);
                             reset.setVisible(false);
+                            settings.setVisible(true);
+                            break;
                     }
                 }
 

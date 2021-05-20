@@ -14,9 +14,11 @@
         android:text="@string/input_UserName"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
@@ -25,25 +27,17 @@
         android:id="@+id/fragment_settings_userNameEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:inputType="text"
         android:maxLength="20"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_settings_textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/fragment_settings_textView5"
         app:layout_constraintTop_toTopOf="@+id/fragment_settings_textView5"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.45" />
-
-    <Button
-        android:id="@+id/fragment_settings_saveUserNameButton"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:text="@string/button_save"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_settings_userNameEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/fragment_settings_userNameEditText"
-        app:layout_constraintTop_toTopOf="@+id/fragment_settings_userNameEditText"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/fragment_settings_logoutButton"

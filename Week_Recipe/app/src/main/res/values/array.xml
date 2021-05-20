@@ -2,7 +2,13 @@
 <resources>
     <string-array name="foodType">
         <item>@string/foodType_meat</item>
-        <item>@string/foodType_vegetarian</item>
+        <item>@string/foodType_vegetable</item>
+        <item>@string/foodType_cereals</item>
+        <item>@string/foodType_beans</item>
+        <item>@string/foodType_eggs</item>
+        <item>@string/foodType_dairyProducts</item>
+        <item>@string/foodType_aquaticProducts</item>
+        <item>@string/foodType_fruit</item>
         <item>@string/foodType_other</item>
     </string-array>
 </resources>

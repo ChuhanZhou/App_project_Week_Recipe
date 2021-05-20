@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.utility.MyUnit;
 import com.example.week_recipe.view.adapter.HorizontalIngredientsListAdapter;
 import com.example.week_recipe.view.adapter.IngredientsListAdapter;
 import com.example.week_recipe.model.domain.food.Ingredients;

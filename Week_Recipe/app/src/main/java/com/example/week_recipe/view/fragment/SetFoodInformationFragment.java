@@ -31,6 +31,10 @@ import com.example.week_recipe.model.domain.food.FoodType;
 import com.example.week_recipe.model.domain.food.IngredientsList;
 import com.example.week_recipe.utility.MyPicture;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
+import java.net.URI;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetFoodInformationFragment extends Fragment {
 
@@ -97,20 +101,13 @@ public class SetFoodInformationFragment extends Fragment {
         foodNameEditText.setText(food.getName());
         ingredientsList = food.getIngredientsList();
 
-        switch (food.getType())
+        for (int x=0;x<FoodType.values().length;x++)
         {
-            case Meat:
-                foodTypeSpinner.setSelection(0);
+            if (FoodType.values()[x]==food.getType())
+            {
+                foodTypeSpinner.setSelection(x);
                 break;
-            case Vegetarian:
-                foodTypeSpinner.setSelection(1);
-                break;
-            case Other:
-                foodTypeSpinner.setSelection(2);
-                break;
-            default:
-                foodTypeSpinner.setSelection(2);
-                break;
+            }
         }
 
         ingredientsListFragment.bind(ingredientsList,true);
@@ -179,22 +176,8 @@ public class SetFoodInformationFragment extends Fragment {
 
     public Food getNewFood()
     {
-        FoodType newFoodType;
-        switch (foodTypeSpinner.getSelectedItemPosition())
-        {
-            case 0:
-                newFoodType = FoodType.Meat;
-                break;
-            case 1:
-                newFoodType = FoodType.Vegetarian;
-                break;
-            case 2:
-                newFoodType = FoodType.Other;
-                break;
-            default:
-                newFoodType = FoodType.Other;
-                break;
-        }
+        FoodType newFoodType = FoodType.values()[foodTypeSpinner.getSelectedItemPosition()];
+
         if (foodImage.getScaleType()==ImageView.ScaleType.FIT_CENTER)
         {
             return new Food(foodNameTextView.getText().toString(),newFoodType,ingredientsList);

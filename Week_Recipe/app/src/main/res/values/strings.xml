@@ -10,6 +10,7 @@
     <string name="input_FoodIngredients">Food Ingredients:</string>
     <string name="input_Name">Name:</string>
     <string name="input_FoodQuantity">Food Quantity:</string>
+    <string name="input_RateOfFoodType">Rate Of Food Type:</string>
 
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
@@ -46,7 +47,13 @@
     <string name="calendar_sunday_simple">Sun</string>
 
     <string name="foodType_meat">Meat</string>
-    <string name="foodType_vegetarian">Vegetarian</string>
+    <string name="foodType_vegetable">Vegetable</string>
+    <string name="foodType_cereals">Cereals</string>
+    <string name="foodType_beans">Beans</string>
+    <string name="foodType_eggs">Eggs</string>
+    <string name="foodType_dairyProducts">Dairy Products</string>
+    <string name="foodType_aquaticProducts">Aquatic Products</string>
+    <string name="foodType_fruit">Fruit</string>
     <string name="foodType_other">Other</string>
 
     <string name="nullData">null</string>

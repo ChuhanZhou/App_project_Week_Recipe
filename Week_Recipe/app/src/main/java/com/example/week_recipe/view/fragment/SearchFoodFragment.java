@@ -47,6 +47,11 @@ public class SearchFoodFragment extends Fragment {
 
     public void bind(FoodList basicFoodList, FoodListAdapter.OnFoodListItemClickListener listener,boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
+        bind(false,basicFoodList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
+    }
+
+    public void bind(boolean needReverse, FoodList basicFoodList, FoodListAdapter.OnFoodListItemClickListener listener,boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
+    {
         this.basicFoodList = basicFoodList;
         showList = basicFoodList;
         this.listener = listener;
@@ -61,7 +66,7 @@ public class SearchFoodFragment extends Fragment {
         fragment = FragmentManager.findFragment(view.findViewById(R.id.fragment_searchFood_fragment));
 
         foodNameEditText.setText("");
-        fragment.bind(showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
+        fragment.bind(needReverse,showList,listener,hasMore,hasDelete,hasLike,favouriteFoodList);
         setListener();
         showSearchResult(true);
         updateClearTextCardViewVisibility();

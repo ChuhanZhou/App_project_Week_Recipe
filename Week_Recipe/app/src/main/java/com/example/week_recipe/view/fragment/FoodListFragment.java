@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.week_recipe.R;
+import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.view.adapter.FoodListAdapter;
 import com.example.week_recipe.model.domain.food.FoodList;
 
@@ -24,6 +25,7 @@ public class FoodListFragment extends Fragment{
     private FoodList foodList;
     private FoodListAdapter foodListAdapter;
     private RecyclerView foodListView;
+    private boolean needReverse;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,9 +37,19 @@ public class FoodListFragment extends Fragment{
 
     public void bind(FoodList foodList, FoodListAdapter.OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
     {
+        bind(false,foodList, listener, hasMore, hasDelete, hasLike, favouriteFoodList);
+    }
+
+    public void bind(boolean needReverse, FoodList foodList,FoodListAdapter.OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, LiveData<FoodList> favouriteFoodList)
+    {
+        this.needReverse = needReverse;
+        if (this.needReverse)
+        {
+            foodList = foodList.getReverse();
+        }
         this.foodList = foodList;
         foodListView = view.findViewById(R.id.fragment_foodList_recyclerView);
-        foodListAdapter = new FoodListAdapter(this.foodList,listener,hasMore,hasDelete,hasLike,favouriteFoodList.getValue());
+        foodListAdapter = new FoodListAdapter(needReverse,this.foodList,listener,hasMore,hasDelete,hasLike,favouriteFoodList.getValue());
         noDataTextView = view.findViewById(R.id.fragment_foodList_noDataTextView);
 
         setNoDataTextViewVisibility();
@@ -50,6 +62,10 @@ public class FoodListFragment extends Fragment{
 
     public void updateFoodList(FoodList foodList,boolean showAnimation)
     {
+        if (this.needReverse)
+        {
+            foodList = foodList.getReverse();
+        }
         this.foodList = foodList;
         foodListAdapter.updateFoodList(this.foodList,showAnimation);
         foodListView.setAdapter(foodListAdapter);

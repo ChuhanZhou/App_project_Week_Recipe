@@ -47,21 +47,9 @@ public class FoodInformationFragment extends Fragment {
             foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
         foodNameTextView.setText(food.getName());
-        switch (food.getType())
-        {
-            case Meat:
-                foodTypeTextView.setText(R.string.foodType_meat);
-                break;
-            case Vegetarian:
-                foodTypeTextView.setText(R.string.foodType_vegetarian);
-                break;
-            case Other:
-                foodTypeTextView.setText(R.string.foodType_other);
-                break;
-            default:
-                foodTypeTextView.setText(food.getType().toString());
-                break;
-        }
+
+        foodTypeTextView.setText(Food.getStringIdByFoodType(food.getType()));
+
         ingredientsListFragment.bind(food.getIngredientsList(),false);
     }
 }

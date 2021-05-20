@@ -57,6 +57,7 @@ public class WeekRecipeListAdapter extends RecyclerView.Adapter<WeekRecipeListAd
         if (viewHolderMap.containsKey(position))
         {
             ViewHolder holder = viewHolderMap.get(position);
+            holder.showPosition = position;
             FavouriteWeekRecipe weekRecipe = weekRecipeList.getByIndex(position);
             if (weekRecipe!=null)
             {
@@ -125,6 +126,7 @@ public class WeekRecipeListAdapter extends RecyclerView.Adapter<WeekRecipeListAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private int showPosition;
         private final View view;
         private final TextView nameTextView;
         private final TextView foodQuantityTextView;
@@ -183,7 +185,7 @@ public class WeekRecipeListAdapter extends RecyclerView.Adapter<WeekRecipeListAd
                 for (int x = 0; x < viewHolderMap.size(); x++) {
                     if (x != getAdapterPosition()) {
                         if (hasDelete) {
-                            if (viewHolderMap.containsKey(x))
+                            if (viewHolderMap.containsKey(x)&&viewHolderMap.get(x).showPosition==x)
                             {
                                 hideMore(viewHolderMap.get(x).deleteCardView, viewHolderMap.get(x).delete, 0.25);
                             }

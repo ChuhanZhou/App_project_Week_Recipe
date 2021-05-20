@@ -23,8 +23,8 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/nav_settingsFragment"
-        android:icon="@drawable/ic_action_settings"
+        android:icon="@drawable/ic_action_setting_dark"
         android:orderInCategory="3"
         android:title="@string/title_setting"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

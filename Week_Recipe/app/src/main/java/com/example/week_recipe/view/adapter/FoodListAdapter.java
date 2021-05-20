@@ -21,26 +21,29 @@ import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.model.domain.food.FoodList;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
 
     private FoodList foodList;
     private FoodList favouriteFoodList;
     private final OnFoodListItemClickListener onFoodListItemClickListener;
-    private ArrayList<ViewHolder> viewHolderList;
+    private Map<Integer,ViewHolder> viewHolderMap;
     private final boolean hasMore;
     private final boolean hasDelete;
     private final boolean hasLike;
     private boolean showAnimation;
     private int numberOfAnimation;
     private int lastAnimationPosition;
+    private boolean isReversed;
 
-    public FoodListAdapter(FoodList foodList, OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, FoodList favouriteFoodList) {
+    public FoodListAdapter(boolean isReversed,FoodList foodList, OnFoodListItemClickListener listener, boolean hasMore, boolean hasDelete, boolean hasLike, FoodList favouriteFoodList) {
+        this.isReversed = isReversed;
         showAnimation = true;
         numberOfAnimation = 0;
         lastAnimationPosition = -1;
-        viewHolderList = new ArrayList<>();
+        viewHolderMap = new HashMap<>();
         if (foodList == null) {
             this.foodList = new FoodList();
         } else {
@@ -58,9 +61,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         this.favouriteFoodList = favouriteFoodList;
         if (hasLike&&this.favouriteFoodList!=null)
         {
-            for (int x=0;x<viewHolderList.size();x++)
+            for (int x=0;x<viewHolderMap.size();x++)
             {
-                changeLikeState( viewHolderList.get(x),this.favouriteFoodList.hasFood(foodList.getByIndex(x)));
+                changeLikeState( viewHolderMap.get(x),this.favouriteFoodList.hasFood(foodList.getByIndex(x)));
             }
         }
     }
@@ -85,7 +88,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     public void updateFoodList(FoodList foodList,boolean showAnimation)
     {
         this.showAnimation = showAnimation;
-        viewHolderList = new ArrayList<>();
         if (foodList == null) {
             this.foodList = new FoodList();
         } else {
@@ -117,13 +119,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_food_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-        viewHolderList.add(viewHolder);
         return viewHolder;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.showPosition = position;
+        viewHolderMap.put(position,holder);
         updateItem(holder,foodList.getByIndex(position));
 
         new Thread(()->{showItemView(holder,0.125,position);}).start();
@@ -135,7 +138,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     }
 
     public ViewHolder getItemViewHolder(int position) {
-        return viewHolderList.get(position);
+        return viewHolderMap.get(position);
     }
 
     private void showItemView(ViewHolder holder,double second,int newPosition)
@@ -181,6 +184,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private int showPosition;
         private final TextView foodName;
         private final ImageView foodImage;
         private final ImageView more;
@@ -235,7 +239,15 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         public void onClick(View v) {
             if (v.equals(foodImage))
             {
-                onFoodListItemClickListener.onFoodImageClick(getAdapterPosition());
+                if (isReversed)
+                {
+                    onFoodListItemClickListener.onFoodImageClick(getItemCount()-getAdapterPosition()-1);
+                    System.out.println(getItemCount()-getAdapterPosition()-1);
+                }
+                else
+                {
+                    onFoodListItemClickListener.onFoodImageClick(getAdapterPosition());
+                }
             }
             else if (v.equals(more) && hasMore)
             {
@@ -254,8 +266,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                         showMore(likeCardView, like, 0.25);
                     }
                 }
-                for (int x = 0; x < viewHolderList.size(); x++) {
-                    if (x != getAdapterPosition()) {
+                for (int x = 0; x < viewHolderMap.size(); x++) {
+                    if (x != getAdapterPosition()&&getItemViewHolder(x).showPosition == x) {
+                        System.out.println(x+"::"+getAdapterPosition());
                         if (hasDelete) {
                             hideMore(getItemViewHolder(x).deleteCardView, getItemViewHolder(x).delete, 0.25);
                         }
@@ -267,11 +280,27 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             }
             else if (v.equals(delete) && hasDelete)
             {
-                onFoodListItemClickListener.onDeleteClick(getAdapterPosition());
+                if (isReversed)
+                {
+                    onFoodListItemClickListener.onDeleteClick(getItemCount()-getAdapterPosition()-1);
+                    System.out.println(getItemCount()-getAdapterPosition()-1);
+                }
+                else
+                {
+                    onFoodListItemClickListener.onDeleteClick(getAdapterPosition());
+                }
             }
             else if (v.equals(like) && hasLike)
             {
-                onFoodListItemClickListener.onLikeClick(getAdapterPosition());
+                if (isReversed)
+                {
+                    onFoodListItemClickListener.onLikeClick(getItemCount()-getAdapterPosition()-1);
+                    System.out.println(getItemCount()-getAdapterPosition()-1);
+                }
+                else
+                {
+                    onFoodListItemClickListener.onLikeClick(getAdapterPosition());
+                }
             }
         }
 

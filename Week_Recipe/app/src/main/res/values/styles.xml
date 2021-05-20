@@ -28,4 +28,11 @@
         <item name="background">@color/button_background1</item>
         <item name="backgroundTint">@color/button_background1</item>
     </style>
+    <style name="Button_Statistics">
+        <item name="android:src">@drawable/ic_button_statistics_dark</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+        <item name="background">@color/button_background1</item>
+        <item name="backgroundTint">@color/button_background1</item>
+    </style>
 </resources>

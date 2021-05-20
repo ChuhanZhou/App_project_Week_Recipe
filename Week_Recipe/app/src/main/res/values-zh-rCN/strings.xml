@@ -10,6 +10,7 @@
     <string name="input_FoodIngredients">所需食材:</string>
     <string name="input_Name">名称:</string>
     <string name="input_FoodQuantity">菜品数量:</string>
+    <string name="input_RateOfFoodType">荤素搭配率:</string>
 
     <string name="button_login">登录</string>
     <string name="button_register">注册</string>
@@ -46,7 +47,13 @@
     <string name="calendar_sunday_simple">日</string>
 
     <string name="foodType_meat">荤菜</string>
-    <string name="foodType_vegetarian">素菜</string>
+    <string name="foodType_vegetable">素菜</string>
+    <string name="foodType_cereals">谷物类</string>
+    <string name="foodType_beans">豆类</string>
+    <string name="foodType_eggs">蛋类</string>
+    <string name="foodType_dairyProducts">乳制品</string>
+    <string name="foodType_aquaticProducts">水产品</string>
+    <string name="foodType_fruit">水果</string>
     <string name="foodType_other">其他</string>
 
     <string name="nullData">空值</string>
