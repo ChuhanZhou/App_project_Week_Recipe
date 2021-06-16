@@ -242,7 +242,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 if (isReversed)
                 {
                     onFoodListItemClickListener.onFoodImageClick(getItemCount()-getAdapterPosition()-1);
-                    System.out.println(getItemCount()-getAdapterPosition()-1);
                 }
                 else
                 {
@@ -268,7 +267,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 }
                 for (int x = 0; x < viewHolderMap.size(); x++) {
                     if (x != getAdapterPosition()&&getItemViewHolder(x).showPosition == x) {
-                        System.out.println(x+"::"+getAdapterPosition());
                         if (hasDelete) {
                             hideMore(getItemViewHolder(x).deleteCardView, getItemViewHolder(x).delete, 0.25);
                         }
@@ -283,7 +281,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 if (isReversed)
                 {
                     onFoodListItemClickListener.onDeleteClick(getItemCount()-getAdapterPosition()-1);
-                    System.out.println(getItemCount()-getAdapterPosition()-1);
                 }
                 else
                 {
@@ -295,7 +292,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 if (isReversed)
                 {
                     onFoodListItemClickListener.onLikeClick(getItemCount()-getAdapterPosition()-1);
-                    System.out.println(getItemCount()-getAdapterPosition()-1);
                 }
                 else
                 {

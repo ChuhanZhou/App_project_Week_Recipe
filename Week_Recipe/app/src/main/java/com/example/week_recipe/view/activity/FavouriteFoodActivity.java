@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -91,6 +93,7 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
 
         UiDataCache.putData(FoodListFragment.noDataTitleIdKey,R.string.text_noFavouriteFood);
         showFavouriteFragment.bind(favouriteFoodList.getValue(),this,true,true,false,favouriteFoodList);
+        showFavouriteFragment.getFoodNameEditText().setHint(R.string.text_inputFavouriteFoodName);
         //addFavouriteFoodFragment.bind(allFoodList,favouriteFoodList,this);
     }
 
@@ -122,6 +125,10 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
             showFavouriteFragment.getView().setVisibility(View.VISIBLE);
             addFoodButton.setVisibility(View.VISIBLE);
             addFavouriteFoodFragment.getView().setVisibility(View.GONE);
+            if (addFavouriteFoodFragment.getFoodNameEditText()!=null)
+            {
+                showFavouriteFragment.getFoodNameEditText().setText(addFavouriteFoodFragment.getFoodNameEditText().getText());
+            }
         }
         else
         {
@@ -129,6 +136,10 @@ public class FavouriteFoodActivity extends AppCompatActivity implements AddFoodT
             addFoodButton.setVisibility(View.GONE);
             addFavouriteFoodFragment.getView().setVisibility(View.VISIBLE);
             addFavouriteFoodFragment.bind(true,allFoodList,favouriteFoodList,this);
+            if (showFavouriteFragment.getFoodNameEditText()!=null)
+            {
+                addFavouriteFoodFragment.getFoodNameEditText().setText(showFavouriteFragment.getFoodNameEditText().getText());
+            }
         }
     }
 

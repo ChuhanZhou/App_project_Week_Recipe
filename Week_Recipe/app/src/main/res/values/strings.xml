@@ -30,6 +30,7 @@
     <string name="text_choosePlease">Choose please</string>
     <string name="text_inputFoodName">Input food name</string>
     <string name="text_inputFavouriteName">Input favourite name</string>
+    <string name="text_inputFavouriteFoodName">Input favourite food name</string>
     <string name="text_createNewFood">Create New Food</string>
     <string name="text_monday">Monday</string>
     <string name="text_tuesday">Tuesday</string>

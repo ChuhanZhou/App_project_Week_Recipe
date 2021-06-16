@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -208,6 +209,14 @@ public class AddFoodToFoodListFragment extends Fragment{
     public FoodList getShowList()
     {
         return searchFragment.getShowList();
+    }
+
+    public EditText getFoodNameEditText() {
+        if (searchFragment!=null)
+        {
+            return searchFragment.getFoodNameEditText();
+        }
+        return null;
     }
 
     public interface StateListener extends FoodListAdapter.OnFoodListItemClickListener{

@@ -30,6 +30,7 @@
     <string name="text_choosePlease">请选择</string>
     <string name="text_inputFoodName">请输入菜名</string>
     <string name="text_inputFavouriteName">请输入收藏名称</string>
+    <string name="text_inputFavouriteFoodName">请输入已收藏的菜名</string>
     <string name="text_createNewFood">创建新菜</string>
     <string name="text_monday">星期一</string>
     <string name="text_tuesday">星期二</string>
