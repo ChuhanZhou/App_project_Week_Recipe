@@ -103,7 +103,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
         this.recipeList = recipeList;
         for (int x=0;x<recipeList.getSize();x++)
         {
-            updateViewHolder(x);
+            if (viewHolderMap.get(x)!=null&&viewHolderMap.get(x).getLayoutPosition()==x)
+            {
+                updateViewHolder(x);
+            }
         }
     }
 

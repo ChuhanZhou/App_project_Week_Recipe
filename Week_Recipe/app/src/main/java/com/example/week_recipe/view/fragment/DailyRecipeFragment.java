@@ -30,7 +30,7 @@ public class DailyRecipeFragment extends Fragment {
     private FloatingActionButton addFoodButton;
     private int tabPosition = 0;
     private FoodListAdapter.OnFoodListItemClickListener onFoodListItemClickListener;
-    private  LiveData<FoodList> favouriteFoodList;
+    private LiveData<FoodList> favouriteFoodList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

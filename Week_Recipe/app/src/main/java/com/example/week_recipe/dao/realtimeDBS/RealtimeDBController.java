@@ -125,7 +125,15 @@ public class RealtimeDBController {
                     }
                     if (getDataTask.isComplete())
                     {
-                        String updateTime = getDataTask.getResult().getValue(String.class);
+                        String updateTime = "0-1-1 0:0:0";
+                        try
+                        {
+                            updateTime = getDataTask.getResult().getValue(String.class);
+                        }
+                        catch (RuntimeException e)
+                        {
+                            databaseOnline = false;
+                        }
                         System.out.println(updateTime);
                         return LocalDateTimeConverter.stringToLocalDateTime(updateTime);
                     }

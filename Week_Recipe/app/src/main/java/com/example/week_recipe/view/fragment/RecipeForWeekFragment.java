@@ -72,13 +72,13 @@ public class RecipeForWeekFragment extends Fragment implements RecipeListAdapter
     {
         if (showCalendar)
         {
-            tabLayout.setTranslationZ(0f);
+            //tabLayout.setTranslationZ(0f);
             showCalendar = false;
             popupCalendarFragment.getView().setVisibility(View.GONE);
         }
         else
         {
-            tabLayout.setTranslationZ(5f);
+            //tabLayout.setTranslationZ(5f);
             showCalendar = true;
             popupCalendarFragment.getView().setVisibility(View.VISIBLE);
             popupCalendarFragment.showCalendar(0.25);

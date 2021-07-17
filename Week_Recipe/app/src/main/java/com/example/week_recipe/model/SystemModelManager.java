@@ -47,6 +47,7 @@ public class SystemModelManager implements SystemModel{
         //list.add(userData);
         //System.out.println((new Gson()).toJson(list));
         MyPicture.loadAllBitmapToCache(userData.getAllImageId());
+        MyPicture.clearUselessBitmapInInternalStorage(userData.copy().getAllImageId());
         property.firePropertyChange("setUserData",null,userData.copy());
     }
 
@@ -154,15 +155,9 @@ public class SystemModelManager implements SystemModel{
         {
             return result;
         }
-        result = updateFood(userData.copy(),oldFood,newFood);
-        if (result!=null)
-        {
-            return result;
-        }
-        result = updateFood(userData,oldFood,newFood);
+        updateFood(userData,oldFood,newFood);
         userData.updateTime();
         property.firePropertyChange("updateFood",oldFood,newFood);
-        MyPicture.clearUselessBitmapInInternalStorage(userData.copy().getAllImageId());
         return result;
     }
 

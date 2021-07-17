@@ -137,6 +137,7 @@ public class ShowDailyRecipeActivity extends AppCompatActivity implements FoodLi
     private void updateDailyRecipe()
     {
         dailyRecipe.setValue(dailyRecipe.getValue());
+        dailyRecipeFragment.updateDailyRecipe(dailyRecipe.getValue(),false);
     }
 
     private void updateFragment()

@@ -6,8 +6,14 @@ import android.graphics.Bitmap;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.ColorSpace;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
@@ -73,6 +79,7 @@ public class MyPicture {
     public static byte[] bitmapToByte(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+
         return byteArrayOutputStream.toByteArray();
     }
 
@@ -154,8 +161,11 @@ public class MyPicture {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void putBitmapByImageId(String imageId, Bitmap bitmap)
     {
-        bitmapCache.put(imageId,bitmap);
-        new Thread(()->{saveBitmapToInternalStorage(bitmap, imageId);}).start();
+        if (!bitmap.equals(bitmapCache.get(imageId)))
+        {
+            bitmapCache.put(imageId,bitmap);
+            new Thread(()->{saveBitmapToInternalStorage(bitmap, imageId);}).start();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -205,5 +215,56 @@ public class MyPicture {
                 }
             }
         }).start();
+    }
+
+    @SuppressLint("NewApi")
+    public static Bitmap getGrayBitmapByPixel(Bitmap bitmap)
+    {
+        Bitmap output = bitmap.copy(Bitmap.Config.ARGB_8888,true);
+        int width = output.getWidth();
+        int height = output.getHeight();
+        int threadNum = Math.min(width,200);
+        new Thread(()->{
+            for (int x=0;x<threadNum;x++)
+            {
+                int threadId = x;
+                new Thread(()->{
+                    int dealWithX = threadId;
+                    while (true)
+                    {
+                        for (int y=0;y<height;y++)
+                        {
+                            Color pointColor = output.getColor(dealWithX,y);
+                            float grayValue = 0.3f * pointColor.red() + 0.59f * pointColor.green() + 0.11f * pointColor.blue();
+                            int grayId = Color.argb(pointColor.alpha(),grayValue,grayValue,grayValue);
+                            output.setPixel(dealWithX,y,grayId);
+                        }
+                        dealWithX+=threadNum;
+                        if (dealWithX>=width)
+                        {
+                            break;
+                        }
+                    }
+                }).start();
+            }
+        }).start();
+        return output;
+    }
+
+    public static Bitmap getGrayBitmapByPaint(Bitmap bitmap){
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        Bitmap output  = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(output);
+        Paint paint = new Paint();
+
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
+        paint.setColorFilter(colorFilter);
+
+        canvas.drawBitmap(bitmap, 0,0, paint);
+        return output;
     }
 }

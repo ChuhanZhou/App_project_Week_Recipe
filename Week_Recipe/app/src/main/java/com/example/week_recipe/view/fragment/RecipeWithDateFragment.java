@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.week_recipe.R;
 import com.example.week_recipe.dao.converter.LocalDateConverter;
+import com.example.week_recipe.utility.MyUnit;
 import com.example.week_recipe.view.activity.AddFoodToMyDailyRecipeListActivity;
 import com.example.week_recipe.view.activity.FoodInformationActivity;
 import com.example.week_recipe.viewModel.RecipeWithDateViewModel;
@@ -86,13 +87,13 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
     {
         if (showCalendar)
         {
-            tabLayout.setTranslationZ(0f);
+            tabLayout.setTranslationZ(MyUnit.DPtoPX(getContext(),0f));
             showCalendar = false;
             popupCalendarFragment.getView().setVisibility(View.GONE);
         }
         else
         {
-            tabLayout.setTranslationZ(5f);
+            tabLayout.setTranslationZ(MyUnit.DPtoPX(getContext(),5f));
             showCalendar = true;
             popupCalendarFragment.getView().setVisibility(View.VISIBLE);
             popupCalendarFragment.showCalendar(0.25);
@@ -110,11 +111,11 @@ public class RecipeWithDateFragment extends Fragment implements FoodListAdapter.
         int tabPosition = 0;
         if (LocalDateConverter.localDateToString(viewModel.getShowDate()).equals(LocalDateConverter.localDateToString(LocalDate.now())))
         {
-            if (LocalTime.now().isBefore(LocalTime.of(9,0)))
+            if (LocalTime.now().isBefore(LocalTime.of(10,0)))
             {
                 tabPosition = 0;
             }
-            else if (LocalTime.now().isBefore(LocalTime.of(14,0)))
+            else if (LocalTime.now().isBefore(LocalTime.of(16,0)))
             {
                 tabPosition = 1;
             }
