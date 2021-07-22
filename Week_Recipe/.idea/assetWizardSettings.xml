@@ -147,7 +147,6 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -224,7 +223,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\Think\AppData\Local\Temp\baseline_chevron_right_24.xml" />
+                                                <entry key="imagePath" value="C:\Users\Think\AppData\Local\Temp\round_crop_free_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -235,7 +234,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/chevron_right/baseline_chevron_right_24.xml" />
+                                                <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialiconsround/crop_free/round_crop_free_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -278,7 +277,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_to_right" />
+                                      <entry key="outputName" value="ic_picture_processing" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -361,6 +360,11 @@
                             </entry>
                           </map>
                         </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="NOTIFICATION" />
+                          </map>
+                        </option>
                       </PersistentState>
                     </value>
                   </entry>
@@ -371,7 +375,39 @@
         </entry>
         <entry key="vectorWizard">
           <value>
-            <PersistentState />
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialiconsround/crop_free/round_crop_free_24.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputName" value="ic_action_picture_processing" />
+                            <entry key="sourceFile" value="D:\学习资料\VIA\Android Development (AND)\4th semester\App project\App_project_Week_Recipe\Week_Recipe" />
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
           </value>
         </entry>
       </map>

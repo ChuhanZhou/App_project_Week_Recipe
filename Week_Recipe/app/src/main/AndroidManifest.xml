@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Week_Recipe">
+        <activity android:name=".view.activity.PictureProcessingActivity"></activity>
         <activity android:name=".view.activity.StatisticsOfRecipeListActivity" />
         <activity android:name=".view.activity.ShowDailyRecipeActivity" />
         <activity android:name=".view.activity.FavouriteWeekRecipeActivity" />

@@ -114,8 +114,16 @@ public class UserInformationFragment extends Fragment {
     }
 
     private void selectImageFromLocal() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19)
+        {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+        }
+        else
+        {
+            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        }
         startActivityForResult(intent,IMAGE_FROM_PHOTO);
     }
 }

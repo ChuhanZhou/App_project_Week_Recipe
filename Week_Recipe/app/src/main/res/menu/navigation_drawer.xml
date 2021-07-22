@@ -21,6 +21,10 @@
     <group
         android:id="@+id/other">
         <item
+            android:id="@+id/nav_pictureProcessing"
+            android:icon="@drawable/ic_action_picture_processing"
+            android:title="@string/title_pictureProcessing" />
+        <item
             android:id="@+id/nav_settingsFragment"
             android:icon="@drawable/ic_action_settings"
             android:title="@string/title_setting" />

@@ -25,4 +25,9 @@
         android:name="com.example.week_recipe.view.fragment.SettingsFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_pictureProcessing"
+        android:name="com.example.week_recipe.view.fragment.PictureProcessingFragment"
+        android:label="@string/title_pictureProcessing"
+        tools:layout="@layout/fragment_picture_processing" />
 </navigation>

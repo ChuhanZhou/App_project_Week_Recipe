@@ -102,6 +102,7 @@ public class HomePageActivity extends AppCompatActivity {
                 super.onBackPressed();
                 break;
             case R.id.nav_settingsFragment:
+            case R.id.nav_pictureProcessing:
                 navController.navigate(R.id.nav_userInformationFragment);
                 break;
         }
@@ -121,7 +122,8 @@ public class HomePageActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_todayRecipeFragment,
                 R.id.nav_weekRecipeFragment,
-                R.id.nav_userInformationFragment)
+                R.id.nav_userInformationFragment,
+                R.id.nav_pictureProcessing)
                 .setOpenableLayout(layout)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
