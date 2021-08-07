@@ -65,6 +65,7 @@
     <string name="title_homepage">主页</string>
     <string name="title_setting">设置</string>
     <string name="title_pictureProcessing">图片处理(测试)</string>
+    <string name="title_QRCodeScan">二维码扫描(测试)</string>
     <string name="title_reset">重置</string>
     <string name="title_addToFavourite">收藏</string>
     <string name="title_setByFavourite">应用收藏</string>

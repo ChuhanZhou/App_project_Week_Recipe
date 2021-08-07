@@ -87,11 +87,15 @@ public class MyPicture {
     }
 
     public static Bitmap byteToBitmap(byte[] imageByte) {
-        return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+        if (imageByte!=null)
+        {
+            return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+        }
+        return null;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static void saveBitmapToInternalStorage(Bitmap bitmap, String imageId) {
+    public static void saveBitmapToInternalStorage(Bitmap bitmap, String imageId) {
         String fileName = SystemModelManager.getSystemModelManager().getUserData().getEmail().hashCode() + imageId + ".png";
         File directory = context.getFilesDir();
         File file = new File(directory, fileName);
@@ -216,6 +220,21 @@ public class MyPicture {
         }).start();
     }
 
+    public static Bitmap changeBitmapSize(Bitmap bitmap,int targetWidth,int targetHeight)
+    {
+        Bitmap output = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+        float widthScale = (float) targetWidth/bitmap.getWidth();
+        float heightScale = (float) targetHeight/bitmap.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(widthScale,heightScale);
+
+        output = Bitmap.createBitmap(output, 0, 0, output.getWidth(), output.getHeight(), matrix, true);
+
+        return output;
+    }
+
     public static Bitmap bitmapCompressionOnSize(Bitmap bitmap,float maxMB)
     {
         Bitmap output = bitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -291,7 +310,7 @@ public class MyPicture {
                 int r = (pixel[index] >> 16) & 0xff;
                 int g = (pixel[index] >> 8) & 0xff;
                 int b = pixel[index] & 0xff;
-                int grayValue = (int) (0.3f * r + 0.59f * g + 0.11f * b);
+                int grayValue = (int) (0.299f * r + 0.587f * g + 0.114f * b);
                 pixel[index] = Color.rgb(grayValue,grayValue,grayValue);
             }
         }
@@ -318,7 +337,7 @@ public class MyPicture {
         return output;
     }
 
-    public static Bitmap getBinarizationBitmapByPixel(Bitmap bitmap)
+    public static Bitmap getBinarizationBitmap(Bitmap bitmap)
     {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -337,7 +356,7 @@ public class MyPicture {
                 int r = (pixel[index] >> 16) & 0xff;
                 int g = (pixel[index] >> 8) & 0xff;
                 int b = pixel[index] & 0xff;
-                int grayValue = (int) (0.3f * r + 0.59f * g + 0.11f * b);
+                int grayValue = (int) (0.299f * r + 0.587f * g + 0.114f * b);
 
                 gray[x][y] = grayValue;
                 sumGray += grayValue;
@@ -369,18 +388,61 @@ public class MyPicture {
         return output;
     }
 
-    public static Bitmap getBinarizationBitmapBaseOnOriginalBitmap(Bitmap bitmap)
+    public static Bitmap getBinarizationBitmapBaseOnOriginalBitmap(Bitmap bitmap,Boolean needQuickCalculate)
+    {
+        return getBinarizationBitmapBaseOnOriginalBitmap(bitmap, needQuickCalculate,10,2);
+    }
+
+    public static Bitmap getBinarizationBitmapBaseOnOriginalBitmap(Bitmap bitmap,Boolean needQuickCalculate,int bacCompRatio,int bacSampleRadius)
     {
         bitmap = getGrayScaleBitmapByPaint(bitmap);//灰度化
-        bitmap = bitmapCompressionOnSize(bitmap,1f);//压缩至1MB左右
 
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int area = width * height;
         int[] pixel = new int[area];
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        float bitmapSize = byteArrayOutputStream.size();
+
+        //中值滤波
+        //medianFilteringBaseOnGray(pixel,width,height,1);
+
+        //压缩至1MB左右
+        bitmap = bitmapCompressionOnSize(bitmap,1f);
+
+        width = bitmap.getWidth();
+        height = bitmap.getHeight();
+        area = width * height;
+        pixel = new int[area];
+        int[] brightnessBackground = new int[area];
         bitmap.getPixels(pixel,0,width,0,0,width,height);
 
-        int[] brightnessBackground = getBrightnessBackgroundBaseOnGray(pixel,width,height,5);//获得图片亮度背景
+        if(needQuickCalculate)
+        {
+            //压缩背景样本减少背景计算时间（样本范围bacCompRatio x bacCompRatio x bacSampleRadius x bacSampleRadius像素）
+            int backgroundWidth = bitmap.getWidth()/bacCompRatio;
+            int backgroundHeight = bitmap.getHeight()/bacCompRatio;
+            int[] backgroundSamplePixel = new int[backgroundWidth*backgroundHeight];
+
+            Bitmap backgroundSample = changeBitmapSize(bitmap,backgroundWidth,backgroundHeight);
+
+            backgroundSample.getPixels(backgroundSamplePixel,0,backgroundWidth,0,0,backgroundWidth,backgroundHeight);
+            //获得图片亮度背景
+            backgroundSamplePixel = getBrightnessBackgroundBaseOnGray(backgroundSamplePixel,backgroundWidth,backgroundHeight,bacSampleRadius);
+
+            backgroundSample.setPixels(backgroundSamplePixel,0,backgroundWidth,0,0,backgroundWidth,backgroundHeight);
+            backgroundSample = changeBitmapSize(backgroundSample,width,height);
+
+            backgroundSample.getPixels(brightnessBackground,0,width,0,0,width,height);
+        }
+        else
+        {
+            //获得图片亮度背景（样本范围11x11像素）
+            brightnessBackground = getBrightnessBackgroundBaseOnGray(pixel,width,height,5);
+        }
+
         pixel = brightnessAdjustmentBaseOnGray(pixel,width,height,brightnessBackground);//基于图片亮度背景调整亮度
 
         //二值化
@@ -401,8 +463,6 @@ public class MyPicture {
         }
 
         aveGray = (int) (sumGray/area);
-
-        //System.out.println("ave:"+aveGray+"sum:"+sumGray+"area:"+area);
 
         for (int x=0;x<width;x++)
         {
@@ -531,6 +591,7 @@ public class MyPicture {
         return output;
     }
 
+    //base on http://www.javashuo.com/article/p-xxqdgcxk-nr.html
     public static Bitmap getBrightnessBackground(Bitmap bitmap,int sampleRadius)
     {
         if (sampleRadius<0)
@@ -566,7 +627,6 @@ public class MyPicture {
         int r;
         int g;
         int b;
-        int grayValue;
         int[] brightness = new int[3];
 
         for (int x=0;x<width;x++)
@@ -624,6 +684,7 @@ public class MyPicture {
         return output;
     }
 
+    //base on http://www.javashuo.com/article/p-xxqdgcxk-nr.html
     public static int[] getBrightnessBackgroundBaseOnGray(int[] pixel,int width,int height,int sampleRadius)
     {
         if (sampleRadius<0)
@@ -681,6 +742,7 @@ public class MyPicture {
         return output;
     }
 
+    //base on http://www.javashuo.com/article/p-xxqdgcxk-nr.html
     public static int[] brightnessAdjustmentBaseOnGray(int[] pixel,int width,int height,int[] brightnessBackground)
     {
         int area = width * height;
@@ -796,6 +858,60 @@ public class MyPicture {
 
         Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         output.setPixels(after,0,width,0,0,width,height);
+        return output;
+    }
+
+    public static Bitmap intercept(Bitmap bitmap,int[]pixelIndex)
+    {
+        int minX = bitmap.getWidth();
+        int maxX = 0;
+        int minY = bitmap.getHeight();
+        int maxY = 0;
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        if (width*height>=pixelIndex.length)
+        {
+            for (int i=0;i<pixelIndex.length;i++)
+            {
+                int x = pixelIndex[i]%width;
+                int y = pixelIndex[i]/width;
+                minX = Math.min(x,minX);
+                maxX = Math.max(x,maxX);
+                minY = Math.min(y,minY);
+                maxY = Math.max(y,maxY);
+            }
+
+            int outputWidth = maxX-minX+1;
+            int outputHeight = maxY-minY+1;
+
+            Bitmap output = Bitmap.createBitmap(bitmap,minX, minY, outputWidth,outputHeight);
+
+            for (int i=0;i<pixelIndex.length;i++)
+            {
+                int x = pixelIndex[i]%width-minX;
+                int y = pixelIndex[i]/width-minY;
+                System.out.println(x+"::"+y);
+                output.setPixel(x,y,Color.rgb(255,0,0));
+            }
+
+            return output;
+        }
+        return null;
+    }
+
+    public static Bitmap tagPixel(Bitmap bitmap,int[] pixelValue,int tagRGB)
+    {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int area = width * height;
+        int[] pixel = new int[area];
+        bitmap.getPixels(pixel,0,width,0,0,width,height);
+        for (int i=0;i<pixelValue.length;i++)
+        {
+            pixel[pixelValue[i]] = tagRGB;
+        }
+        Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        output.setPixels(pixel,0,width,0,0,width,height);
         return output;
     }
 }

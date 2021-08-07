@@ -34,6 +34,7 @@ import com.example.week_recipe.model.SystemModelManager;
 import com.example.week_recipe.model.domain.user.UserData;
 import com.example.week_recipe.utility.UiDataCache;
 import com.example.week_recipe.view.fragment.DailyRecipeFragment;
+import com.example.week_recipe.view.fragment.QRCodeScanFragment;
 import com.example.week_recipe.view.fragment.RecipeForWeekFragment;
 import com.example.week_recipe.view.fragment.RecipeWithDateFragment;
 import com.example.week_recipe.viewModel.HomePageViewModel;
@@ -102,7 +103,7 @@ public class HomePageActivity extends AppCompatActivity {
                 super.onBackPressed();
                 break;
             case R.id.nav_settingsFragment:
-            case R.id.nav_pictureProcessing:
+            case R.id.nav_pictureProcessingFragment:
                 navController.navigate(R.id.nav_userInformationFragment);
                 break;
         }
@@ -123,7 +124,7 @@ public class HomePageActivity extends AppCompatActivity {
                 R.id.nav_todayRecipeFragment,
                 R.id.nav_weekRecipeFragment,
                 R.id.nav_userInformationFragment,
-                R.id.nav_pictureProcessing)
+                R.id.nav_pictureProcessingFragment)
                 .setOpenableLayout(layout)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

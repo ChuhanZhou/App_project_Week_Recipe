@@ -35,4 +35,18 @@
         <item name="background">@color/button_background1</item>
         <item name="backgroundTint">@color/button_background1</item>
     </style>
+    <style name="Button_QRCode">
+        <item name="android:src">@drawable/ic_button_qrcode_dark</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+        <item name="background">@color/button_background1</item>
+        <item name="backgroundTint">@color/button_background1</item>
+    </style>
+    <style name="Button_QRCodeScan">
+        <item name="android:src">@drawable/ic_button_qrcodescan_dark</item>
+        <item name="tint">#FFFFFF</item>
+        <item name="android:alpha">1</item>
+        <item name="background">@color/button_background1</item>
+        <item name="backgroundTint">@color/button_background1</item>
+    </style>
 </resources>

@@ -19,11 +19,14 @@
             android:title="@string/title_myInformation" />
     </group>
     <group
-        android:id="@+id/other">
+        android:id="@+id/test">
         <item
-            android:id="@+id/nav_pictureProcessing"
+            android:id="@+id/nav_pictureProcessingFragment"
             android:icon="@drawable/ic_action_picture_processing"
             android:title="@string/title_pictureProcessing" />
+    </group>
+    <group
+        android:id="@+id/other">
         <item
             android:id="@+id/nav_settingsFragment"
             android:icon="@drawable/ic_action_settings"

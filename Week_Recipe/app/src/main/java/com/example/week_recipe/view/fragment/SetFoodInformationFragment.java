@@ -14,6 +14,8 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -39,7 +41,9 @@ import java.net.URI;
 public class SetFoodInformationFragment extends Fragment {
 
     private final static int IMAGE_FROM_PHOTO = 1001;
+    private final static int HAS_NEW_FOOD = 1002;
     private View view;
+    private Food food;
     private ImageView foodImage;
     private EditText foodNameEditText;
     private TextView foodNameTextView;
@@ -50,6 +54,35 @@ public class SetFoodInformationFragment extends Fragment {
     private NestedScrollView nestedScrollView;
     private boolean lockName;
     private boolean updateImage;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == HAS_NEW_FOOD) {
+                if (food.hasImage())
+                {
+                    foodImage.setImageBitmap(food.getImage());
+                    foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
+                else
+                {
+                    foodImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                }
+                foodNameEditText.setText(food.getName());
+                ingredientsList = food.getIngredientsList();
+
+                for (int x=0;x<FoodType.values().length;x++)
+                {
+                    if (FoodType.values()[x]==food.getType())
+                    {
+                        foodTypeSpinner.setSelection(x);
+                        break;
+                    }
+                }
+                ingredientsListFragment.updateIngredientsList(ingredientsList);
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +153,14 @@ public class SetFoodInformationFragment extends Fragment {
     {
         Food food = new Food(foodName,FoodType.Meat,null);
         bind(food,lockName);
+    }
+
+    public void setFood(Food food)
+    {
+        this.food = food;
+        Message message = new Message();
+        message.what = HAS_NEW_FOOD;
+        handler.sendMessage(message);
     }
 
     private void setListener()

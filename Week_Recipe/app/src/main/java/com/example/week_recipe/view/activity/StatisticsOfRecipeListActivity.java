@@ -1,6 +1,7 @@
 package com.example.week_recipe.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class StatisticsOfRecipeListActivity extends AppCompatActivity {
     public static String showValueKey = "statisticsOfRecipeListActivity_recipeList";
     private SectorGraphView sectorGraphView;
+    private NestedScrollView nestedScrollView;
     private Button backButton;
     private IngredientsListFragment ingredientsListFragment;
     private Map<FoodType,Integer> numOfFoodTypeMap;
@@ -52,6 +54,7 @@ public class StatisticsOfRecipeListActivity extends AppCompatActivity {
 
     private void bind()
     {
+        nestedScrollView = findViewById(R.id.statisticsOfRecipeList_nestedScrollView);
         sectorGraphView = findViewById(R.id.statisticsOfRecipeList_sectorGraphView);
         backButton = findViewById(R.id.statisticsOfRecipeList_backButton);
         ingredientsListFragment = FragmentManager.findFragment(findViewById(R.id.statisticsOfRecipeList_ingredientsListFragment));

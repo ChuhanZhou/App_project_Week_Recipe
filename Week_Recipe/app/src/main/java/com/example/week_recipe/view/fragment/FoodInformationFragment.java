@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.example.week_recipe.R;
 import com.example.week_recipe.model.domain.food.Food;
 import com.example.week_recipe.utility.MyPicture;
+import com.example.week_recipe.utility.MyQRCode;
+import com.google.gson.Gson;
 
 public class FoodInformationFragment extends Fragment {
 
@@ -40,6 +42,7 @@ public class FoodInformationFragment extends Fragment {
         if (food.hasImage())
         {
             foodImage.setImageBitmap(food.getImage());
+
             foodImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
         else

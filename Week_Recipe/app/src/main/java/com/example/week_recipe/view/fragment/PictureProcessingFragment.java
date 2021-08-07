@@ -2,6 +2,7 @@ package com.example.week_recipe.view.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.week_recipe.R;
 import com.example.week_recipe.utility.MyPicture;
+import com.example.week_recipe.utility.MyQRCode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayInputStream;
@@ -37,6 +39,7 @@ public class PictureProcessingFragment extends Fragment {
     private ArrayList<String> titleList;
     private int showIndex;
     private FloatingActionButton chooseImageButton;
+    private Thread pictureProcessingThread;
 
     private Handler handler = new Handler() {
         @Override
@@ -76,38 +79,23 @@ public class PictureProcessingFragment extends Fragment {
 
                     showIndex = 0;
                     showList.add(read);
-                    titleList.add("原图");
+                    titleList.add("原图 "+read.getWidth()+"x"+read.getHeight()+"\n解码:"+MyQRCode.decodeQRCode(read));
                     imageView.setImageBitmap(showList.get(0));
                     titleTextView.setText(titleList.get(0));
 
-                    new Thread(()->{
-                        //Bitmap compression = MyPicture.bitmapCompressionOnSize(read,1f);
-                        //showList.add(compression);
-                        //titleList.add("原图->压缩");
-                        //updateNewImage();
-//
-                        //Bitmap brightnessBackground = MyPicture.getBrightnessBackground(compression,5);
-                        //showList.add(brightnessBackground);
-                        //titleList.add("原图->压缩->亮度背景11x11");
-                        //updateNewImage();
-//
-                        //Bitmap brightnessAdjustment = MyPicture.brightnessAdjustment(compression,brightnessBackground);
-                        //showList.add(brightnessAdjustment);
-                        //titleList.add("原图->压缩->亮度背景11x11->亮度调整");
-                        //updateNewImage();
-//
-                        //showList.add(MyPicture.getBinarizationBitmapByPixel(brightnessAdjustment));
-                        //titleList.add("原图->压缩->亮度背景11x11->亮度调整->二值化");
+                    pictureProcessingThread = new Thread(()->{
+                        //showList.add(MyPicture.getBrightnessBackground(MyPicture.bitmapCompressionOnSize(read,1f),5));
+                        //titleList.add("原图->压缩->计算亮度背景(样本范围11x11)");
                         //updateNewImage();
 
-                        showList.add(MyPicture.getBinarizationBitmapBaseOnOriginalBitmap(read));
-                        titleList.add("原图->灰度化->压缩->计算亮度背景（样本范围11x11）->亮度调整->二值化");
+                        showList.add(MyPicture.getBinarizationBitmapBaseOnOriginalBitmap(read,true,10,2));
+                        int width = showList.get(showList.size()-1).getWidth();
+                        int height = showList.get(showList.size()-1).getHeight();
+                        titleList.add("原图->灰度化->压缩->中值滤波->计算亮度背景(快速)->亮度调整->二值化 "+width+"x"+height
+                                +"\n解码:"+MyQRCode.decodeQRCode(showList.get(showList.size()-1)));
                         updateNewImage();
-
-                        showList.add(MyPicture.getBinarizationBitmapByPixel(MyPicture.bitmapCompressionOnSize(read,2.5f)));
-                        titleList.add("原图->压缩->二值化");
-                        updateNewImage();
-                    }).start();
+                    });
+                    pictureProcessingThread.start();
                 }
                 break;
         }

@@ -65,6 +65,7 @@
     <string name="title_homepage">Homepage</string>
     <string name="title_setting">Settings</string>
     <string name="title_pictureProcessing">Picture Processing(test)</string>
+    <string name="title_QRCodeScan">QR Code Scan(test)</string>
     <string name="title_reset">Reset</string>
     <string name="title_addToFavourite">Save to favourite</string>
     <string name="title_setByFavourite">Set by favourite</string>
